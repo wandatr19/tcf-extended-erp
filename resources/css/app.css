@@ -1,0 +1,9 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+#th-lkh{
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    text-align: center;
+}
