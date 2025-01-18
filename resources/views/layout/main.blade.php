@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="{{asset('img/logo-tcf.png')}}">
@@ -17,6 +18,7 @@
 	<!-- Style-->  
 	<link rel="stylesheet" href="{{asset('eduadmin/main/css/style.css')}}">
 	<link rel="stylesheet" href="{{asset('eduadmin/main/css/skin_color.css')}}">
+	<link rel="stylesheet" href="{{ asset('eduadmin/assets/vendor_plugins/select2-theme/select2-bootstrap-5-theme.min.css') }}">
 	
   </head>
 
@@ -218,15 +220,21 @@
 	
 	<!-- Page Content overlay -->
 	
+	<!-- jQuery -->
+	<script src="{{ asset('eduadmin/assets/vendor_plugins/jquery/jquery.min.js') }}"></script>
+	<script src="{{ asset('eduadmin/assets/vendor_components/apexcharts-bundle-new/dist/apexcharts.js') }}"></script>
 	
 	<!-- Vendor JS -->
 	<script src="{{asset('eduadmin/main/js/vendors.min.js')}}"></script>
 	<script src="{{asset('eduadmin/main/js/pages/chat-popup.js')}}"></script>
     <script src="{{asset('eduadmin/assets/icons/feather-icons/feather.min.js')}}"></script>
 
-	{{-- <script src="{{asset('eduadmin/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js')}}"></script> --}}
+	<script src="{{asset('eduadmin/assets/vendor_components/apexcharts-bundle/dist/apexcharts.js')}}"></script>
 	<script src="{{asset('eduadmin/assets/vendor_components/moment/min/moment.min.js')}}"></script>
 	<script src="{{asset('eduadmin/assets/vendor_components/fullcalendar/fullcalendar.js')}}"></script>
+	<script src="{{ asset('eduadmin/assets/vendor_components/select2/dist/js/select2.full.min.js') }}"></script>
+	<script src="{{ asset('eduadmin/assets/vendor_components/nestable/jquery.nestable.js') }}"></script>
+
 	
 	<!-- EduAdmin App -->
 	<script src="{{asset('eduadmin/main/js/template.js')}}"></script>

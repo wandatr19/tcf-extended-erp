@@ -15,6 +15,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/lkh/input', [LKHController::class, 'input'])->name('lkh-input');
     Route::post('/lkh/store', [LKHController::class, 'input_lkh'])->name('lkh-store');
     Route::get('/lkh/monitor', [LKHController::class, 'monitor'])->name('lkh-monitor');
+    Route::post('/lkh/get_customer', [LKHController::class, 'get_customer']);
     // Route::get('/login2', [LKHController::class, 'login2'])->name('login');
 
     Route::get('/lppk', [LPPKController::class, 'index'])->name('lppk-main');

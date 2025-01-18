@@ -1,19 +1,30 @@
-import $ from 'jquery';
-import 'select2';
-import 'select2/dist/css/select2.min.css';
+// import $ from 'jquery';
+// import 'select2';
+// import 'select2/dist/css/select2.min.css';
 
-$(document).ready(function() {
-    // Menginisialisasi Select2 pada dropdown
-    $('#customer').select2({
-        placeholder: "Select a Company",  // Placeholder di dropdown
-        allowClear: true, 
-        minimumInputLength: 2                // Menambahkan tombol clear
+$(function(){
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+      });
+
+      $('#customer').select2({
+        ajax: {
+            url:  '/lkh/get_customer',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
     });
-});
 
-
-// Pop up when user complete input data
-$(document).ready(function () {
     $('#form-lkh').on('submit', function (e) {
         e.preventDefault(); // Prevent form submission
 
@@ -44,7 +55,13 @@ $(document).ready(function () {
             }
         });
     });
-});
+
+
+
+    })
+
+
+
 
 
 // Calculate total defect
@@ -128,26 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     const total_prod = document.getElementById('total_prod');
-//     const part_reject = document.getElementById('part_reject');
-//     const part_ok = document.getElementById('part_ok');
-
-//     const calculatePartOk = () => {
-//         const total = parseFloat(total_prod.value) || 0;
-//         const reject = parseFloat(part_reject.value) || 0;
-//         const ok = total - reject;
-//         part_ok.value = ok;
-//     };
-
-//     total_prod.addEventListener('input', calculatePartOk);
-//     setInterval(() => {
-//         if (part_reject.value !== previousRejectValue) {
-//             previousRejectValue = part_reject.value;
-//             calculatePartOk();
-//         }
-//     }, 100); // Cek setiap 100ms
-// });
 document.addEventListener('DOMContentLoaded', function () {
     const total_prod = document.getElementById('total_prod');
     const part_reject = document.getElementById('part_reject');

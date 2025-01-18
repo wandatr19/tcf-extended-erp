@@ -158,14 +158,11 @@
                                         <td>{{$record->part_repair ?? 0}}</td>
                                         <td>{{$record->part_reject ?? 0}}</td>
                                         <td>{{$record->verifikasi ?? 0}}</td>
-                                        
                                     </tr>
-                                        
                                     @empty
                                     <tr>
                                         <td colspan="40" class="text-center">Tidak ada data</td>
                                     </tr>
-                                        
                                     @endforelse
                                 </tbody>
                             </table>
@@ -194,12 +191,10 @@
                                 </tfoot>
                             </table>
                         </div>
-    
                     </div>
                 </div>
             </div>
         </div>
-
     </section>
 
 

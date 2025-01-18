@@ -67,11 +67,8 @@
                         <div class= "col-md-4 col-12">
                             <div class="form-group">
                                 <label for="customer" class="form-label">Customer</label>
-                                <select class="form-select select2" name="customer" id="customer">
-                                    {{-- <option value="">-- Select a Company --</option> --}}
-                                    @foreach($customer as $customer)
-                                        <option value="{{$customer->name}}">{{$customer->name}}</option>
-                                    @endforeach
+                                <select class="form-select " name="customer" id="customer">
+                                    <option value="">Pilih Customer</option>
                                 </select>
                             </div>
                         </div>

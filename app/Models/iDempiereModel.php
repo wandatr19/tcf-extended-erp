@@ -11,4 +11,12 @@ class iDempiereModel extends Model
     use HasFactory;
     protected $connection = 'idempiere';
     protected $table = 'c_bpartner';
+
+    public function scopeFromWarehouse($query)
+    {
+        return $query->from('c_bpartner')
+                    // ->whereIn('ad_org_id', [1000001, 1000002])
+                    ->where('isactive', 'Y')
+                    ->where('iscustomer', 'Y');
+    }
 }

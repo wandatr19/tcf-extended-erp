@@ -32,6 +32,49 @@ class LKHController extends Controller
 
         return view('lkh.input', $dataPage, compact('customer'));
     }
+    public function get_customer(Request $request)
+    {
+        $search = $request->input('search');
+        $page = $request->input("page");
+        $idCats = $request->input('catsProd');
+        $adOrg = $request->input('adOrg');
+
+        $query = iDempiereModel::fromWarehouse()->select(
+            'c_bpartner_id',
+            'name',
+        );
+
+        if (!empty($search)) {
+            $query->where(function ($dat) use ($search) {
+                $dat->where('c_bpartner_id', 'ILIKE', "%{$search}%")
+                    ->orWhere('name', 'ILIKE', "%{$search}%");
+            });
+        }
+
+        $data = $query->simplePaginate(10);
+
+        $morePages = true;
+        $pagination_obj = json_encode($data);
+        if (empty($data->nextPageUrl())) {
+            $morePages = false;
+        }
+
+        foreach ($data->items() as $customer) {
+            $dataUser[] = [
+                'id' => $customer->c_bpartner_id,
+                'text' => $customer->name
+            ];
+        }
+
+        $results = array(
+            "results" => $dataUser,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+
+        return response()->json($results);
+    }
     public function input_lkh(Request $request) 
     {
         $validated = $request->validate([
