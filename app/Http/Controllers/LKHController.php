@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\iDempiereModel;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\LKHmodel;
+use Illuminate\Http\Request;
+use App\Models\iDempiereModel;
 
 class LKHController extends Controller
 {
@@ -115,13 +116,24 @@ class LKHController extends Controller
             'part_reject' => 'required|integer',
             'verifikasi' => 'required|integer',
         ]);
+        
+        try {
+            DB::beginTransaction();
+            LKHmodel::create($validated);
+            DB::commit();
 
-        LKHmodel::create($validated);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data Berhasil Disimpan!',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
 
-        return response()->json([
-            'message' => 'Data Berhasil Disimpan!',
-            'redirect_url' => url()->previous()// Replace '/form' with your desired redirect URL
-        ]);
+            return response()->json([
+                'success' => false, 
+                'message' => 'Terjadi kesalahan saat input data:' . $e->getMessage(),
+            ], 500);
+        }
     }
     public function monitor(Request $request){
         $dataPage = [

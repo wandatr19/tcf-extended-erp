@@ -54,20 +54,22 @@
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label class="form-label">Customer</label>
-                                        <select class="form-select" style="width: 100%;">
-                                            <option selected="selected">PT Summit Adyawinsa Indonesia</option>
-                                            <option>PT Exedy Manufacturing Indonesia</option>
-                                            <option>PT Astra Daihatsu Motor</option>
-                                            <option>PT Honda Prospect Motor</option>
-                                            <option>PT Adyawinsa Plastics Indonesia</option>
+                                        <label class="form-label">Partner</label>
+                                        <select class="form-select" style="width: 100%;" name="customer" id="customer">
+                                            <option value="">Pilih Partner</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label class="form-label">Date</label>
-                                            <input class="form-control" type="date" name="date">
+                                        <label class="form-label">Input Date</label>
+                                            <input class="form-control" type="date" name="input_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Target Close</label>
+                                            <input class="form-control" type="date" name="target_close">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">

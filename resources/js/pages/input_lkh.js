@@ -9,7 +9,41 @@ $(function(){
         },
       });
 
-      $('#customer').select2({
+    let loadingSwal;
+    function loadingSwalShow() {
+        loadingSwal = Swal.fire({
+            imageHeight: 300,
+            showConfirmButton: false,
+            title: '<i class="fas fa-sync-alt fa-spin fs-80"></i>',
+            allowOutsideClick: false,
+            background: 'rgba(0, 0, 0, 0)'
+        });
+    }
+
+    function loadingSwalClose() {
+        loadingSwal.close();
+    }
+
+    function showToast(options) {
+        const toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000, 
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        toast.fire({
+            icon: options.icon || "success",
+            title: options.title
+        });
+    }
+
+    $('#customer').select2({
         ajax: {
             url:  '/lkh/get_customer',
             type: "post",
@@ -28,7 +62,6 @@ $(function(){
     $('#form-lkh').on('submit', function (e) {
         e.preventDefault(); // Prevent form submission
 
-        // Ambil data form
         let formData = $(this).serialize();
 
         // Kirim data dengan AJAX
@@ -38,10 +71,12 @@ $(function(){
             data: formData,
             success: function (response) {
                 // Tampilkan notifikasi
+                // showToast({ title: response.message });
                 alert(response.message);
+                $('#form-lkh')[0].reset();
 
                 // Redirect ke URL baru
-                window.location.href = response.redirect_url;
+                // window.location.href = response.redirect_url;
             },
             error: function (xhr) {
                 // Tangani error (misalnya validasi gagal)
@@ -55,7 +90,6 @@ $(function(){
             }
         });
     });
-
 
 
     })

@@ -18,6 +18,8 @@
 	<!-- Style-->  
 	<link rel="stylesheet" href="{{asset('eduadmin/main/css/style.css')}}">
 	<link rel="stylesheet" href="{{asset('eduadmin/main/css/skin_color.css')}}">
+	<link rel="stylesheet" href="{{asset('eduadmin/assets/vendor_components/sweetalert2/dist/sweetalert2.css') }}">
+
 	<link rel="stylesheet" href="{{ asset('eduadmin/assets/vendor_plugins/select2-theme/select2-bootstrap-5-theme.min.css') }}">
 	
   </head>
@@ -166,8 +168,8 @@
 				  </span>
 				</a>
 				<ul class="treeview-menu">
-				  <li><a href="{{route('lkh-input')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Input LKH Stamping</a></li>
-				  <li><a href="{{route('lkh-monitor')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Monitoring</a></li>
+				  <li class="{{ $page == 'lkh-input' ? 'active' : '' }}"><a href="{{route('lkh-input')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Input LKH Stamping</a></li>
+				  <li class="{{ $page == 'lkh-monitor' ? 'active' : '' }}"><a href="{{route('lkh-monitor')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Monitoring</a></li>
 				</ul>
 			  </li>
 			  <li class="treeview">
@@ -179,9 +181,9 @@
 				  </span>
 				</a>
 				<ul class="treeview-menu">
-				  <li><a href="{{route('lppk-input')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Request Repair</a></li>
-				  <li><a href="{{route('lppk-monitor')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>List Repair</a></li>
-				  <li><a href="{{route('lppk-logbook')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Logbook LPPK</a></li>
+				  <li class="{{ $page == 'lppk-input' ? 'active' : '' }}"><a href="{{route('lppk-input')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Request Repair</a></li>
+				  <li class="{{ $page == 'lppk-monitor' ? 'active' : '' }}"><a href="{{route('lppk-monitor')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>List Repair</a></li>
+				  <li class="{{ $page == 'lppk-logbook' ? 'active' : '' }}"><a href="{{route('lppk-logbook')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Logbook LPPK</a></li>
 				</ul>
 			  </li>
 			  <li class="treeview">
@@ -234,6 +236,8 @@
 	<script src="{{asset('eduadmin/assets/vendor_components/fullcalendar/fullcalendar.js')}}"></script>
 	<script src="{{ asset('eduadmin/assets/vendor_components/select2/dist/js/select2.full.min.js') }}"></script>
 	<script src="{{ asset('eduadmin/assets/vendor_components/nestable/jquery.nestable.js') }}"></script>
+	<script src="{{ asset('eduadmin/assets/vendor_components/dist/sweetalert2/sweetalert2.min.js') }}"></script>
+
 
 	
 	<!-- EduAdmin App -->

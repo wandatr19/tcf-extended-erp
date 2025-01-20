@@ -44,7 +44,8 @@
                             <div class="form-group">
                             <label for="line" class="form-label">Line</label>
                             <select class="form-select" style="width: 100%;" name="line" id="line" required>
-                                <option selected="selected" value="1">1</option>
+                                <option selected="selected" disabled>Select Line</option>
+                                <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
@@ -58,7 +59,8 @@
                             <div class="form-group">
                             <label for="shift" class="form-label">Shift</label>
                             <select class="form-select" style="width: 100%;" name="shift" id="shift" required>
-                                <option selected="selected" value="1">1</option>
+                                <option selected="selected" disabled>Select Shift</option>
+                                <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
@@ -371,14 +373,11 @@
                 <div class="col-4">
                 </div>
                     <div class="col-4" style="text-align:center;">
-                        <input type="submit" class="btn btn-primary" value="Submit">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
             </div>
-        <!-- ./col -->
         </form>
       </div>
-      <!-- /.row -->
     </section>
-    <!-- /.content -->
   </div>
 @endsection

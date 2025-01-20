@@ -81,11 +81,13 @@ Waves
 @import url(../../assets/icons/font-awesome/css/font-awesome.css);
 @import url(../../assets/icons/Ionicons/css/ionicons.css);
 @import url(../../assets/icons/glyphicons/glyphicon.css);
+@import url(../../assets/icons/themify-icons/themify-icons.css);
 @import url(../../assets/icons/material-design-iconic-font/css/materialdesignicons.css);
 @import url(../../assets/icons/iconsmind/style.css);
 @import url(../../assets/icons/icomoon/style.css);
 @import url(../../assets/vendor_components/animate/animate.css);
 @import url(../../assets/vendor_components/dropzone/dropzone.css);
+@import url(../../assets/vendor_components/sweetalert2/dist/sweetalert2.css);
 html {
   height: 100%;
   font-size: 14px; }

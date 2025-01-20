@@ -1,4 +1,89 @@
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
+//     const noSuratField = document.getElementById("no_lppk");
+//     const form = document.querySelector("form"); // Seleksi form
+    
+//     // Data sementara untuk melacak nomor surat terakhir
+//     let lastNumbers = JSON.parse(localStorage.getItem("lastNumbers")) || {};
+
+//     // Fungsi untuk mendapatkan bulan dalam format Romawi
+//     function getRomanMonth(month) {
+//         const romanMonths = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+//         return romanMonths[month - 1];
+//     }
+
+//     // Fungsi untuk mendapatkan nomor surat tanpa mengubah nomor terakhir
+//     function previewNoSurat() {
+//         const today = new Date();
+//         const month = today.getMonth() + 1; // Bulan mulai dari 0
+//         const year = today.getFullYear().toString().slice(-2); // Ambil 2 digit terakhir tahun
+//         const romanMonth = getRomanMonth(month);
+
+//         // Tentukan kunci berdasarkan bulan dan tahun
+//         const key = `${month}-${year}`;
+        
+//         // Tentukan nomor urut tanpa menyimpan
+//         const currentNumber = (lastNumbers[key] || 0) + 1;
+
+//         // Format nomor surat
+//         const formattedNumber = String(currentNumber).padStart(3, "0");
+//         return `LPPK/QC/${romanMonth}/${year}/${formattedNumber}`;
+//     }
+
+//     // Fungsi untuk menyimpan nomor surat baru
+//     function saveNoSurat() {
+//         const today = new Date();
+//         const month = today.getMonth() + 1;
+//         const year = today.getFullYear().toString().slice(-2);
+//         const key = `${month}-${year}`;
+
+//         // Update nomor urut terakhir
+//         if (!lastNumbers[key]) {
+//             lastNumbers[key] = 1;
+//         } else {
+//             lastNumbers[key]++;
+//         }
+
+//         // Simpan ke localStorage
+//         localStorage.setItem("lastNumbers", JSON.stringify(lastNumbers));
+//     }
+
+//     // Tampilkan nomor surat di field tanpa menyimpan
+//     if (noSuratField) {
+//         noSuratField.value = previewNoSurat();
+//     }
+
+//     // Event listener pada form submit
+//     if (form) {
+//         form.addEventListener("submit", function (e) {
+//             // Simpan nomor surat hanya jika form disubmit
+//             saveNoSurat();
+//         });
+//     }
+// });
+
+$(function(){
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+
+    $('#customer').select2({
+        ajax: {
+            url:  '/lkh/get_customer',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+    });
+
     const noSuratField = document.getElementById("no_lppk");
     const form = document.querySelector("form"); // Seleksi form
     
@@ -58,8 +143,9 @@ document.addEventListener("DOMContentLoaded", function () {
             // Simpan nomor surat hanya jika form disubmit
             saveNoSurat();
         });
-    }
+    }    
 });
+
 
 Dropzone.autoDiscover = false; // Nonaktifkan auto-discover
 
@@ -99,3 +185,4 @@ const dropzone = new Dropzone("#gambar_lppk", {
         });
     }
 });
+
