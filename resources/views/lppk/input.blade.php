@@ -19,7 +19,8 @@
         </div>
     </div>
     <section class="content">
-        <form action="#" id="form_lppk">
+        <form action="{{route('lppk-store-request')}}" method="POST" id="form_lppk" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-12">
                     <div class="box">
@@ -36,34 +37,36 @@
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label class="form-label">Part No.</label>
-                                            <input class="form-control" type="name" name="part_no">
+                                        <label class="form-label">Part Code</label>
+                                            <input class="form-control" type="name" name="part_code">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Part Name</label>
-                                            <input class="form-control" type="name" name="part_name">
+                                        <select class="form-select" style="width: 100%" name="part_name" id="part_name">
+                                            <option value="">Pilih Part Name</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Type</label>
-                                            <input class="form-control" type="name" name="type">
+                                            <input class="form-control" type="name" name="part_type">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Partner</label>
-                                        <select class="form-select" style="width: 100%;" name="customer" id="customer">
+                                        <select class="form-select" style="width: 100%;" name="partner" id="partner">
                                             <option value="">Pilih Partner</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
-                                        <label class="form-label">Input Date</label>
-                                            <input class="form-control" type="date" name="input_date">
+                                        <label class="form-label">Issued Date</label>
+                                            <input class="form-control" type="date" name="issued_date">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
@@ -75,28 +78,27 @@
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Material</label>
-                                            <input class="form-control" type="name" name="date">
+                                            <input class="form-control" type="name" name="material">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Lot Material</label>
-                                            <input class="form-control" type="name" name="date">
+                                            <input class="form-control" type="name" name="lot_material">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Quantity</label>
-                                            <input class="form-control" type="number" name="date">
+                                            <input class="form-control" type="number" name="quantity">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Problem Type</label>
-                                            <input class="form-control" type="number" name="date">
+                                            <input class="form-control" type="name" name="problem_type">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="box-header">
@@ -107,15 +109,15 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Description</label>
-                                        <textarea class="form-control" rows="6" name="description"></textarea>
+                                        <textarea class="form-control" rows="6" name="problem_desc"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Gambar</label>
-                                        <div class="dropzone" id="gambar_lppk">
-                                        </div>
-
+                                        <input type="file" class="form-control" name="image1">
+                                        <input type="file" class="form-control" name="image2">
+                                        <input type="file" class="form-control" name="image3">
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +129,7 @@
                 <div class="col-4">
                 </div>
                     <div class="col-4" style="text-align:center;">
-                        <input type="submit" class="btn btn-primary" value="Submit">
+                        <button type="submit" class="btn btn-primary" >Submit</button>
                     </div>
             </div>
         </form>

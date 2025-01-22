@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use Exception;
 use App\Models\LKHmodel;
 use Illuminate\Http\Request;
 use App\Models\iDempiereModel;
+use Illuminate\Support\Facades\DB;
 
 class LKHController extends Controller
 {
@@ -33,14 +34,14 @@ class LKHController extends Controller
 
         return view('lkh.input', $dataPage, compact('customer'));
     }
-    public function get_customer(Request $request)
+    public function get_partner(Request $request)
     {
         $search = $request->input('search');
         $page = $request->input("page");
         $idCats = $request->input('catsProd');
         $adOrg = $request->input('adOrg');
 
-        $query = iDempiereModel::fromWarehouse()->select(
+        $query = iDempiereModel::fromPartner()->select(
             'c_bpartner_id',
             'name',
         );
@@ -63,6 +64,49 @@ class LKHController extends Controller
         foreach ($data->items() as $customer) {
             $dataUser[] = [
                 'id' => $customer->c_bpartner_id,
+                'text' => $customer->name
+            ];
+        }
+
+        $results = array(
+            "results" => $dataUser,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+
+        return response()->json($results);
+    }
+    public function get_part(Request $request)
+    {
+        $search = $request->input('search');
+        $page = $request->input("page");
+        $idCats = $request->input('catsProd');
+        $adOrg = $request->input('adOrg');
+
+        $query = iDempiereModel::fromPart()->select(
+            'm_product_id',
+            'name',
+        );
+
+        if (!empty($search)) {
+            $query->where(function ($dat) use ($search) {
+                $dat->where('m_product_id', 'ILIKE', "%{$search}%")
+                    ->orWhere('name', 'ILIKE', "%{$search}%");
+            });
+        }
+
+        $data = $query->simplePaginate(10);
+
+        $morePages = true;
+        $pagination_obj = json_encode($data);
+        if (empty($data->nextPageUrl())) {
+            $morePages = false;
+        }
+
+        foreach ($data->items() as $customer) {
+            $dataUser[] = [
+                'id' => $customer->m_product_id,
                 'text' => $customer->name
             ];
         }
@@ -126,7 +170,7 @@ class LKHController extends Controller
                 'status' => 'success',
                 'message' => 'Data Berhasil Disimpan!',
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
 
             return response()->json([

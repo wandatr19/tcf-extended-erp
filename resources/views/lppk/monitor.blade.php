@@ -130,11 +130,8 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label class="form-label">Gambar</label>
-                                    <form action="#" class="dropzone">
-                                        <div class="fallback">
-                                            <input name="file" type="file" multiple >
-                                        </div>
-                                    </form>
+                                    <div class="dropzone" id="lppk-gambar">
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -45,7 +45,23 @@ $(function(){
 
     $('#customer').select2({
         ajax: {
-            url:  '/lkh/get_customer',
+            url: '/lkh/get_partner',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+    });
+
+    $('#part_no').select2({
+        ajax: {
+            url:  '/lkh/get_part',
             type: "post",
             dataType: "json",
             delay: 250,
@@ -60,36 +76,60 @@ $(function(){
     });
 
     $('#form-lkh').on('submit', function (e) {
-        e.preventDefault(); // Prevent form submission
-
+        e.preventDefault(); 
+        loadingSwalShow();
         let formData = $(this).serialize();
 
-        // Kirim data dengan AJAX
         $.ajax({
             url: $(this).attr('action'),
             type: 'POST',
             data: formData,
-            success: function (response) {
-                // Tampilkan notifikasi
-                // showToast({ title: response.message });
-                alert(response.message);
+            success: function (data) {
+                loadingSwalClose();
+                showToast({ title: data.message });
                 $('#form-lkh')[0].reset();
-
-                // Redirect ke URL baru
-                // window.location.href = response.redirect_url;
+                $('#customer').val('').trigger('change'); 
+                $('#part_no').val('').trigger('change'); 
             },
-            error: function (xhr) {
-                // Tangani error (misalnya validasi gagal)
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON.errors;
-                    let errorMessages = Object.values(errors).flat().join('\n');
-                    alert('Validation Error:\n' + errorMessages);
-                } else {
-                    alert('Terjadi kesalahan. Coba lagi nanti.');
-                }
-            }
+            error: function (jqXHR, textStatus, errorThrown) {
+                loadingSwalClose();
+                showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                $('#form-lkh')[0].reset();
+            },
         });
     });
+
+
+    // $('#form-lkh').on('submit', function (e) {
+    //     e.preventDefault(); // Prevent form submission
+
+    //     let formData = $(this).serialize();
+
+    //     $.ajax({
+    //         url: $(this).attr('action'),
+    //         type: 'POST',
+    //         data: formData,
+    //         success: function (response) {
+    //             // Tampilkan notifikasi
+    //             showToast({ title: response.message });
+    //             // alert(response.message);
+    //             $('#form-lkh')[0].reset();
+
+    //             // Redirect ke URL baru
+    //             // window.location.href = response.redirect_url;
+    //         },
+    //         error: function (xhr) {
+    //             // Tangani error (misalnya validasi gagal)
+    //             if (xhr.status === 422) {
+    //                 let errors = xhr.responseJSON.errors;
+    //                 let errorMessages = Object.values(errors).flat().join('\n');
+    //                 alert('Validation Error:\n' + errorMessages);
+    //             } else {
+    //                 alert('Terjadi kesalahan. Coba lagi nanti.');
+    //             }
+    //         }
+    //     });
+    // });
 
 
     })

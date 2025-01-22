@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="{{asset('eduadmin/main/css/style.css')}}">
 	<link rel="stylesheet" href="{{asset('eduadmin/main/css/skin_color.css')}}">
 	<link rel="stylesheet" href="{{asset('eduadmin/assets/vendor_components/sweetalert2/dist/sweetalert2.css') }}">
-
+	<link rel="stylesheet" href="{{ asset('eduadmin/assets/vendor_components/datatable/datatables.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('eduadmin/assets/vendor_plugins/select2-theme/select2-bootstrap-5-theme.min.css') }}">
 	
   </head>
@@ -236,7 +236,9 @@
 	<script src="{{asset('eduadmin/assets/vendor_components/fullcalendar/fullcalendar.js')}}"></script>
 	<script src="{{ asset('eduadmin/assets/vendor_components/select2/dist/js/select2.full.min.js') }}"></script>
 	<script src="{{ asset('eduadmin/assets/vendor_components/nestable/jquery.nestable.js') }}"></script>
-	<script src="{{ asset('eduadmin/assets/vendor_components/dist/sweetalert2/sweetalert2.min.js') }}"></script>
+	<script src="{{ asset('eduadmin/assets/vendor_components/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+	<script src="{{ asset('eduadmin/assets/vendor_components/datatable/datatables.min.js') }}"></script>
+
 
 
 	
@@ -256,6 +258,10 @@
 	@if ($page == 'lkh-monitor')
 		@vite(['resources/js/pages/monitor_lkh.js'])
 	@endif
+	@if ($page == 'lppk-logbook')
+		@vite(['resources/js/pages/logbook_lppk.js'])
+	@endif
+
 	
 </body>
 </html>

@@ -76,8 +76,10 @@
                         </div>
                         <div class= "col-md-4 col-12">
                             <div class="form-group">
-                                <label class="form-label">Part Number</label>
-                                    <input class="form-control" type="name" name="part_no">
+                                <label class="form-label">Part Name</label>
+                                <select class="form-select " name="part_no" id="part_no">
+                                    <option value="">Pilih Part</option>
+                                </select>
                             </div>
                         </div>
                         <div class= "col-md-2 col-12">

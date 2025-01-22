@@ -19,78 +19,28 @@
         </div>
     </div>
     <section class="content">
-        <div class="box">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead class="bg-primary">
-                        <tr>
-                            <th rowspan="2" class="text-center">No.</th>
-                            <th rowspan="2" class="text-center">Part No./Name</th>
-                            <th rowspan="2" class="text-center">Problem Description</th>
-                            <th rowspan="2" class="text-center">No. LPPK</th>
-                            <th rowspan="2" class="text-center">Tanggal Dibuat</th>
-                            <th rowspan="2" class="text-center">Target Close</th>
-                            <th colspan="3" class="text-center">Status Problem</th>
-                            <th rowspan="2" class="text-center">Pembuat</th>
-                        </tr>
-                        <tr>
-                            <th class="text-center">Open</th>
-                            <th class="text-center">Progress</th>
-                            <th class="text-center">Close</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>5305A781</td>
-                            <td>Mesin Mati</td>
-                            <td>LPPK/QC/01/212/24/</td>
-                            <td>14/12/2024</td>
-                            <td>16/12/2024</td>
-                            <td>N</td>
-                            <td>Y</td>
-                            <td>N</td>
-                            <td>Wahyu Adhanta</td>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>5305A781</td>
-                            <td>Mesin Mati</td>
-                            <td>LPPK/QC/01/212/24/</td>
-                            <td>14/12/2024</td>
-                            <td>16/12/2024</td>
-                            <td>N</td>
-                            <td>Y</td>
-                            <td>N</td>
-                            <td>Wahyu Adhanta</td>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>5305A781</td>
-                            <td>Mesin Mati</td>
-                            <td>LPPK/QC/01/212/24/</td>
-                            <td>14/12/2024</td>
-                            <td>16/12/2024</td>
-                            <td>N</td>
-                            <td>Y</td>
-                            <td>N</td>
-                            <td>Wahyu Adhanta</td>
-                            </th>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
+        <div class="col-12">
+            <div class="box">
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="table-logbook-lppk">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Part Name</th>
+                                    <th class="text-center">Problem Desc</th>
+                                    <th class="text-center">No. LPPK</th>
+                                    <th class="text-center">Tanggal Dibuat</th>
+                                    <th class="text-center">Target Close</th>
+                                    <th class="text-center">Status Problem</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>    
             </div>
-
         </div>
-
     </section>
-
-
 </div>
 
 

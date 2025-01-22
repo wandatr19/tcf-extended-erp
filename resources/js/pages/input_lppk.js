@@ -68,9 +68,43 @@ $(function(){
         },
     });
 
-    $('#customer').select2({
+    let loadingSwal;
+    function loadingSwalShow() {
+        loadingSwal = Swal.fire({
+            imageHeight: 300,
+            showConfirmButton: false,
+            title: '<i class="fas fa-sync-alt fa-spin fs-80"></i>',
+            allowOutsideClick: false,
+            background: 'rgba(0, 0, 0, 0)'
+          });
+    }
+
+    function loadingSwalClose() {
+        loadingSwal.close();
+    }
+
+    function showToast(options) {
+        const toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000, 
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        toast.fire({
+            icon: options.icon || "success",
+            title: options.title
+        });
+    }
+
+    $('#partner').select2({
         ajax: {
-            url:  '/lkh/get_customer',
+            url:  '/lkh/get_partner',
             type: "post",
             dataType: "json",
             delay: 250,
@@ -83,6 +117,65 @@ $(function(){
             cache: true,
         },
     });
+
+    $('#part_name').select2({
+        ajax: {
+            url:  '/lkh/get_part',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+    });
+
+    $('#form_lppk').on('submit', function (e) {
+        // console.log(typeof Swal !== 'undefined' ? 'SweetAlert is loaded' : 'SweetAlert is not loaded');
+
+        e.preventDefault(); 
+        loadingSwalShow();
+        let formData = $(this).serialize();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                loadingSwalClose();
+                showToast({ title: data.message });
+                $('#form_lppk')[0].reset();
+                $('#partner').val('').trigger('change'); 
+                $('#part_name').val('').trigger('change'); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                loadingSwalClose();
+                showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                $('#form_lppk')[0].reset();
+            },
+        });
+    });
+
+    Dropzone.options.fileUpload = {
+        url: '#',
+        addRemoveLinks: true,
+        accept: function(file) {
+            let fileReader = new FileReader();
+    
+            fileReader.readAsDataURL(file);
+            fileReader.onloadend = function() {
+    
+                let content = fileReader.result;
+                $('#file').val(content);
+                file.previewElement.classList.add("dz-success");
+            }
+            file.previewElement.classList.add("dz-complete");
+        }
+    }
 
     const noSuratField = document.getElementById("no_lppk");
     const form = document.querySelector("form"); // Seleksi form
@@ -140,49 +233,9 @@ $(function(){
     // Event listener pada form submit
     if (form) {
         form.addEventListener("submit", function (e) {
-            // Simpan nomor surat hanya jika form disubmit
             saveNoSurat();
         });
     }    
 });
 
-
-Dropzone.autoDiscover = false; // Nonaktifkan auto-discover
-
-const dropzone = new Dropzone("#gambar_lppk", {
-    url: "", // Endpoint sementara untuk upload file
-    paramName: "file",
-    maxFilesize: 2, // Maksimal ukuran file (MB)
-    acceptedFiles: ".jpg,.jpeg,.png",
-    headers: {
-        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    autoProcessQueue: false, // Proses manual
-    addRemoveLinks: true,
-    init: function() {
-        const myDropzone = this;
-
-        // Sinkronkan file Dropzone dengan form saat dikirim
-        document.getElementById("form_lppk").addEventListener("submit", function(event) {
-            event.preventDefault(); // Cegah submit default
-
-            // Pastikan file di Dropzone diproses sebelum form dikirim
-            if (myDropzone.getQueuedFiles().length > 0) {
-                myDropzone.processQueue(); // Proses file
-            } else {
-                this.submit(); // Jika tidak ada file, kirim langsung
-            }
-        });
-
-        // Submit form setelah semua file Dropzone berhasil diunggah
-        myDropzone.on("queuecomplete", function() {
-            document.getElementById("form_lppk").submit();
-        });
-
-        // Opsional: Tangani error
-        myDropzone.on("error", function(file, errorMessage) {
-            console.error(errorMessage);
-        });
-    }
-});
 
