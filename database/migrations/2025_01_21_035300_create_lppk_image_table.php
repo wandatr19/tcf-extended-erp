@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('lppk_image', function (Blueprint $table) {
             $table->increments('id_lppk_image');
             $table->unsignedBigInteger('lppk_id');
+            $table->string('image_name');
             $table->string('image_path');
             $table->timestamps();
 

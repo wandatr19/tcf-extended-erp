@@ -10,6 +10,7 @@ class LPPKImageModel extends Model
     protected $primaryKey = 'id_lppk_image';
     protected $fillable = [
         'lppk_id',
+        'image_name',
         'image_path',
     ];
 

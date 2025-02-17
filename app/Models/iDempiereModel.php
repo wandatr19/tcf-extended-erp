@@ -25,5 +25,11 @@ class iDempiereModel extends Model
                     ->where('isactive', 'Y');
     }
 
+    public function scopeFromMachine($query)
+    {
+        return $query->from('m_product')
+                    ->where('m_product_category_id', '1000024');
+    }
+
     
 }

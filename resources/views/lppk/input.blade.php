@@ -115,9 +115,9 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Gambar</label>
-                                        <input type="file" class="form-control" name="image1">
-                                        <input type="file" class="form-control" name="image2">
-                                        <input type="file" class="form-control" name="image3">
+                                        <input class="form-control" type="file" name="image1">
+                                        <input class="form-control" type="file" name="image2">
+                                        <input class="form-control" type="file" name="image3">
                                     </div>
                                 </div>
                             </div>

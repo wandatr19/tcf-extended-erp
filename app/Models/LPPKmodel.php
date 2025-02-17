@@ -57,6 +57,10 @@ class LPPKmodel extends Model
             'perm_action',
         );
 
+        // $data->leftJoin('lppk_image', 'lppk.id_lppk', '=', 'lppk_image.lppk_id');
+        //     ->addSelect('lppk_image.image_path as image_path')
+        //     ->addSelect('lppk_image.image_name as image_name');
+
         if (isset($dataFilter['search'])) {
             $search = $dataFilter['search'];
             $data->where(function ($query) use ($search) {

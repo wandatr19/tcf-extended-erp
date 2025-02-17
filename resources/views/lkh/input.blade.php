@@ -23,7 +23,6 @@
 
     <!-- Main content -->
     <section class="content">
-
       <div class="row">
         <form action="{{route('lkh-store')}}" method="POST" id="form-lkh">
             @csrf

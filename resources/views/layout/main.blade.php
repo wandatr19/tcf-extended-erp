@@ -261,6 +261,9 @@
 	@if ($page == 'lppk-logbook')
 		@vite(['resources/js/pages/logbook_lppk.js'])
 	@endif
+	@if ($page == 'checksheet-op-form')
+		@vite(['resources/js/pages/cs_op_form.js'])
+	@endif
 
 	
 </body>

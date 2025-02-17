@@ -1,65 +1,3 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     const noSuratField = document.getElementById("no_lppk");
-//     const form = document.querySelector("form"); // Seleksi form
-    
-//     // Data sementara untuk melacak nomor surat terakhir
-//     let lastNumbers = JSON.parse(localStorage.getItem("lastNumbers")) || {};
-
-//     // Fungsi untuk mendapatkan bulan dalam format Romawi
-//     function getRomanMonth(month) {
-//         const romanMonths = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-//         return romanMonths[month - 1];
-//     }
-
-//     // Fungsi untuk mendapatkan nomor surat tanpa mengubah nomor terakhir
-//     function previewNoSurat() {
-//         const today = new Date();
-//         const month = today.getMonth() + 1; // Bulan mulai dari 0
-//         const year = today.getFullYear().toString().slice(-2); // Ambil 2 digit terakhir tahun
-//         const romanMonth = getRomanMonth(month);
-
-//         // Tentukan kunci berdasarkan bulan dan tahun
-//         const key = `${month}-${year}`;
-        
-//         // Tentukan nomor urut tanpa menyimpan
-//         const currentNumber = (lastNumbers[key] || 0) + 1;
-
-//         // Format nomor surat
-//         const formattedNumber = String(currentNumber).padStart(3, "0");
-//         return `LPPK/QC/${romanMonth}/${year}/${formattedNumber}`;
-//     }
-
-//     // Fungsi untuk menyimpan nomor surat baru
-//     function saveNoSurat() {
-//         const today = new Date();
-//         const month = today.getMonth() + 1;
-//         const year = today.getFullYear().toString().slice(-2);
-//         const key = `${month}-${year}`;
-
-//         // Update nomor urut terakhir
-//         if (!lastNumbers[key]) {
-//             lastNumbers[key] = 1;
-//         } else {
-//             lastNumbers[key]++;
-//         }
-
-//         // Simpan ke localStorage
-//         localStorage.setItem("lastNumbers", JSON.stringify(lastNumbers));
-//     }
-
-//     // Tampilkan nomor surat di field tanpa menyimpan
-//     if (noSuratField) {
-//         noSuratField.value = previewNoSurat();
-//     }
-
-//     // Event listener pada form submit
-//     if (form) {
-//         form.addEventListener("submit", function (e) {
-//             // Simpan nomor surat hanya jika form disubmit
-//             saveNoSurat();
-//         });
-//     }
-// });
 
 $(function(){
     $.ajaxSetup({
@@ -134,108 +72,69 @@ $(function(){
         },
     });
 
-    $('#form_lppk').on('submit', function (e) {
-        // console.log(typeof Swal !== 'undefined' ? 'SweetAlert is loaded' : 'SweetAlert is not loaded');
+    function generateNoLppk() {
+        const monthNames = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+        const date = new Date();
+        const month = monthNames[date.getMonth()];
+        const year = date.getFullYear().toString().slice(-2);
 
+        $.ajax({
+            url: '/lkh/get_last_no_lppk',
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                // const lastNumber = data.last_number + 1;
+                // const noLppk = `LPPK/QC/${month}/${year}/${lastNumber}`;
+                // $('#no_lppk').val(noLppk);
+                let lastNumber = 0;
+                if (data.last_number) {
+                    const parts = data.last_number.split('/');
+                    const lastMonth = parts[2];
+                    const lastYear = parts[3];
+                    if (lastMonth === month && lastYear === year) {
+                        lastNumber = parseInt(parts[4], 10);
+                    }
+                }
+                lastNumber += 1;
+                const noLppk = `LPPK/QC/${month}/${year}/${lastNumber}`;
+                $('#no_lppk').val(noLppk);
+                },
+            error: function (jqXHR, textStatus, errorThrown) {
+                showToast({ icon: "error", title: "Failed to generate LPPK number" });
+            },
+        });
+    }
+
+    generateNoLppk();
+
+    $('#form_lppk').on('submit', function (e) {
         e.preventDefault(); 
         loadingSwalShow();
-        let formData = $(this).serialize();
+        let formData = new FormData(this);
 
         $.ajax({
             url: $(this).attr('action'),
             type: 'POST',
             data: formData,
+            processData: false,
+            contentType: false,
             success: function (data) {
                 loadingSwalClose();
                 showToast({ title: data.message });
                 $('#form_lppk')[0].reset();
                 $('#partner').val('').trigger('change'); 
                 $('#part_name').val('').trigger('change'); 
+                generateNoLppk(); 
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 loadingSwalClose();
                 showToast({ icon: "error", title: jqXHR.responseJSON.message });
                 $('#form_lppk')[0].reset();
+                generateNoLppk();
             },
         });
     });
 
-    Dropzone.options.fileUpload = {
-        url: '#',
-        addRemoveLinks: true,
-        accept: function(file) {
-            let fileReader = new FileReader();
-    
-            fileReader.readAsDataURL(file);
-            fileReader.onloadend = function() {
-    
-                let content = fileReader.result;
-                $('#file').val(content);
-                file.previewElement.classList.add("dz-success");
-            }
-            file.previewElement.classList.add("dz-complete");
-        }
-    }
-
-    const noSuratField = document.getElementById("no_lppk");
-    const form = document.querySelector("form"); // Seleksi form
-    
-    // Data sementara untuk melacak nomor surat terakhir
-    let lastNumbers = JSON.parse(localStorage.getItem("lastNumbers")) || {};
-
-    // Fungsi untuk mendapatkan bulan dalam format Romawi
-    function getRomanMonth(month) {
-        const romanMonths = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-        return romanMonths[month - 1];
-    }
-
-    // Fungsi untuk mendapatkan nomor surat tanpa mengubah nomor terakhir
-    function previewNoSurat() {
-        const today = new Date();
-        const month = today.getMonth() + 1; // Bulan mulai dari 0
-        const year = today.getFullYear().toString().slice(-2); // Ambil 2 digit terakhir tahun
-        const romanMonth = getRomanMonth(month);
-
-        // Tentukan kunci berdasarkan bulan dan tahun
-        const key = `${month}-${year}`;
-        
-        // Tentukan nomor urut tanpa menyimpan
-        const currentNumber = (lastNumbers[key] || 0) + 1;
-
-        // Format nomor surat
-        const formattedNumber = String(currentNumber).padStart(3, "0");
-        return `LPPK/QC/${romanMonth}/${year}/${formattedNumber}`;
-    }
-
-    // Fungsi untuk menyimpan nomor surat baru
-    function saveNoSurat() {
-        const today = new Date();
-        const month = today.getMonth() + 1;
-        const year = today.getFullYear().toString().slice(-2);
-        const key = `${month}-${year}`;
-
-        // Update nomor urut terakhir
-        if (!lastNumbers[key]) {
-            lastNumbers[key] = 1;
-        } else {
-            lastNumbers[key]++;
-        }
-
-        // Simpan ke localStorage
-        localStorage.setItem("lastNumbers", JSON.stringify(lastNumbers));
-    }
-
-    // Tampilkan nomor surat di field tanpa menyimpan
-    if (noSuratField) {
-        noSuratField.value = previewNoSurat();
-    }
-
-    // Event listener pada form submit
-    if (form) {
-        form.addEventListener("submit", function (e) {
-            saveNoSurat();
-        });
-    }    
 });
 
 

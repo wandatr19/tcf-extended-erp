@@ -32,6 +32,7 @@
                                     <th class="text-center">Tanggal Dibuat</th>
                                     <th class="text-center">Target Close</th>
                                     <th class="text-center">Status Problem</th>
+                                    <th class="text-center">Issued By</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,7 @@
     </section>
 </div>
 
+@include('lppk.modal_logbook')
 
 
 @endsection

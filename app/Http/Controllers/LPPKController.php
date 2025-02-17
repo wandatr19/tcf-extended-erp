@@ -7,7 +7,9 @@ use App\Models\LPPKmodel;
 use Illuminate\Http\Request;
 use App\Models\LPPKImageModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class LPPKController extends Controller
 {
@@ -51,9 +53,9 @@ class LPPKController extends Controller
             'target_close' => 'required',
             'problem_type' => 'nullable',
             'problem_desc' => 'nullable',
-            'image1' => 'nullable',
-            'image2' => 'nullable',
-            'image3' => 'nullable',
+            'image1' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image3' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
         $validator = Validator::make(request()->all(), $dataValidate);
 
@@ -74,20 +76,18 @@ class LPPKController extends Controller
                 'deadline_date' => $request->target_close,
                 'problem_type' => $request->problem_type,
                 'problem_desc' => $request->problem_desc,
-                'issue_by' => Auth()->User()->name,
+                'issued_by' => auth()->user()->name,
                 'status_doc' => 'OPEN',
             ]);
-
-            $images = [$request->image1, $request->image2, $request->image3];
+            $images = array_filter([$request->file('image1'), $request->file('image2'), $request->file('image3')]);
             foreach ($images as $image) {
-                if ($image) {
-                    LPPKImageModel::create([
-                        'lppk_id' => $dataLPPK->id_lppk,
-                        'image_path' => $image,
-                    ]);
-                }
+                $imagePath = $image->store('lppk_image', 'public');
+                LPPKImageModel::create([
+                    'lppk_id' => $dataLPPK->id_lppk,
+                    'image_path' => $imagePath,
+                    'image_name' => $image->getClientOriginalName(),
+                ]);
             }
-
             DB::commit();
             return response()->json(['message' => 'Data successfully saved'], 200);
         } catch (Exception $e) {
@@ -104,7 +104,7 @@ class LPPKController extends Controller
             3 => 'issued_date',
             4 => 'deadline_date',
             5 => 'status_doc',
-
+            6 => 'issued_by',
         );
 
         $totalData = LPPKmodel::count();
@@ -138,9 +138,27 @@ class LPPKController extends Controller
                 $nestedData['no_lppk'] = $data->no_lppk;
                 $nestedData['issued_date'] = $data->issued_date;
                 $nestedData['deadline_date'] = $data->deadline_date;
-                $nestedData['status_doc'] = $data->status_doc;
-                $nestedData['action'] = '<div class="btn-group">
-                        <button type="button" class="waves-effect waves-light btn btn-success btnOpen" data-id="' . $data->id_lppk . '"><i class="fa fa-folder-open-o"></i></button>                    
+                if ($data->status_doc == 'OPEN') {
+                    $nestedData['status_doc'] = '<span class="badge badge-pill badge-danger font-weight-bolder">OPEN</span>';
+                } elseif ($data->status_doc == 'CLOSED') {
+                    $nestedData['status_doc'] = '<span class="badge badge-pill badge-success font-weight-bolder">CLOSED</span>';
+                } else {
+                    $nestedData['status_doc'] = $data->status_doc;
+                }
+                $nestedData['issued_by'] = $data->issued_by;
+                $nestedData['action'] = '<div class="btn-group" style="text-align: center;">
+                        <button type="button" class="waves-effect waves-light btn btn-success btnOpen" 
+                            data-id="' . $data->id_lppk . '"
+                            data-no-lppk="' . $data->no_lppk . '"
+                            data-part-code="' . $data->part_code . '"
+                            data-part-name="' . $data->part_name . '"
+                            data-part-type="' . $data->part_type . '"
+                            data-problem-desc="' . $data->problem_desc . '"
+                            data-problem-type="' . $data->problem_type . '"
+                            data-quantity="' . $data->quantity . '"
+                            data-image-path="' . $data->image_path . '"
+                            data-image-name="' . $data->image_name . '"
+                            ><i class="fa fa-folder-open-o"></i></button>                    
                         <button type="button" class="waves-effect waves-light btn btn-danger btnDelete" data-id="' . $data->id_lppk . '"><i class="fa fa-trash-o"></i></button>
                 </div>';
                 $dataTable[] = $nestedData;
@@ -159,12 +177,28 @@ class LPPKController extends Controller
 
         return response()->json($json_data, 200);   
     }
-    public function input_progress_repair($id)
+    public function input_repair(Request $request, string $id)
     {
-        // $dataPage = [
-        //     'page' => 'lppk-input-progress',
-        //     'id' => $id
-        // ];
-        // return view('lppk.input-progress', $dataPage);
+        $dataValidate = [
+
+        ];
+
+        $validator = Validator::make(request()->all(), $dataValidate);
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Fill your input correctly!'], 402);
+        }
+
+        $lppk = LPPKmodel::find($id);
+    }
+    public function getLastNoLppk(Request $request)
+    {
+        try {
+            $lastLppk = DB::table('lppk')->orderBy('id_lppk', 'desc')->first();
+            $lastNumber = $lastLppk ? $lastLppk->no_lppk : 0;
+
+            return response()->json(['last_number' => $lastNumber], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve last LPPK number', 'error' => $e->getMessage()], 500);
+        }
     }
 }

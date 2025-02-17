@@ -29,12 +29,12 @@
                         <tbody>
                             <td>
                                 <div class="form-check text-center p-0">
-                                    <button type="submit" class="btn btn-outline-success active" id="approved" name="approved" value="approved"> <strong>OPEN</strong> </button>
+                                    <button type="submit" class="btn btn-outline-success" id="approved" name="approved" value="approved"> <strong>OPEN</strong> </button>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-check text-center p-0">
-                                    <button type="submit" class="btn btn-outline-danger" id="completed" name="completed" value="completed" > <strong>CLOSED</strong> </button>
+                                    <button type="submit" class="btn btn-outline-danger active" id="completed" name="completed" value="completed" > <strong>CLOSED</strong> </button>
                                 </div>
                             </td>
                         </tbody>
@@ -128,11 +128,20 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label class="form-label">Gambar</label>
-                                    <div class="dropzone" id="lppk-gambar">
-                                    </div>
-                                </div>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Gambar 1</th>
+                                            <th class="text-center">Gambar 2</th>
+                                            <th class="text-center">Gambar 3</th>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
