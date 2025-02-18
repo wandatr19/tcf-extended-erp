@@ -12,8 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cs_op_line', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id_cs_op_line');
+            $table->unsignedBigInteger('cs_op_header_id');
+            $table->unsignedBigInteger('cs_op_pointspv_id');
+            $table->unsignedBigInteger('cs_op_group_shift_id');
+            $table->integer('org_id')->nullable();
+            $table->string('status')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('cs_op_header_id')->references('id_cs_op_header')->on('cs_op_header');
+            $table->foreign('cs_op_pointspv_id')->references('id_cs_op_pointspv')->on('cs_op_pointspv');
+            $table->foreign('cs_op_group_shift_id')->references('id_cs_op_group_shift')->on('cs_op_group_shift');
         });
     }
 

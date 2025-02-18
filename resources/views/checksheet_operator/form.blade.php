@@ -32,41 +32,27 @@
                     <div class="row">
                         <div class= "col-md-4 col-12">
                             <div class="form-group">
-                                <label for="prod_date" class="form-label">Tanggal Produksi</label>
-                                    <input class="form-control" type="date" name="prod_date" id="prod_date" required>
+                                <label for="date" class="form-label">Tanggal Produksi</label>
+                                    <input class="form-control" type="text" name="date" id="date" readonly>
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group">
-                            <label for="line" class="form-label">Shift</label>
-                            <select class="form-select" style="width: 100%;" name="line" id="line" required>
-                                <option selected="selected" disabled>Select Shift</option>
-                                <option value="1">Shift A1</option>
-                                <option value="2">Shift A2</option>
-                                <option value="3">Shift A3</option>
-                                <option value="4">Shift B1</option>
-                                <option value="5">Shift B2</option>
-                            </select>
+                            <label for="shift" class="form-label">Shift</label>
+                            <input type="text" class="form-control" name="shift" id="shift" readonly>
                             </div>
                         </div>
                         
                         <div class="col-md-4 col-12">
                             <div class="form-group">
-                            <label for="shift" class="form-label">Line</label>
-                            <select class="form-select" style="width: 100%;" name="shift" id="shift" required>
-                                <option selected="selected" disabled>Select Line</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                            <label for="line" class="form-label">Line</label>
+                            <input type="text" class="form-control" name="line" id="line" readonly>
                             </div>
                         </div>
                         <div class= "col-md-4 col-12">
                             <div class="form-group">
                                 <label for="machine" class="form-label">Mesin</label>
-                                <select class="form-select " name="machine" id="machine">
-                                    <option value="">Select Mesin</option>
-                                </select>
+                                <input type="text" class="form-control" name="machine" id="machine" readonly>
                             </div>
                         </div>
                     </div>
@@ -83,7 +69,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Operator siap di Mesin dgn Alat Safety</label>
+                            <label for="customer" class="form-label">1. Operator siap di Mesin dgn Alat Safety</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -100,7 +86,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">WI terpasang & Operator konsisten mematuhi WI yang ada</label>
+                            <label for="customer" class="form-label">2. WI terpasang & Operator konsisten mematuhi WI yang ada</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -117,7 +103,7 @@
                 <div class="box-body">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Verifikasi setting dilakukan</label>
+                            <label for="customer" class="form-label">3. Verifikasi setting dilakukan</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -143,7 +129,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Label status part terpasang</label>
+                            <label for="customer" class="form-label">4. Label status part terpasang</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -160,7 +146,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Pengecheckan Kualitas oleh Operator</label>
+                            <label for="customer" class="form-label">5. Pengecheckan Kualitas oleh Operator</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -177,7 +163,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">WI terpasang & Operator konsisten mematuhi WI yang ada</label>
+                            <label for="customer" class="form-label">6. WI terpasang & Operator konsisten mematuhi WI yang ada</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -194,7 +180,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Penempatan NG di Box Merah</label>
+                            <label for="customer" class="form-label">7. Penempatan NG di Box Merah</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -211,7 +197,7 @@
                 <div class="box-body">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Pengecheckan kestabilan setting</label>
+                            <label for="customer" class="form-label">8. Pengecheckan kestabilan setting</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -237,7 +223,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Label status part terpasang</label>
+                            <label for="customer" class="form-label">9. Label status part terpasang</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -254,7 +240,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Pengecheckan Kualitas oleh Operator</label>
+                            <label for="customer" class="form-label">10. Pengecheckan Kualitas oleh Operator</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -271,7 +257,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">WI terpasang & Operator konsisten mematuhi WI yang ada</label>
+                            <label for="customer" class="form-label">11. WI terpasang & Operator konsisten mematuhi WI yang ada</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -288,7 +274,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Penempatan NG di Box Merah</label>
+                            <label for="customer" class="form-label">12. Penempatan NG di Box Merah</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -305,7 +291,7 @@
                 <div class="box-body">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Pengecheckan kestabilan setting</label>
+                            <label for="customer" class="form-label">13. Pengecheckan kestabilan setting</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -331,7 +317,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Operator siap di Mesin & Alat Safety (APD)</label>
+                            <label for="customer" class="form-label">14. Operator siap di Mesin & Alat Safety (APD)</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -348,7 +334,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Pengecheckan Kualitas oleh Operator</label>
+                            <label for="customer" class="form-label">15. Pengecheckan Kualitas oleh Operator</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -365,7 +351,7 @@
                 <div class="box-body">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">WI terpasang & Operator konsisten mematuhi WI yang ada</label>
+                            <label for="customer" class="form-label">16. WI terpasang & Operator konsisten mematuhi WI yang ada</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -391,7 +377,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Label status part terpasang</label>
+                            <label for="customer" class="form-label">17. Label status part terpasang</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -408,7 +394,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Pengecheckan Kualitas oleh Operator</label>
+                            <label for="customer" class="form-label">18. Pengecheckan Kualitas oleh Operator</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -425,7 +411,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">WI terpasang & Operator konsisten mematuhi WI yang ada</label>
+                            <label for="customer" class="form-label">19. WI terpasang & Operator konsisten mematuhi WI yang ada</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -442,7 +428,7 @@
                 <div class="box-header">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Penempatan NG di box merah</label>
+                            <label for="customer" class="form-label">20. Penempatan NG di box merah</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>
@@ -459,7 +445,7 @@
                 <div class="box-body">
                     <div class= "col-md-4 col-12">
                         <div class="form-group">
-                            <label for="customer" class="form-label">Pengecheckan ke</label>
+                            <label for="customer" class="form-label">21. Pengecheckan ke</label>
                             <div class="demo-radio-button">
                                 <input name="group1" type="radio" id="radio_1" checked />
                                 <label for="radio_1">OK</label>

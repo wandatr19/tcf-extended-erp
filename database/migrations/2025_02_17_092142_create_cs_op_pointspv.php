@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cs_op_header', function (Blueprint $table) {
-            $table->id();
+        Schema::create('cs_op_pointspv', function (Blueprint $table) {
+            $table->bigIncrements('id_cs_op_pointspv');
+            $table->integer('org_id');
+            $table->string('order_no');
+            $table->text('name');
+            $table->string('group')->nullable();
             $table->timestamps();
+
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cs_op_header');
+        Schema::dropIfExists('cs_op_pointspv');
     }
 };

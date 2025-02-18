@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Checksheet;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\iDempiereModel;
 
@@ -52,6 +53,14 @@ class ChecksheetOpController extends Controller
         );
 
         return response()->json($results);
+
+    }
+    public function list_data ()
+    {
+        $dataPage = [
+            'page' => 'checksheet-op-data'
+        ];
+        return view('checksheet_operator.data', $dataPage);
 
     }
 }

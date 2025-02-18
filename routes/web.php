@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LKHController;
 use App\Http\Controllers\LPPKController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\ChecksheetOpController;
+use App\Http\Controllers\Checksheet\ChecksheetOpController;
 
 Auth::routes();
 
@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('checksheet-op')->group(function () {
         Route::get('/', [ChecksheetOpController::class, 'index'])->name('checksheet-op-form');
         Route::post('/get_machine', [ChecksheetOpController::class, 'get_machine']);
+        Route::get('/list-data', [ChecksheetOpController::class, 'list_data'])->name('checksheet-op-data');
     });
 
 

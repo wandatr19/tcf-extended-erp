@@ -187,6 +187,19 @@
 				</ul>
 			  </li>
 			  <li class="treeview">
+				<a href="{{route('checksheet-op-form')}}">
+				  <i class="icon-Chat-check"><span class="path1"></span><span class="path2"></span></i>
+				  <span>Checksheet</span>
+				  <span class="pull-right-container">
+					<i class="fa fa-angle-right pull-right"></i>
+				  </span>
+				</a>
+				<ul class="treeview-menu">
+				  <li class="{{ $page == 'checksheet-op-form' ? 'active' : '' }}"><a href="{{route('checksheet-op-form')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Input Checksheet</a></li>
+				  <li class="{{ $page == 'checksheet-op-data' ? 'active' : '' }}"><a href="{{route('checksheet-op-data')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Data Checksheet</a></li>
+				</ul>
+			  </li>
+			  <li class="treeview">
 				<a href="{{route('logout')}}">
 					<i span class="mdi mdi-logout-variant"></i>
 					<span class="text-danger"> <strong>Logout</strong> </span>
@@ -263,6 +276,9 @@
 	@endif
 	@if ($page == 'checksheet-op-form')
 		@vite(['resources/js/pages/cs_op_form.js'])
+	@endif
+	@if ($page == 'checksheet-op-data')
+		@vite(['resources/js/pages/cs_op_data.js'])
 	@endif
 
 	

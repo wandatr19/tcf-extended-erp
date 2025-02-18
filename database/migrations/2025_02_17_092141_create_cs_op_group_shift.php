@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cs_op_pointspv_group', function (Blueprint $table) {
-            $table->id();
+        Schema::create('cs_op_group_shift', function (Blueprint $table) {
+            $table->increments('id_cs_op_group_shift');
+            $table->integer('org_id');
+            $table->string('time');
+            $table->string('group_name');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cs_op_pointspv_group');
+        Schema::dropIfExists('cs_op_group_shift');
     }
 };
