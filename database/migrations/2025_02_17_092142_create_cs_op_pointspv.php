@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cs_op_pointspv', function (Blueprint $table) {
             $table->bigIncrements('id_cs_op_pointspv');
-            $table->integer('org_id');
+            $table->integer('org_id')->nullable();
             $table->string('order_no');
             $table->text('name');
             $table->string('group')->nullable();

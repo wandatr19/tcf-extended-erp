@@ -31,5 +31,10 @@ class iDempiereModel extends Model
                     ->where('m_product_category_id', '1000024');
     }
 
+    public function scopeFromHomeLine($query)
+    {
+        return $query->from('tcf_homeline');
+    }
+
     
 }

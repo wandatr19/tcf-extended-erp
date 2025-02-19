@@ -1,5 +1,14 @@
 @extends('layout.main')
 @section('title', 'Input LKH')
+
+@section('header')
+    @include('layout.header')
+@endsection
+
+@section('navbar')
+    @include('layout.navbar_lkh')
+@endsection
+
 @section('main')
 <div class="container-full">
     <!-- Content Header (Page header) -->

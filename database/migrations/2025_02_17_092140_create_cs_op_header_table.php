@@ -17,9 +17,9 @@ return new class extends Migration
             $table->integer('org_id')->nullable();
             $table->integer('karyawan_id')->nullable();
             $table->string('nama_karyawan')->nullable();
-            $table->integer('grup_id')->nullable();
-            $table->string('nama_grup')->nullable();
+            $table->string('shift')->nullable();
             $table->dateTime('issued_at')->nullable();
+            $table->date('prod_date')->nullable();
             $table->unsignedBigInteger('idem_mesin_id')->nullable();
             $table->string('nama_mesin')->nullable();
             $table->unsignedBigInteger('idem_homeline_id')->nullable();

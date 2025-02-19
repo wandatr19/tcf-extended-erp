@@ -6,6 +6,7 @@ use App\Http\Controllers\LKHController;
 use App\Http\Controllers\LPPKController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Checksheet\ChecksheetOpController;
+use App\Http\Controllers\Checksheet\ChecksheetOPDataController;
 
 Auth::routes();
 
@@ -34,7 +35,12 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('checksheet-op')->group(function () {
         Route::get('/', [ChecksheetOpController::class, 'index'])->name('checksheet-op-form');
         Route::post('/get_machine', [ChecksheetOpController::class, 'get_machine']);
-        Route::get('/list-data', [ChecksheetOpController::class, 'list_data'])->name('checksheet-op-data');
+        Route::post('/get_homeline', [ChecksheetOpController::class, 'get_homeline']);
+
+        Route::get('/list-data', [ChecksheetOPDataController::class, 'list_data'])->name('checksheet-op-data');
+        Route::post('/datatable', [ChecksheetOPDataController::class, 'datatable']);
+        Route::post('/store-data', [ChecksheetOPDataController::class, 'store'])->name('checksheet-op-store');
+        Route::get('/edit-checksheet/{id}', [ChecksheetOPDataController::class, 'edit'])->name('checksheet-op-edit');
     });
 
 

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Checksheet;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\iDempiereModel;
+use App\Http\Controllers\Controller;
+use App\Models\ChecksheetOP\ChecksheetOPPointModel;
 
 class ChecksheetOpController extends Controller
 {
@@ -51,16 +52,45 @@ class ChecksheetOpController extends Controller
                 "more" => $morePages
             )
         );
-
         return response()->json($results);
-
     }
-    public function list_data ()
+    public function get_homeline(Request $request)
     {
-        $dataPage = [
-            'page' => 'checksheet-op-data'
-        ];
-        return view('checksheet_operator.data', $dataPage);
+        $search = $request->input('search');
 
+        $query = iDempiereModel::fromHomeLine()->select(
+            'tcf_homeline_id',
+            'name',
+        );
+
+        if (!empty($search)) {
+            $query->where(function ($dat) use ($search) {
+                $dat->where('tcf_homeline_id', 'ILIKE', "%{$search}%")
+                    ->orWhere('name', 'ILIKE', "%{$search}%");
+            });
+        }
+
+        $data = $query->simplePaginate(10);
+
+        $morePages = true;
+        $pagination_obj = json_encode($data);
+        if (empty($data->nextPageUrl())) {
+            $morePages = false;
+        }
+
+        foreach ($data->items() as $customer) {
+            $dataUser[] = [
+                'id' => $customer->tcf_homeline_id,
+                'text' => $customer->name
+            ];
+        }
+
+        $results = array(
+            "results" => $dataUser,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+        return response()->json($results);
     }
 }

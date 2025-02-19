@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('cs_op_line', function (Blueprint $table) {
             $table->bigIncrements('id_cs_op_line');
-            $table->unsignedBigInteger('cs_op_header_id');
-            $table->unsignedBigInteger('cs_op_pointspv_id');
-            $table->unsignedBigInteger('cs_op_group_shift_id');
+            $table->unsignedBigInteger('cs_op_header_id')->nullable();
+            $table->unsignedBigInteger('cs_op_pointspv_id')->nullable();
+            $table->unsignedBigInteger('cs_op_group_shift_id')->nullable();
             $table->integer('org_id')->nullable();
             $table->string('status')->nullable();
+            $table->string('checked_at')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
 

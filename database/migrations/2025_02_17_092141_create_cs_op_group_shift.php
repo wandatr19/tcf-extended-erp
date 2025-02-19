@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('org_id');
             $table->string('time');
             $table->string('group_name');
+            $table->string('group_shift');
             $table->timestamps();
         });
     }

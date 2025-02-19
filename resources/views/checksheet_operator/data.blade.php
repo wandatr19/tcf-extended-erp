@@ -1,8 +1,16 @@
 @extends('layout.main')
 @section('title', 'Input Checksheet')
+@section('header')
+    @include('layout.header')
+@endsection
+
+@section('navbar')
+    @include('layout.navbar_csop')
+@endsection
+
 @section('main')
 <div class="container-full">
-    <div class="content-header">
+    {{-- <div class="content-header">
         <div class="d-flex align-items-center">
             <div class="me-auto">
                 <h3 class="page-title">Checksheet Operator</h3>
@@ -17,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <section class="content">
         <div class="row">
             <div class="col-12">
@@ -25,8 +33,8 @@
                     <div class="box-header d-flex justify-content-between">
                         <h4 class="box-title">Data Checksheet Monitoring Operator</h4>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-info waves-effect" id="add-checksheet">
-                                <i class="icon-File-plus"></i>
+                            <button type="button" class="btn btn-success waves-effect" id="add-checksheet">
+                                <i class="fa fa-plus-square"></i>
                             </button>
                         </div>
                     </div>
@@ -42,17 +50,6 @@
                                     <th>Date</th>
                                     <th>Action</th>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>sasas</td>
-                                        <td>sasas</td>
-                                        <td>sasas</td>
-                                        <td>sasas</td>
-                                        <td>sasas</td>
-                                        <td>sasas</td>
-                                        <td>sasas</td>
-                                    </tr>                                    
-                                </tbody>                                
                             </table>
                         </div>
                     </div>

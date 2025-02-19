@@ -1,5 +1,6 @@
 @extends('layout.main')
 @section('title', 'LKH')
+
 @section('main')
 <div class="container-full">
     <!-- Main content -->
