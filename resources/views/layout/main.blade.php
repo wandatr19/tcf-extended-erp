@@ -78,7 +78,7 @@
 	
 	<!-- EduAdmin App -->
 	<script src="{{asset('eduadmin/main/js/template.js')}}"></script>
-	<script src="{{asset('eduadmin/main/js/pages/dashboard.js')}}"></script>
+	{{-- <script src="{{asset('eduadmin/main/js/pages/dashboard.js')}}"></script> --}}
 	<script src="{{asset('eduadmin/main/js/pages/calendar.js')}}"></script>
 	<script src="{{asset('eduadmin/assets/vendor_components/dropzone/dropzone.js')}}"></script>
 
@@ -96,10 +96,13 @@
 		@vite(['resources/js/pages/logbook_lppk.js'])
 	@endif
 	@if ($page == 'checksheet-op-form')
-		@vite(['resources/js/pages/cs_op_form.js'])
+		@vite(['resources/js/pages/checksheet_op/cs_op_form.js'])
 	@endif
 	@if ($page == 'checksheet-op-data')
-		@vite(['resources/js/pages/cs_op_data.js'])
+		@vite(['resources/js/pages/checksheet_op/cs_op_data.js'])
+	@endif
+	@if ($page == 'checksheet-op-approve')
+		@vite(['resources/js/pages/checksheet_op/cs_op_approve.js'])
 	@endif
 
 	

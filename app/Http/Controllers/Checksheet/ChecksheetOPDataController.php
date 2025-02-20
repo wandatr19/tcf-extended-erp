@@ -24,6 +24,7 @@ class ChecksheetOPDataController extends Controller
     public function store(Request $request)
     {
         $machineName = iDempiereModel::fromMachine()->select('name')->where('m_product_id', $request->machine_add)->first()->name;
+        $lineName = iDempiereModel::fromHomeLine()->select('name')->where('tcf_homeline_id', $request->line_add)->first()->name;
         DB::beginTransaction();
         try {
             $header = ChecksheetOPHeaderModel::create([
@@ -33,6 +34,7 @@ class ChecksheetOPDataController extends Controller
                 'prod_date' => $request->prod_date,
                 'issued_at' => now(),
                 'idem_homeline_id' => $request->line_add,
+                'nama_homeline' => $lineName,
                 'idem_mesin_id' => $request->machine_add,
                 'nama_mesin' => $machineName,
                 'status_doc' => 'DRAFTED',
@@ -40,7 +42,6 @@ class ChecksheetOPDataController extends Controller
             ]);
 
             $pointspv = ChecksheetOPPointModel::pluck('id_cs_op_pointspv');
-            // dd($pointspv);
 
             $shift = $request->input('shift_add');
             $csGroupShifts = ChecksheetOPGroupShiftModel::where('group_name', $shift)->get();
@@ -132,7 +133,9 @@ class ChecksheetOPDataController extends Controller
                 if ($data->status_doc == 'DRAFTED') {
                     $nestedData['status'] = '<span class="badge badge-pill badge-warning">DRAFTED</span>';
                 } elseif ($data->status_doc == 'COMPLETED') {
-                    $nestedData['status'] = '<span class="badge badge-pill badge-success">COMPLETED</span>';
+                    $nestedData['status'] = '<span class="badge badge-pill badge-info">COMPLETED</span>';
+                } elseif ($data->status_doc == 'APPROVED') {
+                    $nestedData['status'] = '<span class="badge badge-pill badge-success">APPROVED</span>';
                 } else {
                     $nestedData['status'] = $data->status_doc;
                 }
@@ -163,11 +166,73 @@ class ChecksheetOPDataController extends Controller
         $csHeader = ChecksheetOPHeaderModel::findOrFail($id);
         $csLine = ChecksheetOPLineModel::where('cs_op_header_id', $id)->get();
         $dataPage = [
-            'page' => 'checksheet-op-data'
+            'page' => 'checksheet-op-form',
+            'csHeader' => $csHeader,
+            'csLine' => $csLine,
         ];
 
-        return view ('checksheet_operator.form2', compact('csHeader', 'csLine', 'dataPage'));
+        return view ('checksheet_operator.form2', $dataPage);
 
+    }
+    public function update(Request $request) 
+    {
+        DB::beginTransaction();
+        try {
+            $csLine = ChecksheetOPLineModel::findOrFail($request->id);
+            if ($request->has('status')) {
+                $csLine->status = $request->status;
+            }
+
+            if ($request->has('description')) {
+                $csLine->description = $request->description;
+            
+            }
+            $csLine->checked_at = now();
+            $csLine->update();
+
+            DB::commit();
+            return response()->json([
+                'success' => true, 
+                'message' => 'Data updated successfully'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    public function complete($id)
+    {
+        DB::beginTransaction();
+        try {
+            $csHeader = ChecksheetOPHeaderModel::findOrFail($id);
+            $incompleteLines = ChecksheetOPLineModel::where('cs_op_header_id', $id)
+                ->whereNull('status')
+                ->count();
+
+            if ($incompleteLines > 0) {
+            return response()->json([
+                'status' => 'error', 
+                'message' => 'Checksheet Not Been Filled Yet'
+            ], 400);
+            } 
+            $csHeader->status_doc = 'COMPLETED'; 
+            $csHeader->save(); 
+
+            DB::commit();
+            return response()->json([
+                'success' => true, 
+                'message' => 'Checksheet updated successfully'
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+            ]);
+        }
     }
 
 }

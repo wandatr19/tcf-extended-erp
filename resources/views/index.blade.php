@@ -1,5 +1,9 @@
 @extends('layout.main')
 @section('title', 'Dashboard')
+@section('header')
+    @include('layout.header')
+@endsection
+
 @section('main')
 <div class="container-full">
     <!-- Main content -->
@@ -22,7 +26,7 @@
         </div>
         <div class="row">
             <div class="col-lg-6 col-12">
-                <a href="{{route('lkh-main')}}"
+                <a href="{{route('lkh-input')}}"
                     class="box pull-up">
                     <div class="box-body position-relative">
                         <div class="d-flex align-items-center">
@@ -40,7 +44,7 @@
                 </a>
             </div>
             <div class="col-lg-6 col-12">
-                <a href="{{route('lppk-main')}}"
+                <a href="{{route('lppk-input')}}"
                     class="box pull-up">
                     <div class="box-body position-relative">
                         <div class="d-flex align-items-center">
@@ -58,7 +62,7 @@
                 </a>
             </div>
             <div class="col-lg-6 col-12">
-                <a href="{{route('checksheet-op-form')}}"
+                <a href="{{route('checksheet-op-data')}}"
                     class="box pull-up">
                     <div class="box-body position-relative">
                         <div class="d-flex align-items-center">

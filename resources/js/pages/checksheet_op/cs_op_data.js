@@ -73,14 +73,7 @@ $(function(){
             },
         },
         responsive: false,
-        // lengthChange: false,
         columns: columnsTable,
-        // columnDefs: [
-        //     {
-        //         orderable: false,
-        //         targets: [-1],
-        //     },
-        // ],
     });
     function refreshTable() {
         var searchValue = csopTable.search();

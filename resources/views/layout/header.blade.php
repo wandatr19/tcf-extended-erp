@@ -7,7 +7,6 @@
 		<a href="{{route('dashboard')}}" class="logo">
 		  <!-- logo-->
 		  <div class="logo-lg">
-			  {{-- <span class="light-logo"><img src="{{asset('eduadmin/images/logo-dark-text.png')}}" alt="logo"></span> --}}
 			  <span class="light-logo"><img src="{{asset('img/portal-qc-logo.png')}}" alt="logo"></span>
 		  </div>
 		</a>	

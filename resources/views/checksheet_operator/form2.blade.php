@@ -1,5 +1,13 @@
 @extends('layout.main')
 @section('title', 'Input Checksheet')
+@section('header')
+    @include('layout.header')
+@endsection
+
+@section('navbar')
+    @include('layout.navbar_csop')
+@endsection
+
 @section('main')
 <div class="container-full">
     <div class="content-header">
@@ -39,14 +47,14 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                             <label for="shift" class="form-label">Shift</label>
-                            <input type="text" class="form-control" name="shift" id="shift" value="{{ $csHeader->shift }}" readonly>
+                            <input type="text" class="form-control" name="shift" id="shift" value="{{ $csHeader->shift == 'A1' ? 'SHIFT 1 (Waktu 3)' : ($csHeader->shift == 'A2' ? 'SHIFT 2 (Waktu 3)' : ($csHeader->shift == 'A3' ? 'SHIFT 3 (Waktu 3)' : ($csHeader->shift == 'B1' ? 'SHIFT 1 (Waktu 2)' : ($csHeader->shift == 'B2' ? 'SHIFT 2 (Waktu 2)' : $csHeader->shift)))) }}" readonly>
                             </div>
                         </div>
                         
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                             <label for="line" class="form-label">Line</label>
-                            <input type="text" class="form-control" name="line" id="line" readonly>
+                            <input type="text" class="form-control" name="line" id="line" value="{{ $csHeader->nama_homeline }}" readonly>
                             </div>
                         </div>
                         <div class= "col-md-4 col-12">
@@ -58,65 +66,36 @@
                     </div>
                 </div>
             </div>
-            <div class="box">
-                <div class="box-header">
-                    <span class="badge bg-primary">23:50</span>
-                    <span class="badge bg-primary">07:35</span>
-                    <span class="badge bg-primary">15:35</span>
-                    <span class="badge bg-success">07:35</span>
-                    <span class="badge bg-success">22:00</span>
-                </div>
-                <div class="box-header">
-                    <div class= "col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="customer" class="form-label">1. Operator siap di Mesin dgn Alat Safety</label>
-                            <div class="demo-radio-button">
-                                <input name="group1" type="radio" id="radio_1" checked />
-                                <label for="radio_1">OK</label>
-                                <input name="group1" type="radio" id="radio_2" />
-                                <label for="radio_2">NG</label>
-                            </div>
-                            <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
-                            <div class="col-md-3">
-                                <input class="form-control" type="text" name="description" id="description">
+            @foreach ($csLine->sortBy('cs_op_pointspv_id') as $line)
+                <div class="box">
+                    <div class="box-header text-center">
+                        <span class="badge bg-success">{{ $line->group_shift->time }}</span>
+                    </div>
+                    <div class="box-header">
+                        <div class= "col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="customer" class="form-label">{{ $line->pointspv->order_no }}. {{ $line->pointspv->name }}</label>
+                                <div class="demo-radio-button">
+                                    <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ok_{{$line->id_cs_op_line}}" value="OK" class="update-status" {{ $line->status == 'OK' ? 'checked' : '' }}/>
+                                    <label for="radio_ok_{{$line->id_cs_op_line}}">OK</label>
+                                    <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ng_{{$line->id_cs_op_line}}" value="NG" class="update-status" {{ $line->status == 'NG' ? 'checked' : '' }}/>
+                                    <label for="radio_ng_{{$line->id_cs_op_line}}">NG</label>
+                                </div>
+                                <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
+                                <div class="col-md-3">
+                                    <input class="form-control update-desc" type="text" name="description_{{$line->id_cs_op_line}}" id="description_{{$line->id_cs_op_line}}" data-id="{{ $line->id_cs_op_line}}" value="{{ $line->description }}">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="box-header">
-                    <div class= "col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="customer" class="form-label">2. WI terpasang & Operator konsisten mematuhi WI yang ada</label>
-                            <div class="demo-radio-button">
-                                <input name="group1" type="radio" id="radio_1" checked />
-                                <label for="radio_1">OK</label>
-                                <input name="group1" type="radio" id="radio_2" />
-                                <label for="radio_2">NG</label>
-                            </div>
-                            <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
-                            <div class="col-md-3">
-                                <input class="form-control" type="text" name="description" id="description">
-                            </div>
-                        </div>
-                    </div>
+            @endforeach
+            <div class="row">
+                <div class="col-4">
                 </div>
-                <div class="box-body">
-                    <div class= "col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="customer" class="form-label">3. Verifikasi setting dilakukan</label>
-                            <div class="demo-radio-button">
-                                <input name="group1" type="radio" id="radio_1" checked />
-                                <label for="radio_1">OK</label>
-                                <input name="group1" type="radio" id="radio_2" />
-                                <label for="radio_2">NG</label>
-                            </div>
-                            <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
-                            <div class="col-md-3">
-                                <input class="form-control" type="text" name="description" id="description">
-                            </div>
-                        </div>
+                    <div class="col-4" style="text-align:center;">
+                        <button type="submit" id="submit-complete" class="btn btn-primary" data-id="{{ $csHeader->id_cs_op_header}}">Submit</button>
                     </div>
-                </div>
             </div>
         </div>
     </section>

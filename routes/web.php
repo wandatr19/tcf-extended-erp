@@ -37,10 +37,18 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/get_machine', [ChecksheetOpController::class, 'get_machine']);
         Route::post('/get_homeline', [ChecksheetOpController::class, 'get_homeline']);
 
+        Route::get('/list-approve', [ChecksheetOpController::class, 'index_approve'])->name('checksheet-op-approve');
+        Route::post('/datatable-approve', [ChecksheetOpController::class, 'datatable_approve']);
+        Route::patch('/{id}/approved', [ChecksheetOpController::class, 'approved_checksheet']);
+
+
         Route::get('/list-data', [ChecksheetOPDataController::class, 'list_data'])->name('checksheet-op-data');
         Route::post('/datatable', [ChecksheetOPDataController::class, 'datatable']);
         Route::post('/store-data', [ChecksheetOPDataController::class, 'store'])->name('checksheet-op-store');
         Route::get('/edit-checksheet/{id}', [ChecksheetOPDataController::class, 'edit'])->name('checksheet-op-edit');
+        Route::patch('/update-checksheet', [ChecksheetOPDataController::class, 'update'])->name('checksheet-op-update');
+        Route::patch('/{id}/complete', [ChecksheetOPDataController::class, 'complete'])->name('checksheet-op-complete');
+
     });
 
 

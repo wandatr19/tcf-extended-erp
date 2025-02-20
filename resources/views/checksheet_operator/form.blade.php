@@ -1,5 +1,13 @@
 @extends('layout.main')
 @section('title', 'Input Checksheet')
+@section('header')
+    @include('layout.header')
+@endsection
+
+@section('navbar')
+    @include('layout.navbar_csop')
+@endsection
+
 @section('main')
 <div class="container-full">
     <div class="content-header">
