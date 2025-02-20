@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\ChecksheetOP\ChecksheetOPPointModel;
 use App\Models\ChecksheetOP\ChecksheetOPHeaderModel;
+use App\Models\ChecksheetOP\ChecksheetOPLineModel;
 
 class ChecksheetOpController extends Controller
 {
@@ -169,7 +170,10 @@ class ChecksheetOpController extends Controller
                 }
                 $nestedData['issued_at'] = $data->prod_date;
                 $nestedData['action'] = 
-                        '<button type="button" class="waves-effect waves-light btn btn-success btnApprove" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-check-square"></i></button>';
+                        '<div class="btn-group">
+                            <button type="button" class="waves-effect waves-light btn btn-success btnApprove" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-check-square"></i></button>
+                            <button type="button" class="waves-effect waves-light btn btn-danger btnDelete" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-trash"></i></button>
+                        </div>';
                
                 $dataTable[] = $nestedData;
             }
@@ -226,6 +230,25 @@ class ChecksheetOpController extends Controller
                 'message' => 'An error occurred while approving the checksheet'
             ], 500);
         }
+    }
+
+    public function delete($id)
+    {
+        try {
+            DB::transaction(function () use ($id) {
+                // Hapus doc_line terlebih dahulu
+                ChecksheetOPLineModel::where('cs_op_header_id', $id)->delete();
+    
+                // Hapus doc_header
+                $docHeader = ChecksheetOPHeaderModel::findOrFail($id);
+                $docHeader->delete();
+            });
+    
+            return response()->json(['message' => 'Data berhasil dihapus'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menghapus data', 'error' => $e->getMessage()], 500);
+        }
+
     }
 
 }

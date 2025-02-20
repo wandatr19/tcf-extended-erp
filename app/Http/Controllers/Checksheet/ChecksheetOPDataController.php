@@ -65,7 +65,10 @@ class ChecksheetOPDataController extends Controller
             }
             
             DB::commit();
-            return response()->json(['message' => 'Data berhasil disimpan'], 201);
+            return response()->json([
+                'message' => 'Data berhasil disimpan',
+                'data' => $header->id_cs_op_header 
+            ], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([

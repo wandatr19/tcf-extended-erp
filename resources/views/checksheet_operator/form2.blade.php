@@ -69,7 +69,7 @@
             @foreach ($csLine->sortBy('cs_op_pointspv_id') as $line)
                 <div class="box">
                     <div class="box-header text-center">
-                        <span class="badge bg-success">{{ $line->group_shift->time }}</span>
+                        <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
                     </div>
                     <div class="box-header">
                         <div class= "col-md-4 col-12">

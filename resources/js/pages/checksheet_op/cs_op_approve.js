@@ -104,4 +104,25 @@ $(function(){
         });
     });
 
+    $('#table-checksheet-op').on('click', '.btnDelete',function() {
+        var headerId = $(this).data('id');
+        console.log("Mengirim ID:", headerId);
+
+        $.ajax({
+            url: '/checksheet-op/' + headerId + '/delete',
+            type: "DELETE",
+            data: {
+                id: headerId
+            },
+            success: function(response) {
+                showToast({ title: response.message });
+                refreshTable();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                showToast({ icon: "error", title: jqXHR.responseJSON.message });
+            }
+        });
+    });
+
+
 });

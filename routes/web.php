@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/list-approve', [ChecksheetOpController::class, 'index_approve'])->name('checksheet-op-approve');
         Route::post('/datatable-approve', [ChecksheetOpController::class, 'datatable_approve']);
         Route::patch('/{id}/approved', [ChecksheetOpController::class, 'approved_checksheet']);
+        Route::delete('/{id}/delete', [ChecksheetOpController::class, 'delete']);
 
 
         Route::get('/list-data', [ChecksheetOPDataController::class, 'list_data'])->name('checksheet-op-data');
