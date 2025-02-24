@@ -25,6 +25,17 @@ class ChecksheetOPDataController extends Controller
     {
         $machineName = iDempiereModel::fromMachine()->select('name')->where('m_product_id', $request->machine_add)->first()->name;
         $lineName = iDempiereModel::fromHomeLine()->select('name')->where('tcf_homeline_id', $request->line_add)->first()->name;
+        $existingRecord = ChecksheetOPHeaderModel::where('shift', $request->shift_add)
+            ->where('prod_date', $request->prod_date)
+            ->where('idem_mesin_id', $request->machine_add)
+            ->first();
+
+        if ($existingRecord) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cant create checksheet because already created'
+            ], 400);
+        }
         DB::beginTransaction();
         try {
             $header = ChecksheetOPHeaderModel::create([
@@ -61,9 +72,7 @@ class ChecksheetOPDataController extends Controller
                         $count++;
                     }
                 }
-
             }
-            
             DB::commit();
             return response()->json([
                 'message' => 'Data berhasil disimpan',

@@ -123,9 +123,7 @@ $(function(){
         e.preventDefault(); 
         loadingSwalShow();
         let formData = $(this).serialize();
-        // var headerId = $(this).data('id');
-        // console.log("Mengirim ID:", headerId);
-
+        
         $.ajax({
             url: $(this).attr('action'),
             type: 'POST',
@@ -139,13 +137,14 @@ $(function(){
                 $('#line_add').val('').trigger('change'); 
                 $('#machine_add').val('').trigger('change');
                 window.location.href = '/checksheet-op/edit-checksheet/' + headerId; 
-                // closeModal();
-                // refreshTable();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 loadingSwalClose();
                 showToast({ icon: "error", title: jqXHR.responseJSON.message });
                 $('#form-add-checksheet')[0].reset();
+                $('#line_add').val('').trigger('change'); 
+                $('#machine_add').val('').trigger('change');
+                
             },
         });
     });

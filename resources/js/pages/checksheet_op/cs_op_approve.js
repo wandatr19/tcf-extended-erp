@@ -61,6 +61,14 @@ $(function(){
             dataType: "json",
             type: "POST",
             data: function (dataFilter) {
+                let filterDate = $("#filter_date").val();
+                console.log("Filter Date:", filterDate);
+                let filterShift = $("#filter_shift").val();
+                let filterMachine = $("#filter_machine").val();
+
+                dataFilter.filter_date = filterDate;
+                dataFilter.filter_shift = filterShift;
+                dataFilter.filter_machine = filterMachine;
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.responseJSON.data) {
@@ -84,45 +92,171 @@ $(function(){
         }
     }
     
-    $('#table-checksheet-op').on('click', '.btnApprove',function() {
+    $('#table-checksheet-op').on('click', '.btnApprove', function() {
         var headerId = $(this).data('id');
         console.log("Mengirim ID:", headerId);
 
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to approve this item?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, approve it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/checksheet-op/' + headerId + '/approved',
+                    type: "PATCH",
+                    data: {
+                        id: headerId
+                    },
+                    success: function(response) {
+                        showToast({ title: response.message });
+                        refreshTable();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                    }
+                });
+            }
+        });
+    });
+
+    $('#table-checksheet-op').on('click', '.btnDelete', function() {
+        var headerId = $(this).data('id');
+        console.log("Mengirim ID:", headerId);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/checksheet-op/' + headerId + '/delete',
+                    type: "DELETE",
+                    data: {
+                        id: headerId
+                    },
+                    success: function(response) {
+                        showToast({ title: response.message });
+                        refreshTable();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                    }
+                });
+            }
+        });
+    });
+    var modalDetailChecksheetOpt = {
+        backdrop: true,
+        keyboard: false,
+    };
+
+    var modalDetailChecksheet = new bootstrap.Modal(
+        document.getElementById("modal-detail-checksheet"),
+        modalDetailChecksheetOpt
+    );
+
+    function openModalDetail() {
+        modalDetailChecksheet.show();
+    }
+    
+    function closeModalDetail() {
+        modalDetailChecksheet.hide();
+    }
+    $('#table-checksheet-op').on('click', '.btnDetail', function(){
+        let id = $(this).data("id");
+        console.log("ID:", id);
         $.ajax({
-            url: '/checksheet-op/' + headerId + '/approved',
-            type: "PATCH",
+            url: '/checksheet-op/get-detail', 
+            type: 'POST',
             data: {
-                id: headerId
+                id: id
             },
             success: function(response) {
-                showToast({ title: response.message });
-                refreshTable();
+                if (response.success) {
+                    console.log("Response Data:", response.data);
+                    $("#detail-checksheet tbody").html('');
+    
+                    response.data.forEach(function (item) {
+                        let statusColor = item.status === 'OK' ? 'success' : (item.status === 'NG' ? 'danger' : 'info');
+                        let row = `
+                            <tr>
+                                <td>${item.pointspv ? item.pointspv.order_no : '-'}</td>
+                                <td>${item.pointspv ? item.pointspv.name : '-'}</td>
+                                <td>${item.group_shift ? item.group_shift.time : '-'}</td>
+                                <td>${item.checked_at ? new Date(item.checked_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) : '-'}</td>
+                                <td><span class="badge badge-pill badge-${statusColor}">${item.status ? item.status : '-'}</span></td>
+                                <td>${item.description ? item.description : '-' }</td>
+                            </tr>
+                        `;
+                        $("#detail-checksheet tbody").append(row);
+                    });
+                    console.log("Modal dibuka...");
+                    $("#modal-detail-checksheet").modal("show");
+                } else {
+                    alert("Data tidak ditemukan!");
+                }
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 showToast({ icon: "error", title: jqXHR.responseJSON.message });
             }
         });
+    })
+
+    var modalFilterChecksheetOpt = {
+        backdrop: true,
+        keyboard: false,
+    };
+
+    var modalFilterChecksheet = new bootstrap.Modal(
+        document.getElementById("modal-filter-checksheet"),
+        modalFilterChecksheetOpt
+    );
+
+    function openModalFilter() {
+        modalFilterChecksheet.show();
+    }
+    
+    function closeModalFilter() {
+        modalFilterChecksheet.hide();
+    }
+
+    $('#filter_machine').select2({
+        ajax: {
+            url: '/checksheet-op/get_machine',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-filter-checksheet')
     });
 
-    $('#table-checksheet-op').on('click', '.btnDelete',function() {
-        var headerId = $(this).data('id');
-        console.log("Mengirim ID:", headerId);
+    $('#filter-checksheet').on('click', function(){
+        openModalFilter();
+    })
 
-        $.ajax({
-            url: '/checksheet-op/' + headerId + '/delete',
-            type: "DELETE",
-            data: {
-                id: headerId
-            },
-            success: function(response) {
-                showToast({ title: response.message });
-                refreshTable();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                showToast({ icon: "error", title: jqXHR.responseJSON.message });
-            }
-        });
+    $('#submit_filter').on('click', function(){
+        csopTable.search('').draw();
+        closeModalFilter();
     });
+
+
 
 
 });

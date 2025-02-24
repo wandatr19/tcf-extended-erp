@@ -98,6 +98,8 @@ class ChecksheetOpController extends Controller
     }
 
     public function index_approve(){
+        // $csHeader = ChecksheetOPHeaderModel::findOrFail($id);
+        // $csLine = ChecksheetOPLineModel::where('cs_op_header_id', $id)->get();
         $dataPage = [
             'page' => 'checksheet-op-approve'
         ];
@@ -117,6 +119,7 @@ class ChecksheetOpController extends Controller
         );
 
         $totalData = ChecksheetOPHeaderModel::count();
+        
         $totalFiltered = $totalData;
 
         $limit = $request->input('length');
@@ -133,6 +136,19 @@ class ChecksheetOpController extends Controller
         $search = $request->input('search.value');
         if (!empty($search)) {
             $dataFilter['search'] = $search;
+        }
+
+        $date_filter = $request->input('filter_date');
+        if (!empty($date_filter)) {
+            $dataFilter['filter_date'] = $date_filter;
+        }
+        $machineFilter = $request->input('filter_machine');
+        if (!empty($machineFilter)) {
+            $dataFilter['filter_machine'] = $machineFilter;
+        }
+        $shiftFilter = $request->input('filter_shift');
+        if (!empty($shiftFilter)) {
+            $dataFilter['filter_shift'] = $shiftFilter;
         }
 
 
@@ -172,6 +188,7 @@ class ChecksheetOpController extends Controller
                 $nestedData['action'] = 
                         '<div class="btn-group">
                             <button type="button" class="waves-effect waves-light btn btn-success btnApprove" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-check-square"></i></button>
+                            <button type="button" class="waves-effect waves-light btn btn-info btnDetail" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-search-plus"></i></button>
                             <button type="button" class="waves-effect waves-light btn btn-danger btnDelete" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-trash"></i></button>
                         </div>';
                
@@ -236,10 +253,8 @@ class ChecksheetOpController extends Controller
     {
         try {
             DB::transaction(function () use ($id) {
-                // Hapus doc_line terlebih dahulu
                 ChecksheetOPLineModel::where('cs_op_header_id', $id)->delete();
     
-                // Hapus doc_header
                 $docHeader = ChecksheetOPHeaderModel::findOrFail($id);
                 $docHeader->delete();
             });
@@ -248,6 +263,25 @@ class ChecksheetOpController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Gagal menghapus data', 'error' => $e->getMessage()], 500);
         }
+
+    }
+    public function getDetail(Request $request )
+    {
+        $data = ChecksheetOPLineModel::where('cs_op_header_id', $request->id)
+            ->with(['pointspv', 'group_shift'])
+            ->get();
+
+        if ($data->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
+    
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
 
     }
 

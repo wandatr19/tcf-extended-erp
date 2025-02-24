@@ -43,7 +43,7 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
    
-	  &copy; 2024 <a href="https://www.chatgpt.com/">Provided By ICT TCF</a>. All Rights Reserved.
+	  &copy; {{ date('Y') }} <a href="https://www.chatgpt.com/">Provided By ICT TCF</a>. All Rights Reserved.
   </footer>
 
   
@@ -95,6 +95,7 @@
 	@if ($page == 'lppk-logbook')
 		@vite(['resources/js/pages/logbook_lppk.js'])
 	@endif
+
 	@if ($page == 'checksheet-op-form')
 		@vite(['resources/js/pages/checksheet_op/cs_op_form.js'])
 	@endif
@@ -103,6 +104,22 @@
 	@endif
 	@if ($page == 'checksheet-op-approve')
 		@vite(['resources/js/pages/checksheet_op/cs_op_approve.js'])
+	@endif
+
+	@if ($page == 'master-user-index')
+		@vite(['resources/js/pages/master_user/user_index.js'])
+	@endif
+	@if ($page == 'master-user-organization')
+		@vite(['resources/js/pages/master_user/organization.js'])
+	@endif
+	@if ($page == 'master-user-division')
+		@vite(['resources/js/pages/master_user/division.js'])
+	@endif
+	@if ($page == 'master-user-department')
+		@vite(['resources/js/pages/master_user/department.js'])
+	@endif
+	@if ($page == 'master-user-section')
+		@vite(['resources/js/pages/master_user/section.js'])
 	@endif
 
 	

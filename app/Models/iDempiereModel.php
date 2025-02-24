@@ -28,7 +28,8 @@ class iDempiereModel extends Model
     public function scopeFromMachine($query)
     {
         return $query->from('m_product')
-                    ->where('m_product_category_id', '1000024');
+                    ->where('m_product_category_id', '1000024')
+                    ->where('isactive', 'Y');
     }
 
     public function scopeFromHomeLine($query)

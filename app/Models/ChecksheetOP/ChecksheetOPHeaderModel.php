@@ -45,6 +45,25 @@ class ChecksheetOPHeaderModel extends Model
             'checked_by',
         );
 
+        if (!empty($dataFilter['filter_date'])) {
+            $data->whereDate('prod_date', $dataFilter['filter_date']);
+        }
+        if (!empty($dataFilter['filter_machine'])) {
+            $data->where('idem_mesin_id', $dataFilter['filter_machine']);
+        }
+        if (!empty($dataFilter['filter_shift'])) {
+            $data->where('shift', $dataFilter['filter_shift']);
+        }
+
+        if (isset($dataFilter['search'])) {
+            $search = $dataFilter['search'];
+            $data->where(function ($query) use ($search) {
+                $query->where('nama_karyawan', 'ILIKE', "%{$search}%")
+                    ->orWhere('nama_mesin', 'ILIKE', "%{$search}%");
+            });
+        }
+
+
         $result = $data;
         return $result;
     }
