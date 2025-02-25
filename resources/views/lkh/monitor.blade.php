@@ -1,77 +1,37 @@
 @extends('layout.main')
 @section('title', 'Monitoring LKH')
+
+@section('header')
+    @include('layout.header')
+@endsection
+
+@section('navbar')
+    @include('layout.navbar_lkh')
+@endsection
+
 @section('main')
 <div class="container-full">
-    <!-- Content Header -->
-    <div class="content-header">
-        <div class="d-flex align-items-center">
-            <div class="me-auto">
-                <h3 class="page-title">Monitoring LKH Stamping</h3>
-                <div class="d-inline-block align-items-center">
-                    <nav>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('dashboard')}}"><i class="mdi mdi-home-outline"></i></a></li>
-                            <li class="breadcrumb-item" aria-current="page"><a href="{{route('lkh-main')}}">LKH Stamping</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Monitoring </li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content -->
     <section class="content">
         <div class="row">
             <div class="col-12">
                 <div class="box">
+                    <div class="box-header d-flex justify-content-between">
+                        <h4 class="box-title">Data LKH Stamping</h4>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info waves-effect" id="filter-lkh">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
                     <div class="box-body">
-                        <form action="{{route('lkh-monitor')}}" method="GET" id="filterForm">
-                            <div class="row">
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Tanggal Produksi</label>
-                                            <input class="form-control" type="date" name="date" value="{{request('date')}}" id="date">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Shift</label>
-                                        <select class="form-select" style="width: 100%;" id="shift" name="shift">
-                                            <option value="" selected>Select Shift</option>
-                                            <option value="1" {{ request('shift') == '1' ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ request('shift') == '2' ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ request('shift') == '3' ? 'selected' : '' }}>3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div class="form-group">
-                                        <label class="form-label">Line</label>
-                                        <select class="form-select" style="width: 100%;" id="line" name="line">
-                                            <option value="" selected>Select Line</option>
-                                            <option value="1" {{ request('line') == '1' ? 'selected' : '' }}>1</option>
-                                            <option value="2" {{ request('line') == '2' ? 'selected' : '' }}>2</option>
-                                            <option value="3" {{ request('line') == '3' ? 'selected' : '' }}>3</option>
-                                            <option value="4" {{ request('line') == '4' ? 'selected' : '' }}>4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            {{-- <div class="d-flex justify-content-center mt-3">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div> --}}
-                        </form>
-                        <br>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="table-lkh">
-                                <thead class="table-primary">
+                                <thead>
                                     <tr>
-                                        <th rowspan="2">No</th>
                                         <th rowspan="2">Part Number</th>
                                         <th rowspan="2">Customer</th>
                                         <th colspan="22" class="text-center">Item Defect</th>
-                                        <th colspan="6" class="text-center">Dies Process</th>
+                                        <th rowspan="2" class="text-center">Dies Process</th>
                                         <th colspan="2" class="text-center">Act Check</th>
                                         <th colspan="5" class="text-center">Total Part (Pcs)</th>
                                         <th id="th-lkh" rowspan="2">Verifikasi</th>
@@ -99,12 +59,6 @@
                                         <th id="th-lkh">Baret/Scratch</th>
                                         <th id="th-lkh">Dent</th>
                                         <th id="th-lkh">Lain-lain</th>
-                                        <th id="th-lkh">OP 10</th>
-                                        <th id="th-lkh">OP 20</th>
-                                        <th id="th-lkh">OP 30</th>
-                                        <th id="th-lkh">OP 40</th>
-                                        <th id="th-lkh">OP 50</th>
-                                        <th id="th-lkh">OP 60</th>
                                         <th id="th-lkh">Start</th>
                                         <th id="th-lkh">Finish</th>
                                         <th id="th-lkh">Sampling</th>
@@ -112,62 +66,11 @@
                                         <th id="th-lkh">Part OK</th>
                                         <th id="th-lkh">Part Repair</th>
                                         <th id="th-lkh">Part Reject</th>
-    
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @forelse ($records as $record)
-                                    <tr>
-                                        <th scope="row">{{$loop->iteration}}</th>
-                                        <td>{{$record->part_no ?? 0}}</td>
-                                        <td>{{$record->customer ?? 0}}</td>
-                                        <td>{{$record->hole_ta ?? 0}}</td>
-                                        <td>{{$record->hole_mencuat ?? 0}}</td>
-                                        <td>{{$record->hole_doubleprc ?? 0}}</td>
-                                        <td>{{$record->hole_geser ?? 0}}</td>
-                                        <td>{{$record->hole_mengecil ?? 0}}</td>
-                                        <td>{{$record->neck ?? 0}}</td>
-                                        <td>{{$record->crack_p ?? 0}}</td>
-                                        <td>{{$record->glmbg_krpt ?? 0}}</td>
-                                        <td>{{$record->trim_min ?? 0}}</td>
-                                        <td>{{$record->trim_over ?? 0}}</td>
-                                        <td>{{$record->trim_mencuat ?? 0}}</td>
-                                        <td>{{$record->bend_minus ?? 0}}</td>
-                                        <td>{{$record->bend_over ?? 0}}</td>
-                                        <td>{{$record->emb_geser ?? 0}}</td>
-                                        <td>{{$record->double_emb ?? 0}}</td>
-                                        <td>{{$record->penyok_defom ?? 0}}</td>
-                                        <td>{{$record->krg_stamp ?? 0}}</td>
-                                        <td>{{$record->marking_ta ?? 0}}</td>
-                                        <td>{{$record->material_s ?? 0}}</td>
-                                        <td>{{$record->baret_scratch ?? 0}}</td>
-                                        <td>{{$record->dent ?? 0}}</td>
-                                        <td>{{$record->others ?? 0}}</td>
-                                        <td>{!! $record->dies_process === 'OP10' ? '<strong>&#10003;</strong>' : '' !!}</td>
-                                        <td>{!! $record->dies_process === 'OP20' ? '<strong>&#10003;</strong>' : '' !!}</td>
-                                        <td>{!! $record->dies_process === 'OP30' ? '<strong>&#10003;</strong>' : '' !!}</td>
-                                        <td>{!! $record->dies_process === 'OP40' ? '<strong>&#10003;</strong>' : '' !!}</td>
-                                        <td>{!! $record->dies_process === 'OP50' ? '<strong>&#10003;</strong>' : '' !!}</td>
-                                        <td>{!! $record->dies_process === 'OP60' ? '<strong>&#10003;</strong>' : '' !!}</td>
-                                        <td>{{substr($record->time_start,0,5)}}</td>
-                                        <td>{{substr($record->time_finish,0,5)}}</td>
-                                        
-                                        <td>{{$record->sampling ?? 0}}</td>
-                                        <td>{{$record->total_produksi ?? 0}}</td>
-                                        <td>{{$record->part_ok ?? 0}}</td>
-                                        <td>{{$record->part_repair ?? 0}}</td>
-                                        <td>{{$record->part_reject ?? 0}}</td>
-                                        <td>{{$record->verifikasi ?? 0}}</td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="40" class="text-center">Tidak ada data</td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
                             </table>
                         </div>
-                        <div class="d-flex justify-content-end" style="margin-left: 50px">
+                        {{-- <div class="d-flex justify-content-end" style="margin-left: 50px">
                             <table class="table table-bordered" style="width: 400px;">
                                 <thead>
                                     <th class="text-center">Checked</th>
@@ -190,7 +93,7 @@
                                     <th class="text-center">Inspector</th>
                                 </tfoot>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -199,4 +102,5 @@
 
 
 </div>
+@include('lkh.modal-filter')
 @endsection

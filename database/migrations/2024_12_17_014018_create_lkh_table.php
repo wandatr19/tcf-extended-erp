@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('line');
             $table->integer('shift');
+            $table->integer('customer_id')->nullable();
             $table->string('customer')->nullable();
             $table->string('part_no')->nullable();
             $table->dateTime('prod_date')->nullable();

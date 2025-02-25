@@ -7,7 +7,7 @@
                 <li class="{{ $page == 'checksheet-op-data' ? 'active' : '' }}">
                     <a href="{{route('checksheet-op-data')}}">
                         <i class="icon-Clipboard-check"><span class="path1"></span><span class="path2"></span></i>
-                        <span>Input Checksheet</span>
+                        <span>Data Checksheet</span>
                     </a>
                 </li>
                 <li class="{{ $page == 'checksheet-op-approve' ? 'active' : '' }}">

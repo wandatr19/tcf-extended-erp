@@ -1,5 +1,14 @@
 @extends('layout.main')
-@section('title', 'Request LPPK')
+@section('title', 'Input LPPK')
+
+@section('header')
+    @include('layout.header')
+@endsection
+
+@section('navbar')
+    @include('layout.navbar_lppk')
+@endsection
+
 @section('main')
 <div class="container-full">
     <div class="content-header">
@@ -37,16 +46,28 @@
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
+                                        <label class="form-label">Part</label>
+                                        <select class="form-select" style="width: 100%;" name="part_id" id="part_id">
+                                            <option value="">Pilih Part</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
                                         <label class="form-label">Part Code</label>
-                                            <input class="form-control" type="name" name="part_code">
+                                            <input class="form-control" type="name" name="part_code" readonly id="part_code">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">
                                     <div class="form-group">
                                         <label class="form-label">Part Name</label>
-                                        <select class="form-select" style="width: 100%" name="part_name" id="part_name">
-                                            <option value="">Pilih Part Name</option>
-                                        </select>
+                                        <input class="form-control" type="name" name="part_name" readonly id="part_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Part Desc</label>
+                                            <input class="form-control" type="name" name="part_desc" readonly id="part_desc">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-12">

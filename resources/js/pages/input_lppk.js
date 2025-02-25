@@ -56,9 +56,9 @@ $(function(){
         },
     });
 
-    $('#part_name').select2({
+    $('#part_id').select2({
         ajax: {
-            url:  '/lkh/get_part',
+            url:  '/lppk/get_part',
             type: "post",
             dataType: "json",
             delay: 250,
@@ -71,6 +71,27 @@ $(function(){
             cache: true,
         },
     });
+
+    $('#part_id').on('change', function() {
+        let partCode = $(this).val();
+        
+        if (partCode) {
+            $.ajax({
+                url: '/lppk/get_all_part/' + partCode,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#part_name').val(data.name);
+                    $('#part_code').val(data.value);
+                    $('#part_desc').val(data.description);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                },
+            });
+        }
+    });
+
 
     function generateNoLppk() {
         const monthNames = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];

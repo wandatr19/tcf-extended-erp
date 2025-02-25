@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/input', [LKHController::class, 'input'])->name('lkh-input');
         Route::post('/store', [LKHController::class, 'input_lkh'])->name('lkh-store');
         Route::get('/monitor', [LKHController::class, 'monitor'])->name('lkh-monitor');
+        Route::post('/datatable', [LKHController::class, 'datatable']);
         Route::post('/get_partner', [LKHController::class, 'get_partner']);
         Route::post('/get_part', [LKHController::class, 'get_part']);
     });
@@ -32,6 +33,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/lppk', [LPPKController::class, 'index'])->name('lppk-main');
     Route::get('/lppk/input', [LPPKController::class, 'input'])->name('lppk-input');
     Route::patch('/lppk/input_repair/{idLPPK}', [LPPKController::class, 'input_repair'])->name('lppk-input-repair');
+    Route::post('/lppk/get_part', [LPPKController::class, 'get_part']);
+    Route::get('/lppk/get_all_part/{idPart}', [LPPKController::class, 'get_all_part']);
     Route::post('/lkh/get_last_no_lppk', [LPPKController::class, 'getLastNoLppk']);
     Route::post('/lppk/input/store', [LPPKController::class, 'store_request_lppk'])->name('lppk-store-request');
     Route::post('/lppk/datatable', [LPPKController::class, 'logbook_datatable']);
@@ -62,6 +65,8 @@ Route::middleware(['auth'])->group(function(){
     Route::prefix('master-user')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('master-user-index');
         Route::post('/store', [UserController::class, 'store'])->name('master-user-store');
+        Route::delete('/{id}/delete', [UserController::class, 'delete']);
+        Route::patch('/update/{id}', [UserController::class, 'update'])->name('master-user-edit');
         Route::post('/datatable', [UserController::class, 'datatable']);
         Route::post('/get-org', [OrganizationController::class, 'get_organization']);
         Route::post('/get-div', [DivisionController::class, 'get_division']);

@@ -111,7 +111,7 @@ $(function(){
         var noLPPK = $(this).data('no-lppk');
         var partCode = $(this).data('part-code');
         var partName = $(this).data('part-name');
-        var partType = $(this).data('part-type');
+        var partDesc = $(this).data('part-desc');
         var quantity = $(this).data('quantity');
         var problemDesc = $(this).data('problem-desc');
         var problemType = $(this).data('problem-type');
@@ -120,7 +120,7 @@ $(function(){
         $('#no_lppk').val(noLPPK);
         $('#part_code').val(partCode);
         $('#part_name').val(partName);
-        $('#part_type').val(partType);
+        $('#part_type').val(partDesc);
         $('#quantity').val(quantity);
         $('#problem_desc').val(problemDesc);
         $('#problem_type').val(problemType);

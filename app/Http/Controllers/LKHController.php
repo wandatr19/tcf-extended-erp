@@ -184,26 +184,122 @@ class LKHController extends Controller
             'page' => 'lkh-monitor'
         ];
 
-        $monitor = LKHmodel::query();
-        $isFilter = false;
-        if ($request->has('date') && !empty($request->date)) {
-            $monitor->whereDate('prod_date', $request->date);
-            $isFilter = true;
+        return view('lkh.monitor', $dataPage);
+    }
+    public function datatable(Request $request)
+    {
+        $columns = array(
+            0 => 'part_no',
+            1 => 'customer',
+            3 => 'hole_ta',
+            4 => 'hole_tembus',
+            5 => 'hole_mencuat',
+            6 => 'hole_geser',
+            7 => 'hole_doubleprc',
+            8 => 'hole_mengecil',
+            9 => 'neck',
+            10 => 'crack_p',
+            11 => 'glmbg_krpt',
+            12 => 'trim_over',
+            13 => 'trim_min',
+            14 => 'trim_mencuat',
+            15 => 'bend_min',
+            16 => 'bend_over',
+            17 => 'emb_geser',
+            18 => 'double_emb',
+            19 => 'penyok_defom',
+            20 => 'krg_stamp',
+            21 => 'material_s',
+            22 => 'baret_scratch',
+            23 => 'dent',
+            24 => 'others',
+            25 => 'dies_process',
+            26 => 'time_start',
+            27 => 'time_finish',
+            28 => 'sampling',
+            29 => 'total_prod',
+            30 => 'part_ok',
+            31 => 'part_repair',
+            32 => 'part_reject',
+            33 => 'verifikasi',
+        );
+
+        $totalData = LKHmodel::count();
+        $totalFiltered = $totalData;
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = (!empty($request->input('order.0.column'))) ? $columns[$request->input('order.0.column')] : $columns[0];
+        $dir = (!empty($request->input('order.0.dir'))) ? $request->input('order.0.dir') : "DESC";
+
+        $settings['start'] = $start;
+        $settings['limit'] = $limit;
+        $settings['dir'] = $dir;
+        $settings['order'] = $order;
+
+        $dataFilter = [];
+        $search = $request->input('search.value');
+        if (!empty($search)) {
+            $dataFilter['search'] = $search;
         }
 
-        // Filter berdasarkan shift
-        if ($request->has('shift') && !empty($request->shift)) {
-            $monitor->where('shift', $request->shift);
-            $isFilter = true;
+        $checksheet = LKHmodel::getData($dataFilter, $settings);
+        $totalFiltered = LKHmodel::countData($dataFilter);
+
+        $dataTable = [];
+
+        if (!empty($checksheet)) {
+            foreach ($checksheet as $data) {
+                $nestedData['part_no'] = $data->part_no;
+                $nestedData['customer'] = $data->customer;
+                $nestedData['hole_ta'] = $data->hole_ta;
+                $nestedData['hole_tembus'] = $data->hole_tembus;
+                $nestedData['hole_mencuat'] = $data->hole_mencuat;
+                $nestedData['hole_geser'] = $data->hole_geser;
+                $nestedData['hole_doubleprc'] = $data->hole_doubleprc;
+                $nestedData['hole_mengecil'] = $data->hole_mengecil;
+                $nestedData['neck'] = $data->neck;
+                $nestedData['crack_p'] = $data->crack_p;
+                $nestedData['glmbg_krpt'] = $data->glmbg_krpt;
+                $nestedData['trim_over'] = $data->trim_over;
+                $nestedData['trim_min'] = $data->trim_min;
+                $nestedData['trim_mencuat'] = $data->trim_mencuat;
+                $nestedData['bend_min'] = $data->bend_min;
+                $nestedData['bend_over'] = $data->bend_over;
+                $nestedData['emb_geser'] = $data->emb_geser;
+                $nestedData['double_emb'] = $data->double_emb;
+                $nestedData['penyok_defom'] = $data->penyok_defom;
+                $nestedData['krg_stamp'] = $data->krg_stamp;
+                $nestedData['material_s'] = $data->material_s;
+                $nestedData['baret_scratch'] = $data->baret_scratch;
+                $nestedData['dent'] = $data->dent;
+                $nestedData['others'] = $data->others;
+                $nestedData['dies_process'] = $data->dies_process;
+                $nestedData['time_start'] = date('i:s', strtotime($data->time_start));
+                $nestedData['time_finish'] = date('i:s', strtotime($data->time_finish));
+                $nestedData['sampling'] = $data->sampling;
+                $nestedData['total_prod'] = $data->total_prod;
+                $nestedData['part_ok'] = $data->part_ok;
+                $nestedData['part_repair'] = $data->part_repair;
+                $nestedData['part_reject'] = $data->part_reject;
+                $nestedData['verifikasi'] = $data->verifikasi;
+               
+                $dataTable[] = $nestedData;
+            }
         }
 
-        // Filter berdasarkan line
-        if ($request->has('line') && !empty($request->line)) {
-            $monitor->where('line', $request->line);
-            $isFilter = true;
-        }
+        $json_data = array(
+            "draw" => intval($request->input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $dataTable,
+            "order" => $order,
+            "statusFilter" => !empty($dataFilter['statusFilter']) ? $dataFilter['statusFilter'] : "Kosong",
+            "dir" => $dir,
+        );
 
-        $records = $isFilter ? $monitor->get() :  collect();
-        return view('lkh.monitor', $dataPage, compact('records'));
+        return response()->json($json_data, 200);
+
+
     }
 }

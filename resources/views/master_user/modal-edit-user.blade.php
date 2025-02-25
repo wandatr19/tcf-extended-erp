@@ -6,7 +6,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" id="form-edit-user">
+                <form action="#" method="POST" id="form-edit-user" enctype="multipart/form-data">
+                    @method('PATCH')
                     @csrf
                     <div class="row">
                         <input type="hidden" name="id_user_edit" id="id_user_edit">

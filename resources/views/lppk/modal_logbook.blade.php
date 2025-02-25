@@ -1,6 +1,6 @@
 <!-- modal Area -->
 <div class="modal fade" id="modal-logbook-lppk">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-dialog modal-fullscreen" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Input Progress Repair LPPK</h4>
@@ -63,11 +63,13 @@
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Gambar</th>
+                                                <th colspan="3" class="text-center">Gambar</th>
                                             </tr>
                                         </thead>
                                         <tr>
                                             <td id="image_lppk"></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -99,14 +101,29 @@
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-end" style="margin-left: 50px">
+                        <table class="table table-bordered" style="width: 250px;">
+                            <thead>
+                                <th colspan="2" class="text-center">Status</th>
+                            </thead>
+                            <tbody>
+                                <td>
+                                    <div class="form-check text-center p-0">
+                                        <button type="submit" class="btn btn-outline-success" id="approved" name="approved" value="approved"> <strong>OPEN</strong> </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check text-center p-0">
+                                        <button type="submit" class="btn btn-outline-danger active" id="completed" name="completed" value="completed" > <strong>CLOSED</strong> </button>
+                                    </div>
+                                </td>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="modal-footer justify-content-end">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_modal">Close</button>
                         <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
-                    {{-- <div class="col-12 d-flex justify-content-center mt-3">
-                        <button type="submit" class="btn btn-block btn-primary" style="width: 100%;"><i
-                                class="glyphicon glyphicon-ok-sign"></i> Add Data</button>
-                    </div> --}}
                 </form>
             </div>
         </div>

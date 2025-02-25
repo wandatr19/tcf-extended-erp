@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('lppk', function (Blueprint $table) {
             $table->increments('id_lppk');
             $table->string('no_lppk');
+            $table->integer('part_id')->nullable();
             $table->string('part_code')->nullable();
             $table->string('part_name')->nullable();
-            $table->string('part_type')->nullable();
+            $table->string('part_desc')->nullable();
             $table->string('issued_by')->nullable();
-            $table->string('partner')->nullable();
+            $table->integer('partner_id')->nullable();
+            $table->string('partner_name')->nullable();
             $table->date('issued_date')->nullable();
             $table->date('deadline_date')->nullable();
             $table->string('material')->nullable();

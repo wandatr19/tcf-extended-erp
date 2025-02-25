@@ -1,5 +1,14 @@
 @extends('layout.main')
 @section('title', 'Logbook LPPK')
+
+@section('header')
+    @include('layout.header')
+@endsection
+
+@section('navbar')
+    @include('layout.navbar_lppk')
+@endsection
+
 @section('main')
 <div class="container-ful">
     <div class="content-header">

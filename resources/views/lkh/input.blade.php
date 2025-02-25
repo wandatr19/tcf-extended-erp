@@ -26,7 +26,6 @@
                     </nav>
                 </div>
             </div>
-            
         </div>
     </div>
 
@@ -102,13 +101,11 @@
                                 <input class="form-control" type="time" name="time_finish" id="time_finish" required>
                             </div>
                         </div>
-
-
                     </div>
-
                 </div>
+            </div>
                 <!-- /.box-body -->
-                
+            <div class="box">    
                 <div class="box-header">
                     <h4 class="box-title">Item Defects</h4>  
                 </div>
@@ -300,6 +297,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="box">
                 <div class="box-header">
                     <h4 class="box-title">Dies Process</h4>  
                 </div>
@@ -319,6 +318,8 @@
                         <label for="op60">OP 60</label>
                     </div>
                 </div>
+            </div>
+            <div class="box">
                 <div class="box-header">
                     <h4 class="box-title">Total Part (Pcs)</h4>  
                 </div>
@@ -372,12 +373,8 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-                <!-- /.box-body -->
-            <!-- /.box -->
             </div>
             <div class="row">
                 <div class="col-4">

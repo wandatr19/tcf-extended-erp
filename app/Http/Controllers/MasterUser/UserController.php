@@ -101,6 +101,8 @@ class UserController extends Controller
     {
         $dataValidate = [
             'user_name' => ['required'],
+            'email_add' => ['required', 'email'],
+            'password_add' => ['required'],
         ];
     
         $validator = Validator::make(request()->all(), $dataValidate);
@@ -128,6 +130,49 @@ class UserController extends Controller
         } catch(Throwable $error){
             return response()->json(['message' => $error->getMessage()], 500);
         }
+    }
+    public function delete(string $id)
+    {
+        DB::beginTransaction();
+        try{
+            $user = User::findOrFail($id);
+            $user->delete();
+            DB::commit();
+            return response()->json(['message' => 'User Dihapus!'],200);
+        } catch(Throwable $error){
+            return response()->json(['message' => $error->getMessage()], 500);
+        }        
+    }
+    public function update(Request $request, string $id)
+    {
+        $dataValidate = [
+            'name_edit' => ['required'],
+            'email_edit' => ['required'],
+            'nik_edit' => ['required'],
+        ];
+    
+        $validator = Validator::make(request()->all(), $dataValidate);
+    
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Fill your input correctly!'], 402);
+        }
+
+        $user = User::find($id);
+
+        DB::beginTransaction();
+        try{
+            $user->employee_name = $request->input('name_edit');
+            $user->email = $request->input('email_edit');
+            $user->password = $request->input('password_edit');
+            $user->nik = $request->input('nik_edit');
+            $user->save();
+            DB::commit();
+            return response()->json(['message' => 'User Updated!'], 200);
+        } catch(\Throwable $error){
+            DB::rollback();
+            return response()->json(['message' => $error->getMessage()], 500);
+        }
+
     }
 
     

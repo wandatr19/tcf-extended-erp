@@ -98,8 +98,6 @@ class ChecksheetOpController extends Controller
     }
 
     public function index_approve(){
-        // $csHeader = ChecksheetOPHeaderModel::findOrFail($id);
-        // $csLine = ChecksheetOPLineModel::where('cs_op_header_id', $id)->get();
         $dataPage = [
             'page' => 'checksheet-op-approve'
         ];
@@ -149,6 +147,10 @@ class ChecksheetOpController extends Controller
         $shiftFilter = $request->input('filter_shift');
         if (!empty($shiftFilter)) {
             $dataFilter['filter_shift'] = $shiftFilter;
+        }
+        $statusFilter = $request->input('filter_status');
+        if (!empty($statusFilter)) {
+            $dataFilter['filter_status'] = $statusFilter;
         }
 
 
@@ -269,6 +271,7 @@ class ChecksheetOpController extends Controller
     {
         $data = ChecksheetOPLineModel::where('cs_op_header_id', $request->id)
             ->with(['pointspv', 'group_shift'])
+            ->orderBy('cs_op_pointspv_id')
             ->get();
 
         if ($data->isEmpty()) {

@@ -17,6 +17,9 @@
                     <div class="box-header d-flex justify-content-between">
                         <h4 class="box-title">Approval Checksheet Operator</h4>
                         <div class="btn-group">
+                            <button type="button" class="btn btn-info waves-effect" id="reset-table">
+                                <i class="fa fa-refresh"></i>
+                            </button>
                             <button type="button" class="btn btn-success waves-effect" id="filter-checksheet">
                                 <i class="fa fa-filter"></i>
                             </button>

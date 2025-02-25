@@ -79,6 +79,10 @@ $(function(){
         columns: columnsTable,
     });
 
+    function refreshTable() {
+        userTable.search("").draw();
+    }
+
     $('#org_add').select2({
         ajax: {
             url: '/master-user/get-org',
@@ -174,7 +178,7 @@ $(function(){
         modalAddUser.show();
     }
     
-    function closeModal() {
+    function closeModalAdd() {
         modalAddUser.hide();
     }
     $('#add-user').on('click', function(){
@@ -207,11 +211,38 @@ $(function(){
         modalEditUser.show();
     }
     
-    function closeModal() {
+    function closeModalEdit() {
         modalEditUser.hide();
     }
 
     //EDIT USER
+    $('#form-edit-user').on('submit', function (e){
+        e.preventDefault();
+        loadingSwalShow();
+        let idUser = $('#id_user_edit').val();
+        let url = '/master-user/update/' + idUser;
+
+        var formData = new FormData($('#form-edit-user')[0]);
+        $.ajax({
+            url: url,
+            data: formData,
+            method:"POST",
+            contentType: false,
+            processData: false,
+            dataType: "JSON",
+            success: function (data) {
+                loadingSwalClose();
+                showToast({ title: data.message });
+                closeModalEdit();
+                refreshTable();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                loadingSwalClose();
+                showToast({ icon: "error", title: jqXHR.responseJSON.message });
+            },
+        })
+    });
+
     $('#table-data-user').on('click', '.btnEdit', function (){
         var idUser = $(this).data('id');
         var name = $(this).data('user-name');
@@ -222,6 +253,64 @@ $(function(){
         $('#email_edit').val(email);
         $('#nik_edit').val(nik);
         openEdit();
+    });
+
+    $('#table-data-user').on('click', '.btnDelete', function() {
+        var userId = $(this).data('id');
+        console.log("Mengirim ID:", userId);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/master-user/' + userId + '/delete',
+                    type: "DELETE",
+                    data: {
+                        id: userId
+                    },
+                    success: function(response) {
+                        showToast({ title: response.message });
+                        refreshTable();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                    }
+                });
+            }
+        });
+    });
+
+
+    $('#form-add-user').on('submit', function (e) {
+        e.preventDefault(); 
+        loadingSwalShow();
+        let formData = $(this).serialize();
+        
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                loadingSwalClose();
+                showToast({ title: response.message });
+                $('#form-add-user')[0].reset();
+                closeModalAdd();
+                refreshTable();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                loadingSwalClose();
+                showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                $('#form-add-checksheet')[0].reset();
+                
+            },
+        });
     });
 
 

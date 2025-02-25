@@ -25,7 +25,7 @@ class ChecksheetOPLineModel extends Model
     public function pointspv()
     {
         return $this->belongsTo(ChecksheetOPPointModel::class, 'cs_op_pointspv_id', 'id_cs_op_pointspv')
-        ->orderBy('order_no', 'asc');
+        ->orderBy('id_cs_op_pointspv', 'asc');
     }
     public function group_shift()
     {

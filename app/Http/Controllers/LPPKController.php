@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\LPPKmodel;
 use Illuminate\Http\Request;
+use App\Models\iDempiereModel;
 use App\Models\LPPKImageModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class LPPKController extends Controller
 {
@@ -47,7 +48,7 @@ class LPPKController extends Controller
             'no_lppk' => 'required',
             'part_code' => 'nullable',
             'part_name' => 'nullable',
-            'part_type' => 'nullable',
+            'part_desc' => 'nullable',
             'partner' => 'nullable',
             'issued_date' => 'required',
             'target_close' => 'required',
@@ -68,12 +69,16 @@ class LPPKController extends Controller
             DB::beginTransaction();
             $dataLPPK = LPPKmodel::create([
                 'no_lppk' => $request->no_lppk,
+                'part_id' => $request->part_id,
                 'part_code' => $request->part_code,
                 'part_name' => $request->part_name,
-                'part_type' => $request->part_type,
-                'partner' => $request->partner,
+                'part_desc' => $request->part_desc,
+                'partner_name' => $request->partner,
                 'issued_date' => $request->issued_date,
                 'deadline_date' => $request->target_close,
+                'material' => $request->material,
+                'lot_material' => $request->lot_material,
+                'quantity' => $request->quantity,
                 'problem_type' => $request->problem_type,
                 'problem_desc' => $request->problem_desc,
                 'issued_by' => auth()->user()->name,
@@ -133,7 +138,7 @@ class LPPKController extends Controller
 
         if (!empty($sto)) {
             foreach ($sto as $data) {
-                $nestedData['part_name'] = $data->part_code;
+                $nestedData['part_name'] = $data->part_name;
                 $nestedData['problem_desc'] = $data->problem_desc;
                 $nestedData['no_lppk'] = $data->no_lppk;
                 $nestedData['issued_date'] = $data->issued_date;
@@ -152,7 +157,7 @@ class LPPKController extends Controller
                             data-no-lppk="' . $data->no_lppk . '"
                             data-part-code="' . $data->part_code . '"
                             data-part-name="' . $data->part_name . '"
-                            data-part-type="' . $data->part_type . '"
+                            data-part-desc="' . $data->part_desc . '"
                             data-problem-desc="' . $data->problem_desc . '"
                             data-problem-type="' . $data->problem_type . '"
                             data-quantity="' . $data->quantity . '"
@@ -199,6 +204,68 @@ class LPPKController extends Controller
             return response()->json(['last_number' => $lastNumber], 200);
         } catch (Exception $e) {
             return response()->json(['message' => 'Failed to retrieve last LPPK number', 'error' => $e->getMessage()], 500);
+        }
+    }
+    public function get_part(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = iDempiereModel::fromPart()->select(
+            'm_product_id',
+            'value',
+            'name',
+            'description',
+        );
+
+        // $query->where('isactive', 'Y')->where('ad_client_id', 1000000);
+
+        if (!empty($search)) {
+            $query->where(function ($dat) use ($search) {
+                $dat->where('name', 'ILIKE', "%{$search}%")
+                    ->orWhere('value', 'ILIKE', "%{$search}%")
+                    ->orWhere('m_product_id', 'ILIKE', "%{$search}%")
+                    ->orWhere('description', 'ILIKE', "%{$search}%");
+            });
+        }
+
+        $data = $query->simplePaginate(10);
+
+        $morePages = true;
+        $pagination_obj = json_encode($data);
+        if (empty($data->nextPageUrl())) {
+            $morePages = false;
+        }
+
+        foreach ($data->items() as $part) {
+            $dataUser[] = [
+                'id' => $part->m_product_id,
+                'text' => $part->value . ' - ' . $part->name . ' - ' . $part->description,
+                'name' => $part->name,
+                'description' => $part->description
+            ];
+        }
+
+        $results = array(
+            "results" => $dataUser,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+
+        return response()->json($results);
+    }
+    public function get_all_part($id)
+    {
+        $part = iDempiereModel::getPart($id);
+
+        if ($part) {
+            return response()->json([
+                'value' => $part->value,
+                'name' => $part->name,
+                'description' => $part->description,
+            ]);
+        } else {
+            return response()->json(['error' => 'Part not found.'], 404);
         }
     }
 }

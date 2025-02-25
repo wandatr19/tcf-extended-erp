@@ -15,14 +15,29 @@ class iDempiereModel extends Model
     public function scopeFromPartner($query)
     {
         return $query->from('c_bpartner')
-                    // ->whereIn('ad_org_id', [1000001, 1000002])
                     ->where('isactive', 'Y')
+                    ->where('ad_client_id', '1000000')
                     ->where('iscustomer', 'Y');
     }
     public function scopeFromPart($query)
     {
         return $query->from('m_product')
-                    ->where('isactive', 'Y');
+                    ->where('isactive', 'Y')
+                    ->where('ad_client_id', '1000000');
+    }
+    public static function getPart($part_id)
+    {
+        $query = self::fromPart()->select(
+            'm_product.m_product_id',
+            'm_product.name',
+            'm_product.value',
+            'm_product.description',
+        );
+
+        $query->where('m_product.m_product_id', $part_id);
+
+        return $query->first();
+
     }
 
     public function scopeFromMachine($query)

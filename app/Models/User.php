@@ -106,6 +106,8 @@ class User extends Authenticatable
             $search = $dataFilter['search'];
             $data->where(function ($query) use ($search) {
                 $query->where('users.employee_name', 'ILIKE', "%{$search}%")
+                    ->orWhere('users.name', 'ILIKE', "%{$search}%")
+                    ->orWhere('users.email', 'ILIKE', "%{$search}%")
                     ->orWhere('division.name', 'ILIKE', "%{$search}%")
                     ->orWhere('section.name', 'ILIKE', "%{$search}%")
                     ->orWhere('department.name', 'ILIKE', "%{$search}%");

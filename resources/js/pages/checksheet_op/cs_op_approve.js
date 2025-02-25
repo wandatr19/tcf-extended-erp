@@ -62,12 +62,13 @@ $(function(){
             type: "POST",
             data: function (dataFilter) {
                 let filterDate = $("#filter_date").val();
-                console.log("Filter Date:", filterDate);
                 let filterShift = $("#filter_shift").val();
+                let filterStatus = $("#filter_status").val();
                 let filterMachine = $("#filter_machine").val();
 
                 dataFilter.filter_date = filterDate;
                 dataFilter.filter_shift = filterShift;
+                dataFilter.filter_status = filterStatus;
                 dataFilter.filter_machine = filterMachine;
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -174,7 +175,6 @@ $(function(){
     }
     $('#table-checksheet-op').on('click', '.btnDetail', function(){
         let id = $(this).data("id");
-        console.log("ID:", id);
         $.ajax({
             url: '/checksheet-op/get-detail', 
             type: 'POST',
@@ -250,6 +250,10 @@ $(function(){
     $('#filter-checksheet').on('click', function(){
         openModalFilter();
     })
+
+    $('#reset-table').on('click', function(){
+        refreshTable();
+    });
 
     $('#submit_filter').on('click', function(){
         csopTable.search('').draw();

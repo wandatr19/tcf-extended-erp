@@ -40,7 +40,7 @@
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
 											{{-- <input type="text" class="form-control ps-15 bg-transparent" placeholder="Username"> --}}
-											<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+											<input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 											@error('email')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>

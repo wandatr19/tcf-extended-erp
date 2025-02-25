@@ -129,13 +129,13 @@ $(function(){
             type: 'POST',
             data: formData,
             success: function (response) {
-                console.log(response.data);
                 let headerId = response.data;
                 loadingSwalClose();
                 showToast({ title: response.message });
                 $('#form-add-checksheet')[0].reset();
                 $('#line_add').val('').trigger('change'); 
                 $('#machine_add').val('').trigger('change');
+                closeModal();
                 window.location.href = '/checksheet-op/edit-checksheet/' + headerId; 
             },
             error: function (jqXHR, textStatus, errorThrown) {
