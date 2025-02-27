@@ -14,6 +14,14 @@
                                 <label for="prod_date" class="form-label">Tanggal</label>
                                 <input type="date" class="form-control" name="prod_date" id="prod_date">
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="operator_add" class="form-label">Nama Operator</label>
+                                <input type="text" class="form-control" name="operator_add" id="operator_add" required placeholder="Input Nama Operator">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="machine_add" class="form-label">Mesin</label>
                                 <select class="form-control border" name="machine_add" id="machine_add" style="width: 100%;">
@@ -33,6 +41,8 @@
                                     <option value="B2">SHIFT 2 (Waktu 2)</option>
                                 </select>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="line_add" class="form-label">Line</label>
                                 <select class="form-control border" name="line_add" id="line_add" style="width: 100%;">

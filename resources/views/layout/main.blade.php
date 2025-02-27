@@ -7,9 +7,9 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{asset('img/logo-tcf.png')}}">
+    <link rel="icon" href="{{asset('img/tcf-no-bg.png')}}">
 
-    <title>Portal Quality - @yield('title')</title>
+    <title>Portal Checksheet - @yield('title')</title>
 	@vite(['resources/sass/app.scss','resources/js/app.js','resources/css/app.css'])
     
 	<!-- Vendors Style-->

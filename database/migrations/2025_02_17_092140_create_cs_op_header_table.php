@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('karyawan_id')->nullable();
             $table->string('nama_karyawan')->nullable();
             $table->string('shift')->nullable();
+            $table->string('nama_operator')->nullable();
             $table->dateTime('issued_at')->nullable();
             $table->date('prod_date')->nullable();
             $table->unsignedBigInteger('idem_mesin_id')->nullable();

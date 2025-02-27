@@ -7,6 +7,7 @@ use App\Models\LKHmodel;
 use Illuminate\Http\Request;
 use App\Models\iDempiereModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class LKHController extends Controller
 {
@@ -122,7 +123,7 @@ class LKHController extends Controller
     }
     public function input_lkh(Request $request) 
     {
-        $validated = $request->validate([
+        $dataValidate = [
             'line'=> 'required|integer',
             'shift'=> 'required|integer',
             'customer'=> 'required',
@@ -159,11 +160,56 @@ class LKHController extends Controller
             'part_repair' => 'required|integer',
             'part_reject' => 'required|integer',
             'verifikasi' => 'required|integer',
-        ]);
+        ];
+        $validator = Validator::make(request()->all(), $dataValidate);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            return response()->json(['message' => $errors], 402);
+        }
+        $customer_name = iDempiereModel::fromPartner()->select('name')->where('c_bpartner_id', $request->customer)->first()->name;
         
         try {
             DB::beginTransaction();
-            LKHmodel::create($validated);
+            $dataLKH = LKHmodel::create([
+                'line' => $request->line,
+                'shift' => $request->shift,
+                'customer_id' => $request->customer,
+                'customer' => $customer_name,
+                'part_no' => $request->part_no,
+                'prod_date' => $request->prod_date,
+                'hole_ta' => $request->hole_ta,
+                'hole_tembus' => $request->hole_tembus,
+                'hole_geser' => $request->hole_geser,
+                'hole_mencuat' => $request->hole_mencuat,
+                'hole_doubleprc' => $request->hole_doubleprc,
+                'hole_mengecil' => $request->hole_mengecil,
+                'neck' => $request->neck,
+                'crack_p' => $request->crack_p,
+                'glmbg_krpt' => $request->glmbg_krpt,
+                'trim_over' => $request->trim_over,
+                'trim_min' => $request->trim_min,
+                'trim_mencuat' => $request->trim_mencuat,
+                'bend_min' => $request->bend_min,
+                'bend_over' => $request->bend_over,
+                'emb_geser' => $request->emb_geser,
+                'double_emb' => $request->double_emb,
+                'penyok_defom' => $request->penyok_defom,
+                'krg_stamp' => $request->krg_stamp,
+                'material_s' => $request->material_s,
+                'baret_scratch' => $request->baret_scratch,
+                'dent' => $request->dent,
+                'others' => $request->others,
+                'dies_process' => $request->dies_process,
+                'time_start' => $request->time_start,
+                'time_finish' => $request->time_finish,
+                'sampling' => $request->sampling,
+                'total_prod' => $request->total_prod,
+                'part_ok' => $request->part_ok,
+                'part_repair' => $request->part_repair,
+                'part_reject' => $request->part_reject,
+                'verifikasi' => $request->verifikasi,
+            ]);
             DB::commit();
 
             return response()->json([
@@ -191,37 +237,37 @@ class LKHController extends Controller
         $columns = array(
             0 => 'part_no',
             1 => 'customer',
-            3 => 'hole_ta',
-            4 => 'hole_tembus',
-            5 => 'hole_mencuat',
-            6 => 'hole_geser',
-            7 => 'hole_doubleprc',
-            8 => 'hole_mengecil',
-            9 => 'neck',
-            10 => 'crack_p',
-            11 => 'glmbg_krpt',
-            12 => 'trim_over',
-            13 => 'trim_min',
-            14 => 'trim_mencuat',
-            15 => 'bend_min',
-            16 => 'bend_over',
-            17 => 'emb_geser',
-            18 => 'double_emb',
-            19 => 'penyok_defom',
-            20 => 'krg_stamp',
-            21 => 'material_s',
-            22 => 'baret_scratch',
-            23 => 'dent',
-            24 => 'others',
-            25 => 'dies_process',
-            26 => 'time_start',
-            27 => 'time_finish',
-            28 => 'sampling',
-            29 => 'total_prod',
-            30 => 'part_ok',
-            31 => 'part_repair',
-            32 => 'part_reject',
-            33 => 'verifikasi',
+            2 => 'hole_ta',
+            3 => 'hole_tembus',
+            4 => 'hole_mencuat',
+            5 => 'hole_geser',
+            6 => 'hole_doubleprc',
+            7 => 'hole_mengecil',
+            8 => 'neck',
+            9 => 'crack_p',
+            10 => 'glmbg_krpt',
+            11 => 'trim_over',
+            12 => 'trim_min',
+            13 => 'trim_mencuat',
+            14 => 'bend_min',
+            15 => 'bend_over',
+            16 => 'emb_geser',
+            17 => 'double_emb',
+            18 => 'penyok_defom',
+            19 => 'krg_stamp',
+            20 => 'material_s',
+            21 => 'baret_scratch',
+            22 => 'dent',
+            23 => 'others',
+            24 => 'dies_process',
+            25 => 'time_start',
+            26 => 'time_finish',
+            27 => 'sampling',
+            28 => 'total_prod',
+            29 => 'part_ok',
+            30 => 'part_repair',
+            31 => 'part_reject',
+            32 => 'verifikasi',
         );
 
         $totalData = LKHmodel::count();
@@ -275,8 +321,8 @@ class LKHController extends Controller
                 $nestedData['dent'] = $data->dent;
                 $nestedData['others'] = $data->others;
                 $nestedData['dies_process'] = $data->dies_process;
-                $nestedData['time_start'] = date('i:s', strtotime($data->time_start));
-                $nestedData['time_finish'] = date('i:s', strtotime($data->time_finish));
+                $nestedData['time_start'] = \Carbon\Carbon::parse($data->time_start)->format('H:i');
+                $nestedData['time_finish'] = \Carbon\Carbon::parse($data->time_finish)->format('H:i');
                 $nestedData['sampling'] = $data->sampling;
                 $nestedData['total_prod'] = $data->total_prod;
                 $nestedData['part_ok'] = $data->part_ok;

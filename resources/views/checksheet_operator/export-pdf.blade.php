@@ -1,69 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Label STO</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        font-size: 10px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checksheet Operator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+        }
+        .table-cs {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto;
+            /* table-layout: fixed; */
         }
 
-    .sto-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 5px auto;
-        table-layout: fixed;
+        .table-cs td {
+            border: 1px solid black;
+            text-align: left;
+            vertical-align: middle;
+            padding: 7px;
+            word-wrap: break-word;
+        }
+        .table-cs th {
+            border: 1px solid black;
+            text-align: left;
+            vertical-align: middle;
+            padding: 7px;
+            word-wrap: break-word;
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2 kolom sama besar */
+            gap: 20px;
+        }
+        .column {
+            padding: 20px;
+            /* border: 1px solid #ccc;
+            background-color: #f9f9f9; */
         }
 
-    .sto-table td {
-        border: 1px solid black;
-        text-align: left;
-        vertical-align: middle;
-        padding: 7px;
-        word-wrap: break-word;
-        }
-
-    .sto-table .tcf {
-        text-align: center;
-        font-weight: bold;
-        }
-
-    .sto-table .label-sto {
-        text-align: center;
-        font-weight: bold;
-        }
-
-    .sto-table .no-label {
-        text-align: center;
-        font-weight: bold;
-        height: 30px;
-        }
-    .qrcode {
-        text-align: center;
-        margin-top: 20px;
-    }
-
-  </style>
+    </style>
 </head>
 <body>
-    <div>
-        <table class="sto-table">
+    <div class="row">
+        <div class="column">
+            <label for="machine" class="form-label">Mesin</label>
+            <input type="text" class="form-control" name="machine" id="machine" value="{{$header->nama_mesin}}">
+        </div>
+        <div class="column">
+            <label for="prod_date" class="form-label">Tanggal</label>
+            <input type="text" class="form-control" name="prod_date" id="prod_date" value="{{$header->prod_date}}">
+        </div>
+    </div>
+        <div class="column">
+            <label for="line" class="form-label">Line</label>
+            <input type="text" class="form-control" name="line" id="line" value="{{$header->nama_homeline}}">
+        </div>
+        <div class="column">
+            <label for="operator" class="form-label">Operator</label>
+            <input type="text" class="form-control" name="operator" id="operator" value="{{$header->nama_operator}}">
+        </div>
+    </div>
+    <div class="row">
+        <table class="table-cs" id="detail-checksheet">
             <thead>
-                <th>Point Supervisi</th>
-                <th>Plan Checked</th>
-                <th>Actual Check</th>
-                <th>Hasil</th>
-                <th>Uraian</th>
+                <tr>
+                    <th>No</th>
+                    <th>Point Supervisi</th>
+                    <th>Plan Checked</th>
+                    <th>Actual Checked</th>
+                    <th>Status</th>
+                    <th>Uraian</th>
+                </tr>
             </thead>
+            <tbody>
+                @foreach ($lines as $index => $line )
+                <tr>
+                    <td>{{$line->pointspv->order_no}}</td>
+                    <td>{{$line->pointspv->name}}</td>
+                    <td>{{$line->group_shift->time}}</td>
+                    <td>{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</td>
+                    <td>{{$line->status}}</td>
+                    <td>{{$line->description}}</td>
+                </tr>
+                
+                @endforeach
+
+            </tbody>
         </table>
-        <tbody>
-            <td></td>
-            <td></td>
-            <td></td>
-            
-        </tbody>
     </div>
 </body>
+
 </html>

@@ -13,6 +13,7 @@ class LKHmodel extends Model
         'line',
         'shift',
         'customer',
+        'customer_id',
         'part_no',
         'prod_date',
         'hole_ta',

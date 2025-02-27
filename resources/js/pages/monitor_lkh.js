@@ -40,8 +40,8 @@ $(function(){
     }
 
     var columnsTable = [
-        { data: 'customer'},
         { data: 'part_no'},
+        { data: 'customer'},
         { data: 'hole_ta'},
         { data: 'hole_tembus'},
         { data: 'hole_mencuat'},

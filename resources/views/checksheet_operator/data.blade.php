@@ -10,22 +10,6 @@
 
 @section('main')
 <div class="container-full">
-    {{-- <div class="content-header">
-        <div class="d-flex align-items-center">
-            <div class="me-auto">
-                <h3 class="page-title">Checksheet Operator</h3>
-                <div class="d-inline-block align-items-center">
-                    <nav>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{route('dashboard')}}"><i class="mdi mdi-home-outline"></i></a></li>
-                            <li class="breadcrumb-item" aria-current="page"><a href="{{route('lkh-main')}}">Checksheet Operator</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">List Data</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <section class="content">
         <div class="row">
             <div class="col-12">
@@ -33,8 +17,11 @@
                     <div class="box-header d-flex justify-content-between">
                         <h4 class="box-title">Data Checksheet Monitoring Operator</h4>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-success waves-effect" id="add-checksheet">
+                            <button type="button" class="btn btn-success waves-effect" id="add-checksheet" title="Add Checksheet">
                                 <i class="fa fa-plus-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning waves-effect" id="filter-checksheet" title="Filter Table">
+                                <i class="fa fa-filter"></i>
                             </button>
                         </div>
                     </div>
@@ -42,13 +29,14 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped" id="table-checksheet-op">
                                 <thead>
-                                    <th>Doc No</th>
+                                    <th>Action</th>
+                                    <th>Nama Operator</th>
                                     <th>Shift</th>
+                                    <th>Line</th>
                                     <th>Mesin</th>
                                     <th>Issued By</th>
                                     <th>Status</th>
                                     <th>Date</th>
-                                    <th>Action</th>
                                 </thead>
                             </table>
                         </div>
@@ -60,4 +48,5 @@
 
 </div>
 @include('checksheet_operator.modal-add-cs')
+@include('checksheet_operator.modal-filter-2')
 @endsection

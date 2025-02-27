@@ -30,7 +30,9 @@
                             <table class="table table-bordered table-striped" id="table-checksheet-op">
                                 <thead>
                                     <th>Doc No</th>
+                                    <th>Nama Operator</th>
                                     <th>Shift</th>
+                                    <th>Line</th>
                                     <th>Mesin</th>
                                     <th>Issued By</th>
                                     <th>Status</th>

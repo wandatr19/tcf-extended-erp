@@ -41,7 +41,9 @@ $(function(){
 
     var columnsTable = [
         { data: 'doc_number'},
+        { data: 'nama_operator'},
         { data: 'shift'},
+        { data: 'line'},
         { data: 'nama_mesin'},
         { data: 'nama_karyawan'},
         { data: 'status'},
@@ -212,6 +214,11 @@ $(function(){
         });
     })
 
+    $('#table-checksheet-op').on('click', '.btnExport', function(){
+        let id = $(this).data("id");
+        window.open(`/checksheet-op/export-pdf/${id}`, '_blank');
+    })
+
     var modalFilterChecksheetOpt = {
         backdrop: true,
         keyboard: false,
@@ -247,6 +254,10 @@ $(function(){
         dropdownParent: $('#modal-filter-checksheet')
     });
 
+    $('#filter_shift, #filter_status').select2({
+        dropdownParent: $('#modal-filter-checksheet')
+    });
+
     $('#filter-checksheet').on('click', function(){
         openModalFilter();
     })
@@ -259,6 +270,14 @@ $(function(){
         csopTable.search('').draw();
         closeModalFilter();
     });
+    
+    $('#reset_filter').on('click', function(){
+        $('#filter_date').val('').trigger('change');
+        $('#filter_shift').val('').trigger('change');
+        $('#filter_status').val('').trigger('change');
+        $('#filter_machine').val('').trigger('change');
+    });
+
 
 
 

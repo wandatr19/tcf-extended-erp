@@ -28,11 +28,9 @@
     <header class="main-header">
         <nav class="navbar m-0 navbar-static-top">
             <div class="app-menu">
-                <a href="{{route('dashboard')}}" class="logo">
-                    <div class="logo-lg">
-                        <span class="light-logo"><img src="{{asset('img/portal-qc-logo.png')}}" alt="logo"></span>
-                    </div>
-                  </a>
+                <h4 class="mb-0 text-primary"><i class="ti-user"></i>
+                    {{ Auth::user()->name ?? '' }}
+                </h4>
             </div>
             <div class="navbar-custom-menu r-side">
                 <ul class="nav navbar-nav">
@@ -41,11 +39,6 @@
                         <a href="#" class="btn btn-light dropdown-toggle position-relative"
                             data-bs-toggle="dropdown" title="User">
                             <i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
-                                <span
-                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                    style="font-size: 1rem;z-index:2;">
-                                    <i class="ti-bell"></i>
-                                </span>
                         </a>
                         <ul class="dropdown-menu animated flipInX">
                             <li class="user-body">
@@ -121,8 +114,8 @@
 
 	
 	<!-- EduAdmin App -->
-	<script src="{{asset('eduadmin/main/js/template.js')}}"></script>
-	<script src="{{asset('eduadmin/main/js/pages/calendar.js')}}"></script>
+	{{-- <script src="{{asset('eduadmin/main/js/template.js')}}"></script> --}}
+	{{-- <script src="{{asset('eduadmin/main/js/pages/calendar.js')}}"></script> --}}
 	<script src="{{asset('eduadmin/assets/vendor_components/dropzone/dropzone.js')}}"></script>
 
 	

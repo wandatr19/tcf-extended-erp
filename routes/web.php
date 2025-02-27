@@ -13,6 +13,7 @@ use App\Http\Controllers\MasterUser\DepartmentController;
 use App\Http\Controllers\Checksheet\ChecksheetOpController;
 use App\Http\Controllers\MasterUser\OrganizationController;
 use App\Http\Controllers\Checksheet\ChecksheetOPDataController;
+use App\Http\Controllers\Checksheet\ChecksheetOPApprovalController;
 
 Auth::routes();
 
@@ -46,11 +47,12 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/get_machine', [ChecksheetOpController::class, 'get_machine']);
         Route::post('/get_homeline', [ChecksheetOpController::class, 'get_homeline']);
 
-        Route::get('/list-approve', [ChecksheetOpController::class, 'index_approve'])->name('checksheet-op-approve');
-        Route::post('/datatable-approve', [ChecksheetOpController::class, 'datatable_approve']);
-        Route::patch('/{id}/approved', [ChecksheetOpController::class, 'approved_checksheet']);
-        Route::delete('/{id}/delete', [ChecksheetOpController::class, 'delete']);
-        Route::post('get-detail', [ChecksheetOpController::class, 'getDetail']);
+        Route::get('/list-approve', [ChecksheetOPApprovalController::class, 'index_approve'])->name('checksheet-op-approve');
+        Route::post('/datatable-approve', [ChecksheetOPApprovalController::class, 'datatable_approve']);
+        Route::patch('/{id}/approved', [ChecksheetOPApprovalController::class, 'approved_checksheet']);
+        Route::delete('/{id}/delete', [ChecksheetOPApprovalController::class, 'delete']);
+        Route::post('get-detail', [ChecksheetOPApprovalController::class, 'getDetail']);
+        Route::get('/export-pdf/{id}', [ChecksheetOPApprovalController::class, 'export_pdf']);
 
 
         Route::get('/list-data', [ChecksheetOPDataController::class, 'list_data'])->name('checksheet-op-data');

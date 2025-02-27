@@ -37,6 +37,13 @@
                         </li>
                     </ul>
                 </li>
+                <li class="{{ $page == 'master-user-organization' ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="icon-Unlock"><span class="path1"></span><span class="path2"></span></i>
+                        <span>Role Permission</span>
+                    </a>
+                </li>
+
 
 			</ul>
 		</div>

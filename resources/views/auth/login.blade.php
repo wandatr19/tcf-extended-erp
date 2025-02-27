@@ -30,7 +30,7 @@
 						<div class="bg-white rounded10 shadow-lg">
 							<div class="content-top-agile p-20 pb-0">
                                 <img src="{{asset('img/tcf-logo2.jpeg')}}" alt="logo-tcf">
-								<h2 class="text-primary">Portal Quality</h2>
+								<h2 class="text-primary">Portal Checksheet</h2>
                                 <h4>TRI CENTRUM FORTUNA</h4>
 							</div>
 							<div class="p-40">

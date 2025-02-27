@@ -49,6 +49,7 @@ class ChecksheetOPDataController extends Controller
                 'idem_mesin_id' => $request->machine_add,
                 'nama_mesin' => $machineName,
                 'status_doc' => 'DRAFTED',
+                'nama_operator' => $request->operator_add,
                 'nama_karyawan' => auth()->user()->name,
             ]);
 
@@ -90,13 +91,13 @@ class ChecksheetOPDataController extends Controller
     public function datatable(Request $request)
     {
         $columns = array(
-            0 => 'doc_number',
+            0 => 'nama_operator',
             1 => 'shift',
-            2 => 'nama_mesin',
-            3 => 'nama_karyawan',
-            4 => 'status',
-            5 => 'issued_at',
-
+            2 => 'line',
+            3 => 'nama_mesin',
+            4 => 'nama_karyawan',
+            5 => 'status',
+            6 => 'issued_at',
         );
 
         $totalData = ChecksheetOPHeaderModel::count();
@@ -117,6 +118,23 @@ class ChecksheetOPDataController extends Controller
         if (!empty($search)) {
             $dataFilter['search'] = $search;
         }
+        $date_filter = $request->input('filter_date');
+        if (!empty($date_filter)) {
+            $dataFilter['filter_date'] = $date_filter;
+        }
+        $machineFilter = $request->input('filter_machine');
+        if (!empty($machineFilter)) {
+            $dataFilter['filter_machine'] = $machineFilter;
+        }
+        $shiftFilter = $request->input('filter_shift');
+        if (!empty($shiftFilter)) {
+            $dataFilter['filter_shift'] = $shiftFilter;
+        }
+        $statusFilter = $request->input('filter_status');
+        if (!empty($statusFilter)) {
+            $dataFilter['filter_status'] = $statusFilter;
+        }
+
 
 
         $checksheet = ChecksheetOPHeaderModel::getData($dataFilter, $settings);
@@ -126,7 +144,13 @@ class ChecksheetOPDataController extends Controller
 
         if (!empty($checksheet)) {
             foreach ($checksheet as $data) {
-                $nestedData['doc_number'] = $data->doc_number;
+                if ($data->status_doc != 'APPROVED') {
+                    $nestedData['action'] = 
+                        '<a href="' . route('checksheet-op-edit', $data->id_cs_op_header) . '" class="waves-effect waves-light btn btn-success"><i class="fa fa-pencil-square-o"></i></a>';
+                } else {
+                    $nestedData['action'] = '';
+                }
+                $nestedData['nama_operator'] = $data->nama_operator;
                 if ($data->shift == 'A1') {
                     $nestedData['shift'] = 'Shift 1 (Waktu 3)';
                 } elseif ($data->shift == 'A2') {
@@ -140,6 +164,7 @@ class ChecksheetOPDataController extends Controller
                 } else {
                     $nestedData['shift'] = $data->shift;
                 }
+                $nestedData['line'] = $data->nama_homeline;
                 $nestedData['nama_mesin'] = $data->nama_mesin;
                 $nestedData['nama_karyawan'] = $data->nama_karyawan;
                 if ($data->status_doc == 'DRAFTED') {
@@ -147,13 +172,13 @@ class ChecksheetOPDataController extends Controller
                 } elseif ($data->status_doc == 'COMPLETED') {
                     $nestedData['status'] = '<span class="badge badge-pill badge-info">COMPLETED</span>';
                 } elseif ($data->status_doc == 'APPROVED') {
-                    $nestedData['status'] = '<span class="badge badge-pill badge-success">APPROVED</span>';
+                    $nestedData['status'] = '<span class="badge badge-pill badge-success">APPROVED</span>
+                                            <br><small class="text-bold">' . $data->checked_by . '</small>';
                 } else {
                     $nestedData['status'] = $data->status_doc;
                 }
                 $nestedData['issued_at'] = $data->prod_date;
-                $nestedData['action'] = 
-                        '<a href="' . route('checksheet-op-edit', $data->id_cs_op_header) . '" class="waves-effect waves-light btn btn-success"><i class="fa fa-pencil-square-o"></i></a>';
+                
                
                 $dataTable[] = $nestedData;
             }

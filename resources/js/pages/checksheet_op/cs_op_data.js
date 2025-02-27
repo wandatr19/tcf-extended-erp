@@ -40,13 +40,14 @@ $(function(){
     }
 
     var columnsTable = [
-        { data: 'doc_number'},
+        { data: 'action'},
+        { data: 'nama_operator'},
         { data: 'shift'},
+        { data: 'line'},
         { data: 'nama_mesin'},
         { data: 'nama_karyawan'},
         { data: 'status'},
         { data: 'issued_at'},
-        { data: 'action'},
     ];
 
     var csopTable = $('#table-checksheet-op').DataTable({
@@ -61,6 +62,16 @@ $(function(){
             dataType: "json",
             type: "POST",
             data: function (dataFilter) {
+                let filterDate = $("#filter_date").val();
+                let filterShift = $("#filter_shift").val();
+                let filterStatus = $("#filter_status").val();
+                let filterMachine = $("#filter_machine").val();
+
+                dataFilter.filter_date = filterDate;
+                dataFilter.filter_shift = filterShift;
+                dataFilter.filter_status = filterStatus;
+                dataFilter.filter_machine = filterMachine;
+
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (jqXHR.responseJSON.data) {
@@ -118,6 +129,9 @@ $(function(){
         },
         dropdownParent: $('#modal-add-checksheet')
     });
+    $('#shift_add').select2({
+        dropdownParent: $('#modal-add-checksheet')
+    });
 
     $('#form-add-checksheet').on('submit', function (e) {
         e.preventDefault(); 
@@ -135,15 +149,15 @@ $(function(){
                 $('#form-add-checksheet')[0].reset();
                 $('#line_add').val('').trigger('change'); 
                 $('#machine_add').val('').trigger('change');
-                closeModal();
+                closeModalAdd();
                 window.location.href = '/checksheet-op/edit-checksheet/' + headerId; 
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 loadingSwalClose();
                 showToast({ icon: "error", title: jqXHR.responseJSON.message });
-                $('#form-add-checksheet')[0].reset();
-                $('#line_add').val('').trigger('change'); 
-                $('#machine_add').val('').trigger('change');
+                // $('#form-add-checksheet')[0].reset();
+                // $('#line_add').val('').trigger('change'); 
+                // $('#machine_add').val('').trigger('change');
                 
             },
         });
@@ -161,15 +175,15 @@ $(function(){
         modalAddChecksheetOpt
     );
 
-    function openModal() {
+    function openModalAdd() {
         modalAddChecksheet.show();
     }
     
-    function closeModal() {
+    function closeModalAdd() {
         modalAddChecksheet.hide();
     }
     $('#add-checksheet').on('click', function(){
-        openModal();
+        openModalAdd();
     })
 
 
@@ -182,6 +196,66 @@ $(function(){
     $('#reset_checksheet').on('click', function(){
         resetForm();
     })
+
+    $('#prod_date').attr('min', new Date().toISOString().split('T')[0]);
+
+    var modalFilterChecksheetOpt = {
+        backdrop: true,
+        keyboard: false,
+    };
+
+    var modalFilterChecksheet = new bootstrap.Modal(
+        document.getElementById("modal-filter-checksheet"),
+        modalFilterChecksheetOpt
+    );
+
+    function openModalFilter() {
+        modalFilterChecksheet.show();
+    }
+    
+    function closeModalFilter() {
+        modalFilterChecksheet.hide();
+    }
+    $('#filter-checksheet').on('click', function(){
+        openModalFilter();
+    })
+
+    $('#filter_shift, #filter_status').select2({
+        dropdownParent: $('#modal-filter-checksheet')
+    });
+
+    $('#reset_filter').on('click', function(){
+        $('#filter_date').val('').trigger('change');
+        $('#filter_shift').val('').trigger('change');
+        $('#filter_status').val('').trigger('change');
+        $('#filter_machine').val('').trigger('change');
+    });
+    
+
+    $('#submit_filter').on('click', function(){
+        csopTable.search('').draw();
+        closeModalFilter();
+    });
+
+    $('#filter_machine').select2({
+        ajax: {
+            url: '/checksheet-op/get_machine',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-filter-checksheet')
+    });
+
+
+
 
     
 });

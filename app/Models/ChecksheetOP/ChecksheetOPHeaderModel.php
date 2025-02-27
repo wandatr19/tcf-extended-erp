@@ -13,6 +13,7 @@ class ChecksheetOPHeaderModel extends Model
         'doc_number',
         'karyawan_id',
         'nama_karyawan',
+        'nama_operator',
         'shift',
         'issued_at',
         'prod_date',
@@ -33,6 +34,7 @@ class ChecksheetOPHeaderModel extends Model
             'doc_number',
             'karyawan_id',
             'nama_karyawan',
+            'nama_operator',
             'shift',
             'issued_at',
             'prod_date',
@@ -62,7 +64,10 @@ class ChecksheetOPHeaderModel extends Model
             $search = $dataFilter['search'];
             $data->where(function ($query) use ($search) {
                 $query->where('nama_karyawan', 'ILIKE', "%{$search}%")
-                    ->orWhere('nama_mesin', 'ILIKE', "%{$search}%");
+                    ->orWhere('nama_mesin', 'ILIKE', "%{$search}%")
+                    ->orWhere('nama_operator', 'ILIKE', "%{$search}%")
+                    ->orWhere('nama_homeline', 'ILIKE', "%{$search}%")
+                    ->orWhere('prod_date', 'ILIKE', "%{$search}%");
             });
         }
 
