@@ -7,7 +7,7 @@
 		<a href="{{route('dashboard')}}" class="logo">
 		  <!-- logo-->
 		  <div class="logo-lg">
-			  <span class="light-logo"><img src="{{asset('img/portal-qc-logo.png')}}" alt="logo"></span>
+			  <span class="light-logo"><img src="{{asset('img/checksheet-logo.png')}}" alt="logo" style="width: 180px; height: auto;"></span>
 		  </div>
 		</a>	
 	</div>  
@@ -27,7 +27,7 @@
       <div class="navbar-custom-menu r-side">
 		<ul class="nav navbar-nav gap-1">
 			<li class="btn-group nav-item d-lg-inline-flex">
-				<a href="{{ route('logout') }}" class="waves-effect waves-light nav-link" title="Logout">
+				<a href="{{ route('dashboard') }}" class="waves-effect waves-light nav-link" title="Back to Homepage">
 					<i class="fa fa-fw fa-home"></i>
 				</a>
 			</li>

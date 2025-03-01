@@ -59,6 +59,9 @@ class ChecksheetOPHeaderModel extends Model
         if (!empty($dataFilter['filter_status'])) {
             $data->where('status_doc', $dataFilter['filter_status']);
         }
+        if (!empty($dataFilter['karyawan_id'])) {
+            $data->where('karyawan_id', $dataFilter['karyawan_id']);
+        }
 
         if (isset($dataFilter['search'])) {
             $search = $dataFilter['search'];

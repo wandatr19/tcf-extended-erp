@@ -150,7 +150,7 @@ $(function(){
             error: function (jqXHR, textStatus, errorThrown) {
                 loadingSwalClose();
                 showToast({ icon: "error", title: jqXHR.responseJSON.message });
-                $('#form_lppk')[0].reset();
+                // $('#form_lppk')[0].reset();
                 generateNoLppk();
             },
         });

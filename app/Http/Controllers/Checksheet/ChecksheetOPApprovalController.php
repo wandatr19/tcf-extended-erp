@@ -69,7 +69,6 @@ class ChecksheetOPApprovalController extends Controller
             $dataFilter['filter_status'] = $statusFilter;
         }
 
-
         $checksheet = ChecksheetOPHeaderModel::getData($dataFilter, $settings);
         $totalFiltered = ChecksheetOPHeaderModel::countData($dataFilter);
 
@@ -234,7 +233,7 @@ class ChecksheetOPApprovalController extends Controller
             'lines' => $lines
         ]);
 
-        return $pdf->download('export_'.$id.'.pdf');
+        return $pdf->download('ChecksheetOP_'.$id.'.pdf');
 
 
     }

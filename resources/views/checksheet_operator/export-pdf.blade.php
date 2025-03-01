@@ -31,37 +31,35 @@
             padding: 7px;
             word-wrap: break-word;
         }
-        .row {
+        /* .row {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* 2 kolom sama besar */
+            grid-template-columns: 1fr 1fr; 
             gap: 20px;
         }
         .column {
             padding: 20px;
-            /* border: 1px solid #ccc;
-            background-color: #f9f9f9; */
-        }
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        } */
 
     </style>
 </head>
 <body>
+    <h1 style="text-align: center;">Checksheet Monitoring Operator</h1>
     <div class="row">
         <div class="column">
-            <label for="machine" class="form-label">Mesin</label>
-            <input type="text" class="form-control" name="machine" id="machine" value="{{$header->nama_mesin}}">
+            <p>Mesin : {{$header->nama_mesin}}</p>
         </div>
         <div class="column">
-            <label for="prod_date" class="form-label">Tanggal</label>
-            <input type="text" class="form-control" name="prod_date" id="prod_date" value="{{$header->prod_date}}">
+            <p>Tanggal : {{$header->prod_date}}</p>
         </div>
     </div>
+    <div class="row">
         <div class="column">
-            <label for="line" class="form-label">Line</label>
-            <input type="text" class="form-control" name="line" id="line" value="{{$header->nama_homeline}}">
+            <p>Line : {{$header->nama_homeline}}</p>
         </div>
         <div class="column">
-            <label for="operator" class="form-label">Operator</label>
-            <input type="text" class="form-control" name="operator" id="operator" value="{{$header->nama_operator}}">
+            <p>Operator : {{$header->nama_operator}}</p>
         </div>
     </div>
     <div class="row">

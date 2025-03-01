@@ -4,23 +4,23 @@
 		<div class="multinav-scroll" style="height: 100%;">	
 			<ul class="sidebar-menu" data-widget="tree">	
                 <li class="header">Menu LKH</li>
+                <li class="{{ $page == 'lppk-logbook' ? 'active' : '' }}">
+                    <a href="{{route('lppk-logbook')}}">
+                        <i class="icon-Book"><span class="path1"></span><span class="path2"></span></i>
+                        <span>Logbook LPPK</span>
+                    </a>
+                </li>
                 <li class="{{ $page == 'lppk-input' ? 'active' : '' }}">
                     <a href="{{route('lppk-input')}}">
                         <i class="icon-Clipboard"><span class="path1"></span><span class="path2"></span></i>
                         <span>Input LPPK</span>
                     </a>
                 </li>
-                <li class="{{ $page == 'lppk-monitor' ? 'active' : '' }}">
+                {{-- <li class="{{ $page == 'lppk-monitor' ? 'active' : '' }}">
                     <a href="{{route('lppk-monitor')}}">
                         <i class="icon-Laptop"><span class="path1"></span><span class="path2"></span></i>
                         <span>Monitoring LPPK</span>
-                    </a>
-                </li>
-                <li class="{{ $page == 'lppk-logbook' ? 'active' : '' }}">
-                    <a href="{{route('lppk-logbook')}}">
-                        <i class="icon-Book"><span class="path1"></span><span class="path2"></span></i>
-                        <span>Logbook LPPK</span>
-                    </a>
+                    </a> --}}
                 </li>
 			</ul>
 		</div>

@@ -129,8 +129,44 @@ $(function(){
         },
         dropdownParent: $('#modal-add-checksheet')
     });
+
+    $('#operator_add').select2({
+        ajax: {
+            url: '/checksheet-op/get_operator',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-add-checksheet')
+    });
+
     $('#shift_add').select2({
         dropdownParent: $('#modal-add-checksheet')
+    });
+
+    $('#line_add').on('change', function() {
+        let partCode = $(this).find(':selected').data('m_product_id');
+        
+        if (partCode) {
+            $.ajax({
+                url: '/lppk/get_all_part/' + partCode,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#mesin_test').val(data.name);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    showToast({ icon: "error", title: jqXHR.responseJSON.message });
+                },
+            });
+        }
     });
 
     $('#form-add-checksheet').on('submit', function (e) {

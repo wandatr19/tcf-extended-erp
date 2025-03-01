@@ -50,6 +50,7 @@ class iDempiereModel extends Model
     public function scopeFromHomeLine($query)
     {
         return $query->from('tcf_homeline');
+                //  ->leftJoin('m_product', 'tcf_homeline.m_product_id', '=', 'm_product.m_product_id');
     }
 
     

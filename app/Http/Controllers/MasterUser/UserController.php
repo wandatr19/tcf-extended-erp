@@ -75,7 +75,17 @@ class UserController extends Controller
                 $nestedData['position'] = $data->position_name;
                 $nestedData['action'] = '
                 <div class="btn-group">
-                    <button type="button" class="waves-effect waves-light btn btn-info btnEdit" data-id="'.$data->id.'" data-user-name="'.$data->employee_name.'" data-user-email="'.$data->email.'" data-user-nik="'.$data->nik.'"><i class="fa fa-pencil-square-o"></i></button>
+                    <button type="button" class="waves-effect waves-light btn btn-info btnEdit" 
+                    data-id="'.$data->id.'" 
+                    data-user-name="'.$data->employee_name.'" 
+                    data-user-email="'.$data->email.'" 
+                    data-user-nik="'.$data->nik.'"
+                    data-user-org="'.$data->org_id.'"
+                    data-user-div="'.$data->div_id.'"
+                    data-user-dept="'.$data->dept_id.'"
+                    data-user-section="'.$data->section_id.'"
+                    data-user-position="'.$data->position_id.'"
+                    ><i class="fa fa-pencil-square-o"></i></button>
                     <button type="button" class="waves-effect waves-light btn btn-danger btnDelete" data-id="'.$data->id.'"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
@@ -101,6 +111,7 @@ class UserController extends Controller
     {
         $dataValidate = [
             'user_name' => ['required'],
+            'employee_name' => ['required'],
             'email_add' => ['required', 'email'],
             'password_add' => ['required'],
         ];
@@ -115,6 +126,7 @@ class UserController extends Controller
         try{
             $user = User::create([
                 'name' => $request->input('user_name'),
+                'employee_name' => $request->input('employee_name'),
                 'email' => $request->input('email_add'),
                 'password' => $request->input('password_add'),
                 'nik' => $request->input('nik_add'),
@@ -165,6 +177,11 @@ class UserController extends Controller
             $user->email = $request->input('email_edit');
             $user->password = $request->input('password_edit');
             $user->nik = $request->input('nik_edit');
+            $user->org_id = $request->input('org_edit');
+            $user->div_id = $request->input('div_edit');
+            $user->dept_id = $request->input('dept_edit');
+            $user->section_id = $request->input('section_edit');
+            $user->position_id = $request->input('position_edit');
             $user->save();
             DB::commit();
             return response()->json(['message' => 'User Updated!'], 200);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Checksheet;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\iDempiereModel;
 use Illuminate\Support\Facades\DB;
@@ -23,11 +24,10 @@ class ChecksheetOPDataController extends Controller
     }
     public function store(Request $request)
     {
-        $machineName = iDempiereModel::fromMachine()->select('name')->where('m_product_id', $request->machine_add)->first()->name;
-        $lineName = iDempiereModel::fromHomeLine()->select('name')->where('tcf_homeline_id', $request->line_add)->first()->name;
         $existingRecord = ChecksheetOPHeaderModel::where('shift', $request->shift_add)
             ->where('prod_date', $request->prod_date)
             ->where('idem_mesin_id', $request->machine_add)
+            ->where('idem_homeline_id', $request->line_add)
             ->first();
 
         if ($existingRecord) {
@@ -36,6 +36,10 @@ class ChecksheetOPDataController extends Controller
                 'message' => 'Cant create checksheet because already created'
             ], 400);
         }
+
+        $machineName = iDempiereModel::fromMachine()->select('name')->where('m_product_id', $request->machine_add)->first()->name;
+        $lineName = iDempiereModel::fromHomeLine()->select('name')->where('tcf_homeline_id', $request->line_add)->first()->name;
+        $operatorName = User::select('employee_name')->where('id', $request->operator_add)->first()->employee_name;
         DB::beginTransaction();
         try {
             $header = ChecksheetOPHeaderModel::create([
@@ -49,7 +53,8 @@ class ChecksheetOPDataController extends Controller
                 'idem_mesin_id' => $request->machine_add,
                 'nama_mesin' => $machineName,
                 'status_doc' => 'DRAFTED',
-                'nama_operator' => $request->operator_add,
+                'nama_operator' => $operatorName,
+                'karyawan_id' => auth()->user()->id,
                 'nama_karyawan' => auth()->user()->name,
             ]);
 
@@ -135,7 +140,7 @@ class ChecksheetOPDataController extends Controller
             $dataFilter['filter_status'] = $statusFilter;
         }
 
-
+        $dataFilter['karyawan_id'] = auth()->user()->id;
 
         $checksheet = ChecksheetOPHeaderModel::getData($dataFilter, $settings);
         $totalFiltered = ChecksheetOPHeaderModel::countData($dataFilter);

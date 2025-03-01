@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/', [ChecksheetOpController::class, 'index'])->name('checksheet-op-form');
         Route::post('/get_machine', [ChecksheetOpController::class, 'get_machine']);
         Route::post('/get_homeline', [ChecksheetOpController::class, 'get_homeline']);
+        Route::post('/get_operator', [ChecksheetOpController::class, 'get_operator']);
 
         Route::get('/list-approve', [ChecksheetOPApprovalController::class, 'index_approve'])->name('checksheet-op-approve');
         Route::post('/datatable-approve', [ChecksheetOPApprovalController::class, 'datatable_approve']);

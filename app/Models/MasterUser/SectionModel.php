@@ -9,6 +9,7 @@ class SectionModel extends Model
     protected $table = 'section';
     protected $fillable = [
         'id_section',
+        'department_id',
         'name',
     ];
     private static function _query($dataFilter)

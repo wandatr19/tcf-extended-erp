@@ -11,7 +11,13 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="user_name" class="form-label">Nama</label>
+                                <label for="employee_name" class="form-label">Nama Karyawan</label>
+                                <input type="text" class="form-control" name="employee_name" id="employee_name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="user_name" class="form-label">Username</label>
                                 <input type="text" class="form-control" name="user_name" id="user_name">
                             </div>
                         </div>

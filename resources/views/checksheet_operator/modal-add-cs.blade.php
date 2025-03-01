@@ -12,27 +12,35 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="prod_date" class="form-label">Tanggal</label>
-                                <input type="date" class="form-control" name="prod_date" id="prod_date">
+                                <input type="date" class="form-control" name="prod_date" id="prod_date" required> 
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="operator_add" class="form-label">Nama Operator</label>
-                                <input type="text" class="form-control" name="operator_add" id="operator_add" required placeholder="Input Nama Operator">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="machine_add" class="form-label">Mesin</label>
-                                <select class="form-control border" name="machine_add" id="machine_add" style="width: 100%;">
-                                    <option value="">Pilih Mesin</option>
+                                <label for="operator_add" class="form-label">Operator</label>
+                                <select class="form-control border" name="operator_add" id="operator_add" style="width: 100%;" required>
+                                    <option value="">Pilih Operator</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="machine_add" class="form-label">Mesin</label>
+                                <select class="form-control border" name="machine_add" id="machine_add" style="width: 100%;" required>
+                                    <option value="">Pilih Mesin</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mesin_test" class="form-label">MesinG</label>
+                                <input type="text" class="form-control" name="mesin_test" id="mesin_test" readonly> 
+                            </div>
+                        </div> --}}
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="shift_add" class="form-label">Shift</label>
-                                <select class="form-control border" name="shift_add" id="shift_add" style="width: 100%;">
+                                <select class="form-control border" name="shift_add" id="shift_add" style="width: 100%;" required>
                                     <option value="">Pilih Shift</option>
                                     <option value="A1">SHIFT 1 (Waktu 3)</option>
                                     <option value="A2">SHIFT 2 (Waktu 3)</option>
@@ -45,7 +53,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="line_add" class="form-label">Line</label>
-                                <select class="form-control border" name="line_add" id="line_add" style="width: 100%;">
+                                <select class="form-control border" name="line_add" id="line_add" style="width: 100%;" required>
                                     <option value="">Pilih Line</option>
                                 </select>
                             </div>

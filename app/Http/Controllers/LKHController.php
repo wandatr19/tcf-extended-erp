@@ -168,6 +168,7 @@ class LKHController extends Controller
             return response()->json(['message' => $errors], 402);
         }
         $customer_name = iDempiereModel::fromPartner()->select('name')->where('c_bpartner_id', $request->customer)->first()->name;
+        $part_name = iDempiereModel::fromPart()->select('name')->where('m_product_id', $request->part_no)->first()->name;
         
         try {
             DB::beginTransaction();
@@ -176,7 +177,7 @@ class LKHController extends Controller
                 'shift' => $request->shift,
                 'customer_id' => $request->customer,
                 'customer' => $customer_name,
-                'part_no' => $request->part_no,
+                'part_no' => $part_name,
                 'prod_date' => $request->prod_date,
                 'hole_ta' => $request->hole_ta,
                 'hole_tembus' => $request->hole_tembus,

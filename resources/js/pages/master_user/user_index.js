@@ -287,6 +287,86 @@ $(function(){
         });
     });
 
+    $('#org_edit').select2({
+        ajax: {
+            url: '/master-user/get-org',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-edit-user')
+    });
+    $('#div_edit').select2({
+        ajax: {
+            url: '/master-user/get-div',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-edit-user')
+    });
+    $('#dept_edit').select2({
+        ajax: {
+            url: '/master-user/get-dept',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-edit-user')
+    });
+    $('#section_edit').select2({
+        ajax: {
+            url: '/master-user/get-section',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-edit-user')
+    });
+    $('#position_edit').select2({
+        ajax: {
+            url: '/master-user/get-position',
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term || "",
+                    page: params.page || 1,
+                };
+            },
+            cache: true,
+        },
+        dropdownParent: $('#modal-edit-user')
+    });
 
     $('#form-add-user').on('submit', function (e) {
         e.preventDefault(); 

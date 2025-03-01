@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Checksheet;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\iDempiereModel;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\ChecksheetOP\ChecksheetOPLineModel;
 use App\Models\ChecksheetOP\ChecksheetOPPointModel;
 use App\Models\ChecksheetOP\ChecksheetOPHeaderModel;
-use App\Models\ChecksheetOP\ChecksheetOPLineModel;
 
 class ChecksheetOpController extends Controller
 {
@@ -64,6 +65,7 @@ class ChecksheetOpController extends Controller
         $query = iDempiereModel::fromHomeLine()->select(
             'tcf_homeline_id',
             'name',
+            // 'm_product.name as machine_name',
         );
 
         if (!empty($search)) {
@@ -81,10 +83,10 @@ class ChecksheetOpController extends Controller
             $morePages = false;
         }
 
-        foreach ($data->items() as $customer) {
+        foreach ($data->items() as $line) {
             $dataUser[] = [
-                'id' => $customer->tcf_homeline_id,
-                'text' => $customer->name
+                'id' => $line->tcf_homeline_id,
+                'text' => $line->name,
             ];
         }
 
@@ -95,6 +97,60 @@ class ChecksheetOpController extends Controller
             )
         );
         return response()->json($results);
+    }
+    public function get_operator(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = User::select(
+            'id',
+            'employee_name',
+        );
+
+        if (!empty($search)) {
+            $query->where(function ($dat) use ($search) {
+                $dat->where('id', 'ILIKE', "%{$search}%")
+                    ->orWhere('employee_name', 'ILIKE', "%{$search}%");
+            });
+        }
+
+        $data = $query->simplePaginate(10);
+
+        $morePages = true;
+        $pagination_obj = json_encode($data);
+        if (empty($data->nextPageUrl())) {
+            $morePages = false;
+        }
+
+        foreach ($data->items() as $operator) {
+            $dataUser[] = [
+                'id' => $operator->id,
+                'text' => $operator->employee_name
+            ];
+        }
+
+        $results = array(
+            "results" => $dataUser,
+            "pagination" => array(
+                "more" => $morePages
+            )
+        );
+        return response()->json($results);
+    }
+
+    public function get_mesin(string $id)
+    {
+        $part = iDempiereModel::getPart($id);
+
+        if ($part) {
+            return response()->json([
+                'value' => $part->value,
+                'name' => $part->name,
+                'description' => $part->description,
+            ]);
+        } else {
+            return response()->json(['error' => 'Part not found.'], 404);
+        }
     }
 
     

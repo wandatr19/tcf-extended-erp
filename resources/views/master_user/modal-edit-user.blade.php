@@ -35,7 +35,7 @@
                                 <input type="text" class="form-control" name="nik_edit" id="nik_edit">
                             </div>
                         </div>
-                        {{-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="org_edit" class="form-label">Organization</label>
                                 <select class="form-control border" name="org_edit" id="org_edit" style="width: 100%;">
@@ -74,7 +74,7 @@
                                     <option value="">Pilih Posisi</option>
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="modal-footer">
                             <div class="row">
                                 <div class="col-12 d-flex justify-content-end gap-1">

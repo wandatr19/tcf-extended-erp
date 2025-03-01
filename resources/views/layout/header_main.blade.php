@@ -7,7 +7,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{asset('img/logo-tcf.png')}}">
+    <link rel="icon" href="{{asset('img/tcf-no-bg.png')}}">
 
     <title>Portal Quality - Home</title>
 	@vite(['resources/sass/app.scss','resources/js/app.js','resources/css/app.css'])
@@ -35,37 +35,11 @@
             <div class="navbar-custom-menu r-side">
                 <ul class="nav navbar-nav">
                     <!-- User Account-->
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="btn btn-light dropdown-toggle position-relative"
-                            data-bs-toggle="dropdown" title="User">
-                            <i class="icon-User"><span class="path1"></span><span class="path2"></span></i>
-                        </a>
-                        <ul class="dropdown-menu animated flipInX">
-                            <li class="user-body">
-                                    <a class="dropdown-item btnProfile" href="#"><i
-                                            class="ti-user text-muted me-2"></i>
-                                        Profile</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item btnKontrak" href="#"><i
-                                            class="ti-write text-muted me-2"></i>
-                                        Kontrak</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item btnAgendaLembur position-relative" href="#"><i
-                                            class="ti-agenda text-muted me-2"></i>
-                                        Agenda Lembur
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item btnLembur" href="#"><i
-                                            class="ti-time text-muted me-2"></i>
-                                        Slip Lembur
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('logout') }}">
-                                    <i class="ti-lock text-muted me-2"></i>Logout
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    <a href="{{route('logout')}}" title="Logout">
+                        <button class="btn btn-danger">
+                            <i class="fa fa-sign-out fa-1x"><span class="path1"></span><span class="path2"></span></i>
+                        </button>
+                    </a>
                 </ul>
             </div>
         </nav>
