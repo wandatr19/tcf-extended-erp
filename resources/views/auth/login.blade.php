@@ -39,9 +39,8 @@
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-											{{-- <input type="text" class="form-control ps-15 bg-transparent" placeholder="Username"> --}}
-											<input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-											@error('email')
+											<input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" placheolder="Input Username">
+											@error('username')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>
 												</span>
@@ -51,8 +50,7 @@
 									<div class="form-group">
 										<div class="input-group mb-3">
 											<span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
-											{{-- <input type="password" class="form-control ps-15 bg-transparent" placeholder="Password"> --}}
-											<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+											<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="Input Password">
 											@error('password')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>

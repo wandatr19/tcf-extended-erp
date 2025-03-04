@@ -115,7 +115,7 @@
 				</a>
 			</div>
 			@endif
-			<div class="col-lg-6 col-12">
+			{{-- <div class="col-lg-6 col-12">
 				<a href="#"
 					class="box pull-up">
 					<div class="box-body position-relative">
@@ -132,7 +132,7 @@
 						</div>
 					</div>
 				</a>
-			</div>
+			</div> --}}
 		</div>
 	</section>
 </div>

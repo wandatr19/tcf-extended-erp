@@ -158,6 +158,9 @@
 	@if ($page == 'master-user-section')
 		@vite(['resources/js/pages/master_user/section.js'])
 	@endif
+	@if ($page == 'master-user-position')
+		@vite(['resources/js/pages/master_user/position.js'])
+	@endif
 
 	
 </body>

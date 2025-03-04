@@ -57,7 +57,7 @@ class ChecksheetOPDataController extends Controller
                 'status_doc' => 'DRAFTED',
                 'nama_operator' => $operatorName,
                 'karyawan_id' => auth()->user()->id,
-                'nama_karyawan' => auth()->user()->name,
+                'nama_karyawan' => auth()->user()->employee_name,
             ]);
 
             $pointspv = ChecksheetOPPointModel::pluck('id_cs_op_pointspv');

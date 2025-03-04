@@ -28,7 +28,7 @@
                                 <thead>
                                     <th>Name</th>
                                     <th>NIK</th>
-                                    <th>Email</th>
+                                    <th>Username</th>
                                     <th>Organization</th>
                                     <th>Division</th>
                                     <th>Department</th>

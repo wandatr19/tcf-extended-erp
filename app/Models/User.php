@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'employee_name',
         'email',
         'password',
@@ -82,7 +82,7 @@ class User extends Authenticatable
     {
         $data= self::select(
             'users.id as id',
-            'users.name as name',
+            'users.username as name',
             'users.email as email',
             'users.department as department',
             'users.nik as nik',

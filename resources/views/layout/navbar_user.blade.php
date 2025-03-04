@@ -35,14 +35,18 @@
                                 href="{{ route('master-user-section') }}"><i class="icon-Commit"><span
                                         class="path1"></span><span class="path2"></span></i>Seksi</a>
                         </li>
+                        <li class="{{ $page == 'master-user-position' ? 'active' : '' }}"><a
+                                href="{{ route('master-user-position') }}"><i class="icon-Commit"><span
+                                        class="path1"></span><span class="path2"></span></i>Posisi</a>
+                        </li>
                     </ul>
                 </li>
-                <li class="{{ $page == 'master-user-organization' ? 'active' : '' }}">
+                {{-- <li class="{{ $page == 'master-user-organization' ? 'active' : '' }}">
                     <a href="#">
                         <i class="icon-Unlock"><span class="path1"></span><span class="path2"></span></i>
                         <span>Role Permission</span>
                     </a>
-                </li>
+                </li> --}}
 
 
 			</ul>

@@ -25,7 +25,7 @@ class PositionModel extends Model
     {
         return self::_query($dataFilter)->offset($settings['start'])
             ->limit($settings['limit'])
-            ->orderBy($settings['order'], $settings['dir'])
+            ->orderBy('created_at', 'desc')
             ->get();
     }
     public static function countData($dataFilter)

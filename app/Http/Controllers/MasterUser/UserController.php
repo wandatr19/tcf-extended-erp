@@ -67,7 +67,7 @@ class UserController extends Controller
             foreach ($checksheet as $data) {
                 $nestedData['name'] = $data->employee_name;
                 $nestedData['nik'] = $data->nik;
-                $nestedData['email'] = $data->email;
+                $nestedData['email'] = $data->name;
                 $nestedData['organization'] = $data->org_name;
                 $nestedData['division'] = $data->div_name;
                 $nestedData['department'] = $data->dept_name;

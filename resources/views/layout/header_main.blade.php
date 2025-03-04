@@ -29,7 +29,7 @@
         <nav class="navbar m-0 navbar-static-top">
             <div class="app-menu">
                 <h4 class="mb-0 text-primary"><i class="ti-user"></i>
-                    {{ Auth::user()->name ?? '' }}
+                    {{ Auth::user()->username ?? '' }}
                 </h4>
             </div>
             <div class="navbar-custom-menu r-side">

@@ -85,6 +85,8 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/department/datatable', [DepartmentController::class, 'datatable']);
         Route::get('/section', [SectionController::class, 'index'])->name('master-user-section');
         Route::post('/section/datatable', [SectionController::class, 'datatable']);
+        Route::get('/position', [PositionController::class, 'index'])->name('master-user-position');
+        Route::post('/position/datatable', [PositionController::class, 'datatable']);
 
 
     });

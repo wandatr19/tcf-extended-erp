@@ -166,7 +166,7 @@ class ChecksheetOPApprovalController extends Controller
 
             $csHeader->status_doc = 'APPROVED';
             $csHeader->checked_at = now();
-            $csHeader->checked_by = auth()->user()->name;
+            $csHeader->checked_by = auth()->user()->username;
             $csHeader->save();
 
             DB::commit();
