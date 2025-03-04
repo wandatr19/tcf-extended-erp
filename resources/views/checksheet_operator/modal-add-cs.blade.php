@@ -25,20 +25,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="machine_add" class="form-label">Mesin</label>
-                                <select class="form-control border" name="machine_add" id="machine_add" style="width: 100%;" required>
-                                    <option value="">Pilih Mesin</option>
-                                </select>
-                            </div>
-                        </div>
-                        {{-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="mesin_test" class="form-label">MesinG</label>
-                                <input type="text" class="form-control" name="mesin_test" id="mesin_test" readonly> 
-                            </div>
-                        </div> --}}
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="shift_add" class="form-label">Shift</label>
                                 <select class="form-control border" name="shift_add" id="shift_add" style="width: 100%;" required>
                                     <option value="">Pilih Shift</option>

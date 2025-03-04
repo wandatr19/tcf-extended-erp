@@ -82,6 +82,43 @@
 	<script src="{{asset('eduadmin/main/js/pages/calendar.js')}}"></script>
 	<script src="{{asset('eduadmin/assets/vendor_components/dropzone/dropzone.js')}}"></script>
 
+	<script>
+		let loadingSwal;
+		function loadingSwalShow() {
+			loadingSwal = Swal.fire({
+				imageHeight: 300,
+				showConfirmButton: false,
+				title: '<i class="fas fa-sync-alt fa-spin fs-80"></i>',
+				allowOutsideClick: false,
+				background: 'rgba(0, 0, 0, 0)'
+			});
+		}
+
+		function loadingSwalClose() {
+			loadingSwal.close();
+		}
+
+		function showToast(options) {
+			const toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 2000, 
+				timerProgressBar: true,
+				didOpen: (toast) => {
+				toast.onmouseenter = Swal.stopTimer;
+				toast.onmouseleave = Swal.resumeTimer;
+				}
+			});
+
+			toast.fire({
+				icon: options.icon || "success",
+				title: options.title
+			});
+		}
+
+	</script>
+
 	<!--  JS Pages -->
 	@if ($page == 'lkh-input')
 		@vite(['resources/js/pages/input_lkh.js'])

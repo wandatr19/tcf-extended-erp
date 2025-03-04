@@ -20,41 +20,63 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-6 col-12">
-				<a href="{{route('master-user-index')}}"
-					class="box pull-up">
-					<div class="box-body position-relative">
-						<div class="d-flex align-items-center">
-							<div class="icon bg-primary-light rounded-circle w-60 h-60 text-center l-h-80">
-								<span class="fs-30 fa  fa-user-circle-o"><span class="path1"></span><span
-										class="path2"></span><span class="path3"></span><span
-										class="path4"></span></span>
-							</div>
-							<div class="ms-15">
-								<h5 class="mb-0">User Management</h5>
-								<p class="text-fade fs-12 mb-0">Sistem manajemen data user</p>
-							</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="col-lg-6 col-12">
-				<a href="{{route('checksheet-op-data')}}"
-					class="box pull-up">
-					<div class="box-body position-relative">
-						<div class="d-flex align-items-center">
-							<div class="icon bg-primary-light rounded-circle w-60 h-60 text-center l-h-80">
-								<span class="fs-30 fa fa-check-square-o"><span class="path1"></span><span
-										class="path2"></span><span class="path3"></span><span
-										class="path4"></span></span>
-							</div>
-							<div class="ms-15">
-								<h5 class="mb-0">Checksheet Operator</h5>
-								<p class="text-fade fs-12 mb-0">Checksheet untuk pengawasan operator</p>
+			@if (auth()->user()->section_id == 3)
+				<div class="col-lg-6 col-12">
+					<a href="{{route('master-user-index')}}"
+						class="box pull-up">
+						<div class="box-body position-relative">
+							<div class="d-flex align-items-center">
+								<div class="icon bg-primary-light rounded-circle w-60 h-60 text-center l-h-80">
+									<span class="fs-30 fa  fa-user-circle-o"><span class="path1"></span><span
+											class="path2"></span><span class="path3"></span><span
+											class="path4"></span></span>
+								</div>
+								<div class="ms-15">
+									<h5 class="mb-0">User Management</h5>
+									<p class="text-fade fs-12 mb-0">Sistem manajemen data user</p>
+								</div>
 							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
+			@endif
+			
+			<div class="col-lg-6 col-12">
+				@if(auth()->user()->position_id == 6)
+					<a href="{{route('checksheet-op-data')}}"
+						class="box pull-up">
+						<div class="box-body position-relative">
+							<div class="d-flex align-items-center">
+								<div class="icon bg-primary-light rounded-circle w-60 h-60 text-center l-h-80">
+									<span class="fs-30 fa fa-check-square-o"><span class="path1"></span><span
+											class="path2"></span><span class="path3"></span><span
+											class="path4"></span></span>
+								</div>
+								<div class="ms-15">
+									<h5 class="mb-0">Checksheet Operator</h5>
+									<p class="text-fade fs-12 mb-0">Checksheet untuk pengawasan operator</p>
+								</div>
+							</div>
+						</div>
+					</a>
+				@elseif(auth()->user()->position_id == 4)
+					<a href="{{route('checksheet-op-approve')}}"
+						class="box pull-up">
+						<div class="box-body position-relative">
+							<div class="d-flex align-items-center">
+								<div class="icon bg-primary-light rounded-circle w-60 h-60 text-center l-h-80">
+									<span class="fs-30 fa fa-check-square-o"><span class="path1"></span><span
+											class="path2"></span><span class="path3"></span><span
+											class="path4"></span></span>
+								</div>
+								<div class="ms-15">
+									<h5 class="mb-0">Checksheet Operator</h5>
+									<p class="text-fade fs-12 mb-0">Checksheet untuk pengawasan operator</p>
+								</div>
+							</div>
+						</div>
+					</a>
+				@endif
 			</div>
 			<div class="col-lg-6 col-12">
 				<a href="{{route('lkh-input')}}"

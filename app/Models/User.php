@@ -111,6 +111,7 @@ class User extends Authenticatable
                     ->orWhere('users.email', 'ILIKE', "%{$search}%")
                     ->orWhere('division.name', 'ILIKE', "%{$search}%")
                     ->orWhere('section.name', 'ILIKE', "%{$search}%")
+                    ->orWhere('position.name', 'ILIKE', "%{$search}%")
                     ->orWhere('department.name', 'ILIKE', "%{$search}%");
             });
         }

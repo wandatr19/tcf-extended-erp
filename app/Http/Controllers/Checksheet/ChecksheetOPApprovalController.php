@@ -106,9 +106,9 @@ class ChecksheetOPApprovalController extends Controller
                 $nestedData['issued_at'] = $data->prod_date;
                 $nestedData['doc_number'] = $data->doc_number;
                 $actionButtons = '';
-                if ($data->status_doc != 'APPROVED') {
-                    $actionButtons .= '<button type="button" class="waves-effect waves-light btn btn-success btnApprove" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-check-square"></i></button>';
-                }
+                // if ($data->status_doc != 'APPROVED') {
+                //     $actionButtons .= '<button type="button" class="waves-effect waves-light btn btn-success btnApprove" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-check-square"></i></button>';
+                // }
                 $actionButtons .= '<button type="button" class="waves-effect waves-light btn btn-info btnDetail" data-id="' . $data->id_cs_op_header . '"><i class="fa fa-search-plus"></i></button>';
                 $nestedData['action'] = '<div class="btn-group">' . $actionButtons . '</div>
                                          <br>

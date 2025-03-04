@@ -26,7 +26,7 @@ class ChecksheetOPDataController extends Controller
     {
         $existingRecord = ChecksheetOPHeaderModel::where('shift', $request->shift_add)
             ->where('prod_date', $request->prod_date)
-            ->where('idem_mesin_id', $request->machine_add)
+            ->where('shift', $request->shift_add)
             ->where('idem_homeline_id', $request->line_add)
             ->first();
 
@@ -37,8 +37,10 @@ class ChecksheetOPDataController extends Controller
             ], 400);
         }
 
-        $machineName = iDempiereModel::fromMachine()->select('name')->where('m_product_id', $request->machine_add)->first()->name;
-        $lineName = iDempiereModel::fromHomeLine()->select('name')->where('tcf_homeline_id', $request->line_add)->first()->name;
+        
+        $lineName = iDempiereModel::fromHomeLine()->select('tcf_homeline.name')->where('tcf_homeline_id', $request->line_add)->first()->name;
+        $idMachine = iDempiereModel::fromHomeLine()->select('tcf_homeline.m_product_id')->where('tcf_homeline_id', $request->line_add)->first()->m_product_id;
+        $machineName = iDempiereModel::fromMachine()->select('name')->where('m_product_id', $idMachine)->first()->name;
         $operatorName = User::select('employee_name')->where('id', $request->operator_add)->first()->employee_name;
         DB::beginTransaction();
         try {
@@ -50,7 +52,7 @@ class ChecksheetOPDataController extends Controller
                 'issued_at' => now(),
                 'idem_homeline_id' => $request->line_add,
                 'nama_homeline' => $lineName,
-                'idem_mesin_id' => $request->machine_add,
+                'idem_mesin_id' => $idMachine,
                 'nama_mesin' => $machineName,
                 'status_doc' => 'DRAFTED',
                 'nama_operator' => $operatorName,

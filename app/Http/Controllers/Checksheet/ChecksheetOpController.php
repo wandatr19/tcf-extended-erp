@@ -64,14 +64,14 @@ class ChecksheetOpController extends Controller
 
         $query = iDempiereModel::fromHomeLine()->select(
             'tcf_homeline_id',
-            'name',
-            // 'm_product.name as machine_name',
+            'tcf_homeline.name as line_name',
+            'm_product.name as machine_name',
         );
 
         if (!empty($search)) {
             $query->where(function ($dat) use ($search) {
                 $dat->where('tcf_homeline_id', 'ILIKE', "%{$search}%")
-                    ->orWhere('name', 'ILIKE', "%{$search}%");
+                    ->orWhere('line_name', 'ILIKE', "%{$search}%");
             });
         }
 
@@ -86,7 +86,7 @@ class ChecksheetOpController extends Controller
         foreach ($data->items() as $line) {
             $dataUser[] = [
                 'id' => $line->tcf_homeline_id,
-                'text' => $line->name,
+                'text' => $line->line_name . ' (' . $line->machine_name . ')',
             ];
         }
 

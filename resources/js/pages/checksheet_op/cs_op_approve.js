@@ -94,11 +94,9 @@ $(function(){
             csopTable.search("").draw();
         }
     }
-    
-    $('#table-checksheet-op').on('click', '.btnApprove', function() {
-        var headerId = $(this).data('id');
-        console.log("Mengirim ID:", headerId);
 
+    $('.btnApprov').on('click', function() {
+        var headerId = $(this).data('id');
         Swal.fire({
             title: 'Are you sure?',
             text: "Do you want to approve this item?",
@@ -126,6 +124,38 @@ $(function(){
             }
         });
     });
+    
+    // $('#table-checksheet-op').on('click', '.btnApprove', function() {
+    //     var headerId = $(this).data('id');
+    //     console.log("Mengirim ID:", headerId);
+
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: "Do you want to approve this item?",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, approve it!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             $.ajax({
+    //                 url: '/checksheet-op/' + headerId + '/approved',
+    //                 type: "PATCH",
+    //                 data: {
+    //                     id: headerId
+    //                 },
+    //                 success: function(response) {
+    //                     showToast({ title: response.message });
+    //                     refreshTable();
+    //                 },
+    //                 error: function(jqXHR, textStatus, errorThrown) {
+    //                     showToast({ icon: "error", title: jqXHR.responseJSON.message });
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
 
     $('#table-checksheet-op').on('click', '.btnDelete', function() {
         var headerId = $(this).data('id');
@@ -184,11 +214,12 @@ $(function(){
                 id: id
             },
             success: function(response) {
+                $('#modal-detail-checksheet .btnApprov').attr('data-id', id);
                 if (response.success) {
-                    console.log("Response Data:", response.data);
                     $("#detail-checksheet tbody").html('');
     
                     response.data.forEach(function (item) {
+                        console.log("Response Data:", item.id_cs_op_header);
                         let statusColor = item.status === 'OK' ? 'success' : (item.status === 'NG' ? 'danger' : 'info');
                         let row = `
                             <tr>
@@ -202,8 +233,9 @@ $(function(){
                         `;
                         $("#detail-checksheet tbody").append(row);
                     });
-                    console.log("Modal dibuka...");
+                    
                     $("#modal-detail-checksheet").modal("show");
+                    
                 } else {
                     alert("Data tidak ditemukan!");
                 }

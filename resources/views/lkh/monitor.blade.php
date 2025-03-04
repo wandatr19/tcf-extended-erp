@@ -30,14 +30,14 @@
                                     <tr>
                                         <th rowspan="2">Part Number</th>
                                         <th rowspan="2">Customer</th>
-                                        <th colspan="22" class="text-center">Item Defect</th>
+                                        {{-- <th colspan="22" class="text-center">Item Defect</th> --}}
                                         <th rowspan="2" class="text-center">Dies Process</th>
                                         <th colspan="2" class="text-center">Act Check</th>
                                         <th colspan="5" class="text-center">Total Part (Pcs)</th>
                                         <th id="th-lkh" rowspan="2">Verifikasi</th>
                                     </tr>
                                     <tr>
-                                        <th id="th-lkh">Hole T/A</th>
+                                        {{-- <th id="th-lkh">Hole T/A</th>
                                         <th id="th-lkh">Hole Mencuat</th>
                                         <th id="th-lkh">Hole Double Prc</th>
                                         <th id="th-lkh">Hole Geser</th>
@@ -58,7 +58,7 @@
                                         <th id="th-lkh">Material S/Speck</th>
                                         <th id="th-lkh">Baret/Scratch</th>
                                         <th id="th-lkh">Dent</th>
-                                        <th id="th-lkh">Lain-lain</th>
+                                        <th id="th-lkh">Lain-lain</th> --}}
                                         <th id="th-lkh">Start</th>
                                         <th id="th-lkh">Finish</th>
                                         <th id="th-lkh">Sampling</th>

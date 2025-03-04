@@ -233,7 +233,10 @@ $(function(){
         resetForm();
     })
 
-    $('#prod_date').attr('min', new Date().toISOString().split('T')[0]);
+    let today = new Date();
+    let yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    $('#prod_date').attr('min', yesterday.toISOString().split('T')[0]);
 
     var modalFilterChecksheetOpt = {
         backdrop: true,

@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Input Checksheet')
+@section('title', 'Approval Checksheet')
 @section('header')
     @include('layout.header')
 @endsection

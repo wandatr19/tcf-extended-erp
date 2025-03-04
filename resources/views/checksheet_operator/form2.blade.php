@@ -66,10 +66,200 @@
                     </div>
                 </div>
             </div>
-            @foreach ($csLine->sortBy('cs_op_pointspv_id') as $line)
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills justify-content-center mb-20">
+                <li class="nav-item"> <a href="#group-a" class="nav-link active" data-bs-toggle="tab" aria-expanded="false">{{ $csLine->firstWhere('pointspv.group', 'A')->group_shift->time }}</a> </li>
+                <li class="nav-item"> <a href="#group-b" class="nav-link" data-bs-toggle="tab" aria-expanded="false">{{ $csLine->firstWhere('pointspv.group', 'B')->group_shift->time }}</a> </li>
+                <li class="nav-item"> <a href="#group-c" class="nav-link" data-bs-toggle="tab" aria-expanded="false">{{ $csLine->firstWhere('pointspv.group', 'C')->group_shift->time }}</a> </li>
+                <li class="nav-item"> <a href="#group-d" class="nav-link" data-bs-toggle="tab" aria-expanded="false">{{ $csLine->firstWhere('pointspv.group', 'D')->group_shift->time }}</a> </li>
+                <li class="nav-item"> <a href="#group-e" class="nav-link" data-bs-toggle="tab" aria-expanded="false">{{ $csLine->firstWhere('pointspv.group', 'E')->group_shift->time }}</a> </li>
+                <li class="nav-item"> <a href="#group-f" class="nav-link" data-bs-toggle="tab" aria-expanded="false">{{ $csLine->firstWhere('pointspv.group', 'F')->group_shift->time }}</a> </li>
+            </ul>
+            
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div id="group-a" class="tab-pane active">
+                    @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'A'; })->sortBy('cs_op_pointspv_id') as $line)
+                        <div class="box">
+                            <div class="box-header text-center">
+                                <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
+                                @if ($line->checked_at)
+                                    <span class="badge bg-info">{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</span>
+                                @endif
+                            </div>
+                            <div class="box-header">
+                                <div class= "col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="customer" class="form-label">{{ $line->pointspv->order_no }}. {{ $line->pointspv->name }}</label>
+                                        <div class="demo-radio-button">
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ok_{{$line->id_cs_op_line}}" value="OK" class="update-status" {{ $line->status == 'OK' ? 'checked' : '' }}/>
+                                            <label for="radio_ok_{{$line->id_cs_op_line}}">OK</label>
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ng_{{$line->id_cs_op_line}}" value="NG" class="update-status" {{ $line->status == 'NG' ? 'checked' : '' }}/>
+                                            <label for="radio_ng_{{$line->id_cs_op_line}}">NG</label>
+                                        </div>
+                                        <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
+                                        <div class="col-md-3">
+                                            <input class="form-control update-desc" type="text" name="description_{{$line->id_cs_op_line}}" id="description_{{$line->id_cs_op_line}}" data-id="{{ $line->id_cs_op_line}}" value="{{ $line->description }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div id="group-b" class="tab-pane">
+                    @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'B'; })->sortBy('cs_op_pointspv_id') as $line)
+                        <div class="box">
+                            <div class="box-header text-center">
+                                <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
+                                @if ($line->checked_at)
+                                    <span class="badge bg-info">{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</span>
+                                @endif
+                            </div>
+                            <div class="box-header">
+                                <div class= "col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="customer" class="form-label">{{ $line->pointspv->order_no }}. {{ $line->pointspv->name }}</label>
+                                        <div class="demo-radio-button">
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ok_{{$line->id_cs_op_line}}" value="OK" class="update-status" {{ $line->status == 'OK' ? 'checked' : '' }}/>
+                                            <label for="radio_ok_{{$line->id_cs_op_line}}">OK</label>
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ng_{{$line->id_cs_op_line}}" value="NG" class="update-status" {{ $line->status == 'NG' ? 'checked' : '' }}/>
+                                            <label for="radio_ng_{{$line->id_cs_op_line}}">NG</label>
+                                        </div>
+                                        <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
+                                        <div class="col-md-3">
+                                            <input class="form-control update-desc" type="text" name="description_{{$line->id_cs_op_line}}" id="description_{{$line->id_cs_op_line}}" data-id="{{ $line->id_cs_op_line}}" value="{{ $line->description }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div id="group-c" class="tab-pane">
+                    @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'C'; })->sortBy('cs_op_pointspv_id') as $line)
+                        <div class="box">
+                            <div class="box-header text-center">
+                                <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
+                                @if ($line->checked_at)
+                                    <span class="badge bg-info">{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</span>
+                                @endif
+                            </div>
+                            <div class="box-header">
+                                <div class= "col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="customer" class="form-label">{{ $line->pointspv->order_no }}. {{ $line->pointspv->name }}</label>
+                                        <div class="demo-radio-button">
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ok_{{$line->id_cs_op_line}}" value="OK" class="update-status" {{ $line->status == 'OK' ? 'checked' : '' }}/>
+                                            <label for="radio_ok_{{$line->id_cs_op_line}}">OK</label>
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ng_{{$line->id_cs_op_line}}" value="NG" class="update-status" {{ $line->status == 'NG' ? 'checked' : '' }}/>
+                                            <label for="radio_ng_{{$line->id_cs_op_line}}">NG</label>
+                                        </div>
+                                        <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
+                                        <div class="col-md-3">
+                                            <input class="form-control update-desc" type="text" name="description_{{$line->id_cs_op_line}}" id="description_{{$line->id_cs_op_line}}" data-id="{{ $line->id_cs_op_line}}" value="{{ $line->description }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div id="group-d" class="tab-pane">
+                    @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'D'; })->sortBy('cs_op_pointspv_id') as $line)
+                        <div class="box">
+                            <div class="box-header text-center">
+                                <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
+                                @if ($line->checked_at)
+                                    <span class="badge bg-info">{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</span>
+                                @endif
+                            </div>
+                            <div class="box-header">
+                                <div class= "col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="customer" class="form-label">{{ $line->pointspv->order_no }}. {{ $line->pointspv->name }}</label>
+                                        <div class="demo-radio-button">
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ok_{{$line->id_cs_op_line}}" value="OK" class="update-status" {{ $line->status == 'OK' ? 'checked' : '' }}/>
+                                            <label for="radio_ok_{{$line->id_cs_op_line}}">OK</label>
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ng_{{$line->id_cs_op_line}}" value="NG" class="update-status" {{ $line->status == 'NG' ? 'checked' : '' }}/>
+                                            <label for="radio_ng_{{$line->id_cs_op_line}}">NG</label>
+                                        </div>
+                                        <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
+                                        <div class="col-md-3">
+                                            <input class="form-control update-desc" type="text" name="description_{{$line->id_cs_op_line}}" id="description_{{$line->id_cs_op_line}}" data-id="{{ $line->id_cs_op_line}}" value="{{ $line->description }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div id="group-e" class="tab-pane">
+                    @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'E'; })->sortBy('cs_op_pointspv_id') as $line)
+                        <div class="box">
+                            <div class="box-header text-center">
+                                <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
+                                @if ($line->checked_at)
+                                    <span class="badge bg-info">{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</span>
+                                @endif
+                            </div>
+                            <div class="box-header">
+                                <div class= "col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="customer" class="form-label">{{ $line->pointspv->order_no }}. {{ $line->pointspv->name }}</label>
+                                        <div class="demo-radio-button">
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ok_{{$line->id_cs_op_line}}" value="OK" class="update-status" {{ $line->status == 'OK' ? 'checked' : '' }}/>
+                                            <label for="radio_ok_{{$line->id_cs_op_line}}">OK</label>
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ng_{{$line->id_cs_op_line}}" value="NG" class="update-status" {{ $line->status == 'NG' ? 'checked' : '' }}/>
+                                            <label for="radio_ng_{{$line->id_cs_op_line}}">NG</label>
+                                        </div>
+                                        <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
+                                        <div class="col-md-3">
+                                            <input class="form-control update-desc" type="text" name="description_{{$line->id_cs_op_line}}" id="description_{{$line->id_cs_op_line}}" data-id="{{ $line->id_cs_op_line}}" value="{{ $line->description }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div id="group-f" class="tab-pane">
+                    @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'F'; })->sortBy('cs_op_pointspv_id') as $line)
+                        <div class="box">
+                            <div class="box-header text-center">
+                                <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
+                                @if ($line->checked_at)
+                                    <span class="badge bg-info">{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</span>
+                                @endif
+                            </div>
+                            <div class="box-header">
+                                <div class= "col-md-4 col-12">
+                                    <div class="form-group">
+                                        <label for="customer" class="form-label">{{ $line->pointspv->order_no }}. {{ $line->pointspv->name }}</label>
+                                        <div class="demo-radio-button">
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ok_{{$line->id_cs_op_line}}" value="OK" class="update-status" {{ $line->status == 'OK' ? 'checked' : '' }}/>
+                                            <label for="radio_ok_{{$line->id_cs_op_line}}">OK</label>
+                                            <input name="status_{{$line->id_cs_op_line}}" type="radio" data-id="{{ $line->id_cs_op_line}}" id="radio_ng_{{$line->id_cs_op_line}}" value="NG" class="update-status" {{ $line->status == 'NG' ? 'checked' : '' }}/>
+                                            <label for="radio_ng_{{$line->id_cs_op_line}}">NG</label>
+                                        </div>
+                                        <label class="col-form-label col-md-4"><span class="form-text text-muted">Uraian Masalah</span></label>
+                                        <div class="col-md-3">
+                                            <input class="form-control update-desc" type="text" name="description_{{$line->id_cs_op_line}}" id="description_{{$line->id_cs_op_line}}" data-id="{{ $line->id_cs_op_line}}" value="{{ $line->description }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            {{-- @foreach ($csLine->sortBy('cs_op_pointspv_id') as $line)
                 <div class="box">
                     <div class="box-header text-center">
                         <span class="badge {{ $line->status === null ? 'bg-danger' : 'bg-success' }}">{{ $line->group_shift->time }}</span>
+                        @if ($line->checked_at)
+                            <span class="badge bg-info">{{ \Carbon\Carbon::parse($line->checked_at)->format('H:i') }}</span>
+                        @endif
                     </div>
                     <div class="box-header">
                         <div class= "col-md-4 col-12">
@@ -89,7 +279,7 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @endforeach --}}
             <div class="row">
                 <div class="col-4">
                 </div>

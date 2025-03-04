@@ -31,36 +31,63 @@
             padding: 7px;
             word-wrap: break-word;
         }
-        /* .row {
-            display: grid;
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px;
+        .table-header {
+            border-collapse: collapse;
+            margin: auto;
         }
-        .column {
-            padding: 20px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        } */
+        .table-header td {
+            border: 1px solid black;
+            text-align: center;
+            vertical-align: middle;
+            /* padding: 7px; */
+            word-wrap: break-word;
+        }
 
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;">Checksheet Monitoring Operator</h1>
     <div class="row">
-        <div class="column">
-            <p>Mesin : {{$header->nama_mesin}}</p>
-        </div>
-        <div class="column">
-            <p>Tanggal : {{$header->prod_date}}</p>
-        </div>
+        <table >
+            <tr>
+                <td><img src="{{asset('img/tcf-no-bg.png')}}" alt=""></td>
+                <td><h1 style="text-align: center;">CHECKSHEET PENGAWASAN OPERATOR</h1></td>
+                <td style="text-align: left">
+                    <p>Doc No      : TCF2/Form/Prod/01/06</p>
+                    <p>Revision No : 00</p>
+                    <p>Issued Date : 29/11/2019</p>
+                    <p>Page        : 1/1</p>
+                </td>
+            </tr>
+        </table>
     </div>
     <div class="row">
-        <div class="column">
-            <p>Line : {{$header->nama_homeline}}</p>
-        </div>
-        <div class="column">
-            <p>Operator : {{$header->nama_operator}}</p>
-        </div>
+        <table class="table-approval">
+            <tr style="text-align: center;">
+                <td>Dibuat</td>
+                <td>Dicheck</td>
+            </tr>
+            <tr style="height: 50px;">
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>{{$header->checked_by}}</td>
+                <td>{{$header->nama_karyawan}}</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="row">
+        <table style="width: 100%; border: 1px solid black;">
+            <tr>
+                <td>Mesin : {{$header->nama_mesin}}</td>
+                <td>Tanggal : {{$header->prod_date}}</td>
+            </tr>
+            <tr>
+                <td>Line : {{$header->nama_homeline}}</td>
+                <td>Shift : {{ $header->shift == 'A1' ? 'SHIFT 1 (Waktu 3)' : ($header->shift == 'A2' ? 'SHIFT 2 (Waktu 3)' : ($header->shift == 'A3' ? 'SHIFT 3 (Waktu 3)' : ($header->shift == 'B1' ? 'SHIFT 1 (Waktu 2)' : ($header->shift == 'B2' ? 'SHIFT 2 (Waktu 2)' : $header->shift)))) }}</td>
+            </tr>
+        </table>
     </div>
     <div class="row">
         <table class="table-cs" id="detail-checksheet">
