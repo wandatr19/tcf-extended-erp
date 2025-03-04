@@ -10,7 +10,7 @@
 						<div class="flex-grow-1 p-30 flex-grow-1 bg-img dask-bg bg-none-md" style="background-position: right bottom; background-size: auto 100%; background-image: url('{{asset('eduadmin/images/svg-icon/color-svg/custom-1.svg')}}')">
 							<div class="row">
 								<div class="col-12 col-xl-7">
-									<h2>Selamat Datang di <strong>Portal Checksheet</strong></h2>
+									<h2>Selamat Datang di <strong>Extended ERP</strong></h2>
 								</div>
 								<div class="col-12 col-xl-5"></div>
 							</div>
