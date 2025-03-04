@@ -106,6 +106,15 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                            <div class="col-4" style="text-align:center;">
+                                <a href="{{ route('checksheet-op-data') }}">
+                                    <button type="button" id="back" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Back</button>
+                                </a>
+                            </div>
+                    </div>
                 </div>
                 <div id="group-b" class="tab-pane">
                     @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'B'; })->sortBy('cs_op_pointspv_id') as $line)
@@ -135,6 +144,15 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                            <div class="col-4" style="text-align:center;">
+                                <a href="{{ route('checksheet-op-data') }}">
+                                    <button type="button" id="back" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Back</button>
+                                </a>
+                            </div>
+                    </div>
                 </div>
                 <div id="group-c" class="tab-pane">
                     @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'C'; })->sortBy('cs_op_pointspv_id') as $line)
@@ -164,6 +182,15 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                            <div class="col-4" style="text-align:center;">
+                                <a href="{{ route('checksheet-op-data') }}">
+                                    <button type="button" id="back" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Back</button>
+                                </a>
+                            </div>
+                    </div>
                 </div>
                 <div id="group-d" class="tab-pane">
                     @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'D'; })->sortBy('cs_op_pointspv_id') as $line)
@@ -193,6 +220,15 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                            <div class="col-4" style="text-align:center;">
+                                <a href="{{ route('checksheet-op-data') }}">
+                                    <button type="button" id="back" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Back</button>
+                                </a>
+                            </div>
+                    </div>
                 </div>
                 <div id="group-e" class="tab-pane">
                     @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'E'; })->sortBy('cs_op_pointspv_id') as $line)
@@ -222,6 +258,15 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                            <div class="col-4" style="text-align:center;">
+                                <a href="{{ route('checksheet-op-data') }}">
+                                    <button type="button" id="back" class="btn btn-primary"><i class="fa fa-arrow-left"></i>Back</button>
+                                </a>
+                            </div>
+                    </div>
                 </div>
                 <div id="group-f" class="tab-pane">
                     @foreach ($csLine->filter(function($line) { return $line->pointspv->group == 'F'; })->sortBy('cs_op_pointspv_id') as $line)
@@ -251,6 +296,13 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="row">
+                        <div class="col-4">
+                        </div>
+                            <div class="col-4" style="text-align:center;">
+                                <button type="submit" id="submit-complete" class="btn btn-success" data-id="{{ $csHeader->id_cs_op_header}}">Submit</button>
+                            </div>
+                    </div>
                 </div>
             </div>
             {{-- @foreach ($csLine->sortBy('cs_op_pointspv_id') as $line)
@@ -280,13 +332,13 @@
                     </div>
                 </div>
             @endforeach --}}
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-4">
                 </div>
                     <div class="col-4" style="text-align:center;">
                         <button type="submit" id="submit-complete" class="btn btn-primary" data-id="{{ $csHeader->id_cs_op_header}}">Submit</button>
                     </div>
-            </div>
+            </div> --}}
         </div>
     </section>
 </div>

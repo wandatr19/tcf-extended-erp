@@ -70,8 +70,9 @@ class ChecksheetOpController extends Controller
 
         if (!empty($search)) {
             $query->where(function ($dat) use ($search) {
-                $dat->where('tcf_homeline_id', 'ILIKE', "%{$search}%")
-                    ->orWhere('line_name', 'ILIKE', "%{$search}%");
+                $dat->where('tcf_homeline.tcf_homeline_id', 'ILIKE', "%{$search}%")
+                    ->orWhere('tcf_homeline.name', 'ILIKE', "%{$search}%")
+                    ->orWhere('m_product.name', 'ILIKE', "%{$search}%");
             });
         }
 

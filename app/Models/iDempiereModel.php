@@ -49,8 +49,15 @@ class iDempiereModel extends Model
 
     public function scopeFromHomeLine($query)
     {
+        $org_id = auth()->user()->org_id;
+        if ($org_id == 1) {
+           $ad_org_id = 1000001;
+        } else {
+            $ad_org_id = 1000002;
+        }
         return $query->from('tcf_homeline')
-                 ->leftJoin('m_product', 'tcf_homeline.m_product_id', '=', 'm_product.m_product_id');
+                 ->leftJoin('m_product', 'tcf_homeline.m_product_id', '=', 'm_product.m_product_id')
+                 ->where('tcf_homeline.ad_org_id', $ad_org_id);
     }
 
     
